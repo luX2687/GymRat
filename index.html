@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="GymRat 🐀" />
   <meta name="theme-color" content="#070504" />
-  <title>GymRat 🐀 — Schede, Allenamento &amp; PT</title>
+  <title>GymRat 🐀 — Schede, Allenamento, PT &amp; Profilo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
@@ -63,7 +63,7 @@
       background: var(--bg-gloss);
       background-color: var(--bg-base);
       color: var(--text-main);
-      padding-bottom: calc(104px + env(safe-area-inset-bottom));
+      padding-bottom: calc(108px + env(safe-area-inset-bottom));
       position: relative;
     }
 
@@ -187,12 +187,6 @@
       font-size: 0.72rem;
       color: var(--text-muted);
       margin-top: 1px;
-    }
-
-    .topbar-actions {
-      display: flex;
-      align-items: center;
-      gap: 7px;
     }
 
     .top-btn {
@@ -583,6 +577,49 @@
       margin-bottom: 8px;
     }
 
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .kpi-box {
+      border-radius: 12px;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 200, 140, 0.16);
+      text-align: center;
+    }
+
+    .kpi-val {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--amber-shine);
+    }
+
+    .kpi-lbl {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .day-row {
+      display: grid;
+      grid-template-columns: 44px 1fr 34px;
+      gap: 8px;
+      align-items: center;
+      padding: 6px 8px;
+      border-radius: 11px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 200, 140, 0.14);
+    }
+
+    .day-badge {
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: var(--amber-shine);
+    }
+
     .empty-msg {
       padding: 20px 14px;
       text-align: center;
@@ -590,25 +627,26 @@
       font-size: 0.84rem;
     }
 
+    /* DOCK IN BASSO A 4 MACROSEZIONI */
     .dock-wrap {
       position: fixed;
       left: 0;
       right: 0;
       bottom: calc(12px + env(safe-area-inset-bottom));
       z-index: 35;
-      padding: 0 16px;
+      padding: 0 12px;
       pointer-events: none;
     }
 
     .dock {
       pointer-events: auto;
-      max-width: 450px;
+      max-width: 520px;
       margin: 0 auto;
       border-radius: var(--r-dock);
       padding: 5px;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 4px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3px;
       background: linear-gradient(180deg, rgba(44, 29, 20, 0.92), rgba(14, 10, 8, 0.96));
       border: 1.5px solid rgba(255, 205, 150, 0.28);
       box-shadow: 0 16px 36px rgba(0, 0, 0, 0.8), inset 0 1.5px 2px rgba(255, 240, 220, 0.28);
@@ -620,8 +658,8 @@
       border: none;
       background: transparent;
       border-radius: var(--r-dock);
-      padding: 7px 6px;
-      font-size: 0.78rem;
+      padding: 7px 4px;
+      font-size: 0.73rem;
       font-weight: 800;
       color: var(--text-muted);
       cursor: pointer;
@@ -634,8 +672,8 @@
     }
 
     .dock-icon {
-      width: 17px;
-      height: 17px;
+      width: 16px;
+      height: 16px;
       stroke: currentColor;
       stroke-width: 2;
       stroke-linecap: round;
@@ -644,7 +682,7 @@
     }
 
     .dock-emoji {
-      font-size: 1.05rem;
+      font-size: 1rem;
       line-height: 1;
       display: none;
     }
@@ -672,25 +710,7 @@
       margin-top: 1px;
     }
 
-    .modal-bg {
-      position: fixed;
-      inset: 0;
-      z-index: 80;
-      background: rgba(0, 0, 0, 0.74);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 16px;
-    }
-
-    .modal-bg.open {
-      display: flex;
-      animation: fadeSlide 0.25s var(--ease-smooth) both;
-    }
-
-    /* TIMER A TUTTO SCHERMO LUCIDO ANNI '60 */
+    /* TIMER A TUTTO SCHERMO */
     .fullscreen-timer-overlay {
       position: fixed;
       inset: 0;
@@ -749,13 +769,6 @@
       margin-top: 8px;
     }
 
-    .modal-sq {
-      width: 100%;
-      max-width: 400px;
-      border-radius: 22px;
-      padding: 20px;
-    }
-
     .hidden {
       display: none !important;
     }
@@ -781,12 +794,9 @@
     <div class="topbar-inner">
       <div>
         <h1 class="brand-title"><span>🐀</span><span class="accent">GymRat</span></h1>
-        <div class="brand-sub" id="bodyStatsSub">Imposta altezza e peso nel profilo</div>
+        <div class="brand-sub" id="bodyStatsSub">Imposta altezza e peso in Profilo</div>
       </div>
-      <div class="topbar-actions">
-        <button type="button" class="top-btn" id="openProfileBtn">👤 <span id="profileTopLabel">Profilo</span></button>
-        <button type="button" class="top-btn orange" id="openTimerBtn">⏱ <span id="headerTimerText">90s</span></button>
-      </div>
+      <button type="button" class="top-btn orange" id="openTimerBtn">⏱ <span id="headerTimerText">90s</span></button>
     </div>
   </header>
 
@@ -820,7 +830,10 @@
             <span style="font-size:0.78rem;font-weight:800;color:var(--amber-shine);" id="workoutProgressLabel">0 / 0 serie</span>
           </div>
           <div class="tabs-strip" id="workoutRoutineTabs"></div>
-          <div class="row-flex" style="margin-top:10px;justify-content:space-between;">
+          <div class="row-flex" style="margin-top:10px;">
+            <input type="text" id="sessionNoteInput" class="sq-input" placeholder="Nota sessione (es. fatica, sonno, macchina occupata...)" />
+          </div>
+          <div class="row-flex" style="margin-top:6px;justify-content:space-between;">
             <button type="button" class="action-btn soft-orange" id="addFreeExerciseBtn">+ Esercizio extra</button>
             <button type="button" class="action-btn orange" id="finishWorkoutBtn">✓ Salva sessione</button>
           </div>
@@ -860,17 +873,110 @@
             <div class="card-heading"><span class="dot-orange"></span><span>Consulenza PT su misura</span></div>
             <button type="button" class="action-btn soft-orange" id="ptBodyAdviceBtn">Consiglio sul mio corpo</button>
           </div>
-          <div class="pt-reply-box" id="ptCoachOutput">Imposta altezza, peso e tipo di corpo dal tasto Profilo in alto, poi chiedi al PT come impostare esercizi, serie e carichi.</div>
+          <div class="pt-reply-box" id="ptCoachOutput">Imposta altezza, peso e tipo di corpo nella sezione Profilo, poi chiedi al PT come impostare esercizi, serie e carichi.</div>
           <div class="row-flex">
             <input type="text" id="ptQuestionInput" class="sq-input" placeholder="Scrivi una domanda al PT..." />
             <button type="button" class="action-btn orange" id="ptAskBtn">Chiedi</button>
           </div>
         </div>
+
+        <div class="square-card card-pad">
+          <div class="card-top-bar">
+            <div class="card-heading"><span class="dot-orange"></span><span>Calcolatore dischi bilanciere</span></div>
+          </div>
+          <div class="row-flex">
+            <input type="number" id="targetBarKgInput" class="sq-input" step="2.5" min="20" placeholder="Peso totale (es. 80)" />
+            <select id="barWeightSelect" class="sq-select" style="max-width:130px;">
+              <option value="20">Bilanciere 20 kg</option>
+              <option value="15">Bilanciere 15 kg</option>
+              <option value="10">EZ / Corto 10 kg</option>
+            </select>
+            <button type="button" class="action-btn soft-orange" id="calcPlatesBtn">Calcola</button>
+          </div>
+          <div class="advice-box hidden" id="platesResultBox"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. PROFILO (ALTEZZA, PESO, PROGRAMMA SETTIMANALE, RAPPORTO, MASSIMALI) -->
+    <section id="view-profilo" class="view">
+      <div class="feed-stack">
+        <!-- Dati fisici & impostazioni -->
+        <div class="square-card accent-border card-pad">
+          <div class="card-top-bar">
+            <div class="card-heading"><span class="dot-orange"></span><span>Caratteristiche corporee &amp; Profilo</span></div>
+            <span style="font-size:0.74rem;color:var(--amber-shine);font-weight:700;" id="profileCodeBadge">Locale</span>
+          </div>
+
+          <div class="row-flex">
+            <input type="number" id="profileHeightInput" class="sq-input" min="100" max="240" placeholder="Altezza (cm)" />
+            <input type="number" id="profileWeightInput" class="sq-input" step="0.1" min="30" max="250" placeholder="Peso (kg)" />
+          </div>
+
+          <div class="row-flex">
+            <select id="profileSomatotypeInput" class="sq-select">
+              <option value="">Tipo di corpo...</option>
+              <option value="ectomorfo">Ectomorfo (slanciato / fatica a mettere massa)</option>
+              <option value="mesomorfo">Mesomorfo (atletico / risponde rapido)</option>
+              <option value="endomorfo">Endomorfo (struttura più robusta / accumulo facile)</option>
+              <option value="misto">Misto / Da definire</option>
+            </select>
+          </div>
+
+          <div class="row-flex">
+            <button type="button" class="action-btn soft-orange" id="createGymCodeBtn">+ Codice cloud</button>
+            <input type="text" id="joinGymCodeInput" class="sq-input" placeholder="Codice esistente" style="text-transform:uppercase;" />
+            <button type="button" class="action-btn" id="joinGymCodeBtn">Collega</button>
+          </div>
+
+          <div class="row-flex">
+            <input type="password" id="geminiApiKeyInput" class="sq-input" placeholder="Chiave API Google AI Studio (opzionale)" />
+            <button type="button" class="action-btn orange" id="saveProfileSectionBtn">Salva</button>
+          </div>
+        </div>
+
+        <!-- Rapporto settimanale -->
+        <div class="square-card card-pad">
+          <div class="card-top-bar">
+            <div class="card-heading"><span class="dot-orange"></span><span>Rapporto settimanale</span></div>
+            <span style="font-size:0.74rem;color:var(--amber-shine);font-weight:700;" id="weeklyTrendLabel">Ultimi 7 giorni</span>
+          </div>
+          <div class="kpi-grid">
+            <div class="kpi-box">
+              <div class="kpi-val" id="kpiWorkoutsCount">0</div>
+              <div class="kpi-lbl">Allenamenti</div>
+            </div>
+            <div class="kpi-box">
+              <div class="kpi-val" id="kpiSetsCount">0</div>
+              <div class="kpi-lbl">Serie svolte</div>
+            </div>
+            <div class="kpi-box">
+              <div class="kpi-val" id="kpiVolumeKg">0 kg</div>
+              <div class="kpi-lbl">Volume totale</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Programma settimanale -->
+        <div class="square-card card-pad">
+          <div class="card-top-bar">
+            <div class="card-heading"><span class="dot-orange"></span><span>Programma settimanale</span></div>
+          </div>
+          <div id="weeklyPlanContainer" class="feed-stack" style="gap:6px;"></div>
+        </div>
+
+        <!-- Carichi massimali (PR & 1RM stimato) -->
+        <div class="square-card card-pad">
+          <div class="card-top-bar">
+            <div class="card-heading"><span class="dot-orange"></span><span>Carichi massimali (PR / 1RM)</span></div>
+          </div>
+          <div id="maxLiftsContainer" class="feed-stack" style="gap:6px;"></div>
+        </div>
       </div>
     </section>
   </main>
 
-  <!-- DOCK IN BASSO -->
+  <!-- DOCK IN BASSO A 4 MACROSEZIONI -->
   <nav class="dock-wrap" aria-label="Navigazione">
     <div class="dock">
       <button type="button" class="dock-btn active" data-nav="schede">
@@ -887,6 +993,11 @@
         <svg class="dock-icon" viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="3.5" /><path d="M5.5 19.5c0-3.2 2.9-5.5 6.5-5.5s6.5 2.3 6.5 5.5" /></svg>
         <span class="dock-emoji">🧠</span>
         <span>PT</span>
+      </button>
+      <button type="button" class="dock-btn" data-nav="profilo">
+        <svg class="dock-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="3" /><path d="M7 9h10M7 13h6" /></svg>
+        <span class="dock-emoji">👤</span>
+        <span>Profilo</span>
       </button>
     </div>
   </nav>
@@ -928,47 +1039,6 @@
     </div>
   </div>
 
-  <!-- MODALE PROFILO -->
-  <div class="modal-bg" id="profileModal">
-    <div class="modal-sq square-card accent-border">
-      <div class="card-heading" style="margin-bottom:12px;"><span class="dot-orange"></span><span>Il tuo profilo GymRat 🐀</span></div>
-
-      <div class="row-flex">
-        <input type="number" id="profileHeightInput" class="sq-input" min="100" max="240" placeholder="Altezza (cm)" />
-        <input type="number" id="profileWeightInput" class="sq-input" step="0.1" min="30" max="250" placeholder="Peso (kg)" />
-      </div>
-
-      <div class="row-flex">
-        <select id="profileSomatotypeInput" class="sq-select">
-          <option value="">Tipo di corpo...</option>
-          <option value="ectomorfo">Ectomorfo (slanciato / fatica a mettere massa)</option>
-          <option value="mesomorfo">Mesomorfo (atletico / risponde rapido)</option>
-          <option value="endomorfo">Endomorfo (struttura più robusta / accumulo facile)</option>
-          <option value="misto">Misto / Da definire</option>
-        </select>
-      </div>
-
-      <div id="currentSyncCodeBox" class="hidden" style="margin-bottom:8px;">
-        <div style="padding:8px 10px;border-radius:10px;background:rgba(255,122,24,0.14);border:1px dashed rgba(255,165,80,0.5);font-size:0.78rem;font-weight:800;color:var(--amber-shine);text-align:center;" id="currentSyncCodeText"></div>
-      </div>
-
-      <div class="row-flex">
-        <button type="button" class="action-btn soft-orange" id="createGymCodeBtn">+ Codice cloud</button>
-        <input type="text" id="joinGymCodeInput" class="sq-input" placeholder="Codice esistente" style="text-transform:uppercase;" />
-        <button type="button" class="action-btn" id="joinGymCodeBtn">Collega</button>
-      </div>
-
-      <div class="row-flex">
-        <input type="password" id="geminiApiKeyInput" class="sq-input" placeholder="Chiave API Google AI Studio (opzionale, gratuita)" />
-      </div>
-
-      <div class="row-flex" style="justify-content:flex-end;margin-top:12px;">
-        <button type="button" class="action-btn" id="closeProfileModalBtn">Chiudi</button>
-        <button type="button" class="action-btn orange" id="saveProfilePrefsBtn">Salva profilo</button>
-      </div>
-    </div>
-  </div>
-
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-analytics.js";
@@ -996,6 +1066,7 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
+    const DAYS = ["Lun", "Mar", "Mer", "Gio", "Ven", "Sab", "Dom"];
     const MUSCLE_LABELS = {
       petto: "Petto",
       spalle: "Spalle",
@@ -1079,7 +1150,7 @@
       `;
     }
 
-    const STORAGE_KEY = "gymrat_clean_v1";
+    const STORAGE_KEY = "gymrat_hevy_v1";
     const PROFILE_CODE_KEY = "gymrat_profile_code";
     const GEMINI_KEY_STORAGE = "gymrat_gemini_api_key";
 
@@ -1088,6 +1159,7 @@
       routines: [],
       selectedRoutineId: null,
       editingRoutineId: null,
+      weeklyPlan: { Lun: "", Mar: "", Mer: "", Gio: "", Ven: "", Sab: "", Dom: "" },
       activeWorkout: null,
       history: []
     };
@@ -1106,6 +1178,7 @@
           routines: Array.isArray(p.routines) ? p.routines : [],
           selectedRoutineId: p.selectedRoutineId ?? null,
           editingRoutineId: p.editingRoutineId ?? null,
+          weeklyPlan: { ...emptyState.weeklyPlan, ...(p.weeklyPlan || {}) },
           activeWorkout: p.activeWorkout ?? null,
           history: Array.isArray(p.history) ? p.history : []
         };
@@ -1127,23 +1200,17 @@
       if (heightCm) parts.push(`${heightCm} cm`);
       if (weightKg) parts.push(`${weightKg} kg`);
       if (somatotype) parts.push(somatotype.charAt(0).toUpperCase() + somatotype.slice(1));
-      return parts.length ? parts.join(" • ") : "Imposta altezza e peso nel profilo";
+      return parts.length ? parts.join(" • ") : "Imposta altezza e peso in Profilo";
     }
 
     function updateHeaderAndProfileBadges() {
       document.getElementById("bodyStatsSub").textContent = getBodySummaryText();
-      document.getElementById("profileTopLabel").textContent = profileCode || "Profilo";
+      document.getElementById("profileCodeBadge").textContent = profileCode ? `Cloud: ${profileCode}` : "Locale";
       const ptSummary = document.getElementById("ptProfileSummary");
       if (ptSummary) {
         ptSummary.textContent = (state.profile.heightCm || state.profile.weightKg || state.profile.somatotype)
           ? getBodySummaryText()
           : "Profilo non impostato";
-      }
-      if (profileCode) {
-        document.getElementById("currentSyncCodeBox").classList.remove("hidden");
-        document.getElementById("currentSyncCodeText").textContent = `Codice cloud: ${profileCode}`;
-      } else {
-        document.getElementById("currentSyncCodeBox").classList.add("hidden");
       }
     }
 
@@ -1156,6 +1223,7 @@
             profile: state.profile,
             routines: state.routines,
             selectedRoutineId: state.selectedRoutineId,
+            weeklyPlan: state.weeklyPlan,
             activeWorkout: state.activeWorkout,
             history: state.history,
             updatedAt: serverTimestamp()
@@ -1168,6 +1236,7 @@
     function saveState() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
       updateHeaderAndProfileBadges();
+      renderProfiloSection();
       pushToCloud();
     }
 
@@ -1190,6 +1259,7 @@
             profile: state.profile,
             routines: state.routines,
             selectedRoutineId: state.selectedRoutineId,
+            weeklyPlan: state.weeklyPlan,
             activeWorkout: state.activeWorkout,
             history: state.history,
             updatedAt: serverTimestamp()
@@ -1201,12 +1271,15 @@
         if (data.profile) state.profile = { ...state.profile, ...data.profile };
         if (Array.isArray(data.routines)) state.routines = data.routines;
         if (data.selectedRoutineId !== undefined) state.selectedRoutineId = data.selectedRoutineId;
+        if (data.weeklyPlan) state.weeklyPlan = { ...emptyState.weeklyPlan, ...data.weeklyPlan };
         if (data.activeWorkout !== undefined) state.activeWorkout = data.activeWorkout;
         if (Array.isArray(data.history)) state.history = data.history;
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
         isApplyingCloud = false;
+        syncProfileInputsFromState();
         updateHeaderAndProfileBadges();
         renderSchede();
+        renderProfiloSection();
         if (activeNav === "allenamento") renderAllenamento();
       }, () => {});
     }
@@ -1221,6 +1294,43 @@
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;");
+    }
+
+    // MASSIMALI (PR & 1RM STIMATO CON EPLEY)
+    function computePersonalRecords() {
+      const prMap = new Map();
+
+      const scanExercise = (exName, sets) => {
+        const name = (exName || "").trim();
+        if (!name) return;
+        (sets || []).forEach((s) => {
+          if (!s.done) return;
+          const kg = parseFloat(s.kg) || 0;
+          const reps = parseInt(s.reps, 10) || 0;
+          if (kg <= 0 || reps <= 0) return;
+          const est1rm = reps === 1 ? kg : kg * (1 + reps / 30);
+          const prev = prMap.get(name);
+          if (!prev || kg > prev.maxKg || est1rm > prev.est1rm) {
+            prMap.set(name, {
+              name,
+              maxKg: prev ? Math.max(prev.maxKg, kg) : kg,
+              bestRepsAtMax: kg >= (prev?.maxKg || 0) ? reps : prev.bestRepsAtMax,
+              est1rm: prev ? Math.max(prev.est1rm, est1rm) : est1rm
+            });
+          }
+        });
+      };
+
+      if (state.activeWorkout?.exercises) {
+        state.activeWorkout.exercises.forEach((ex) => scanExercise(ex.name, ex.sets));
+      }
+      (state.history || []).forEach((h) => {
+        if (Array.isArray(h.exercisesSnap)) {
+          h.exercisesSnap.forEach((ex) => scanExercise(ex.name, ex.sets));
+        }
+      });
+
+      return Array.from(prMap.values()).sort((a, b) => b.est1rm - a.est1rm);
     }
 
     function suggestExerciseForBodyAndMuscle(muscleKey) {
@@ -1258,7 +1368,7 @@
         sets = 3;
         reps = "8-12";
         rest = recommended.rest;
-        reason = "Impostazione equilibrata; completa altezza, peso e somatotipo nel profilo per tararla meglio.";
+        reason = "Impostazione equilibrata; completa altezza, peso e somatotipo in Profilo per tararla meglio.";
       }
 
       if (h >= 185) reason += " Con leva alta, cura il range di movimento controllato.";
@@ -1273,29 +1383,15 @@
       const { heightCm, weightKg, somatotype } = state.profile;
       const bodyNote = (heightCm || weightKg || somatotype)
         ? ` Profilo (${getBodySummaryText()}): ${somatotype === "ectomorfo" ? "tieni recuperi completi;" : somatotype === "endomorfo" ? "mantieni ritmo costante;" : "progredisci a piccoli step sul carico."}`
-        : " Aggiungi altezza, peso e tipo di corpo nel Profilo per un consiglio mirato.";
+        : " Aggiungi altezza, peso e tipo di corpo in Profilo per un consiglio mirato.";
 
-      const doneSets = (ex.sets || []).filter((s) => s.done);
-      const weights = doneSets.map((s) => parseFloat(s.kg)).filter((n) => !Number.isNaN(n) && n > 0);
-      const reps = doneSets.map((s) => parseInt(s.reps, 10)).filter((n) => !Number.isNaN(n) && n > 0);
+      const pr = computePersonalRecords().find((r) => r.name.toLowerCase() === (ex.name || "").toLowerCase());
+      const prNote = pr ? ` PR registrato: ${pr.maxKg} kg (1RM stimato ~${pr.est1rm.toFixed(1)} kg).` : "";
 
-      let loadAdvice = `Consiglio: ${ex.sets?.length || 3} serie su target ${ex.repsTarget || "8-12"}, recupero ${ex.restSec || 90}s.`;
-      if (weights.length && reps.length) {
-        const topW = Math.max(...weights);
-        const minR = Math.min(...reps);
-        const hi = parseInt(String(ex.repsTarget || "12").split("-").pop(), 10) || 12;
-        if (minR >= hi) {
-          const inc = topW >= 50 ? 2.5 : 1;
-          loadAdvice = `Ottimo: puoi provare ad alzare a ${(topW + inc).toFixed(inc % 1 === 0 ? 0 : 1)} kg nella prossima seduta.`;
-        } else {
-          loadAdvice = `Consolida ${topW} kg finché non arrivi a ${hi} rip su tutte le serie.`;
-        }
-      }
-
-      return `<strong>${escapeHtml(ex.name)}:</strong> ${escapeHtml(baseTip)} ${escapeHtml(loadAdvice)}${escapeHtml(bodyNote)}`;
+      return `<strong>${escapeHtml(ex.name)}:</strong> ${escapeHtml(baseTip)}${escapeHtml(prNote)}${escapeHtml(bodyNote)}`;
     }
 
-    // NAVIGAZIONE 3 SEZIONI
+    // NAVIGAZIONE 4 MACROSEZIONI
     let activeNav = "schede";
     document.querySelectorAll(".dock-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
@@ -1308,6 +1404,9 @@
         if (activeNav === "allenamento") {
           ensureWorkoutLoaded();
           renderAllenamento();
+        } else if (activeNav === "profilo") {
+          syncProfileInputsFromState();
+          renderProfiloSection();
         } else if (activeNav === "pt") {
           updateHeaderAndProfileBadges();
         }
@@ -1343,10 +1442,12 @@
       state.activeWorkout = {
         routineId: r.id,
         routineName: `${r.emoji || "🐀"} ${r.name}`,
+        note: "",
         startedAt: new Date().toISOString(),
         exercises: (r.exercises || []).map((ex) => ({
           id: uid("wex"),
           name: ex.name,
+          note: "",
           repsTarget: ex.repsTarget || "8-12",
           restSec: ex.restSec || 90,
           sets: Array.from({ length: Math.max(1, ex.sets || 3) }, (_, i) => ({
@@ -1372,10 +1473,12 @@
         state.activeWorkout = {
           routineId: r.id,
           routineName: `${r.emoji || "🐀"} ${r.name}`,
+          note: "",
           startedAt: new Date().toISOString(),
           exercises: (r.exercises || []).map((ex) => ({
             id: uid("wex"),
             name: ex.name,
+            note: "",
             repsTarget: ex.repsTarget || "8-12",
             restSec: ex.restSec || 90,
             sets: Array.from({ length: Math.max(1, ex.sets || 3) }, (_, i) => ({
@@ -1602,10 +1705,12 @@
       });
     }
 
+    // RENDER ALLENAMENTO LIVE
     function renderAllenamento() {
       const tabs = document.getElementById("workoutRoutineTabs");
       const list = document.getElementById("workoutExercisesContainer");
       const prog = document.getElementById("workoutProgressLabel");
+      const sessionNoteIn = document.getElementById("sessionNoteInput");
 
       tabs.innerHTML = "";
       state.routines.forEach((r) => {
@@ -1627,10 +1732,17 @@
       const w = state.activeWorkout;
       if (!w) {
         prog.textContent = "0 / 0 serie";
+        sessionNoteIn.value = "";
         list.innerHTML = `<div class="square-card card-pad empty-msg">Crea una scheda in <strong>Schede</strong> o fattela costruire dal <strong>PT</strong> per iniziare.</div>`;
         renderHistory();
         return;
       }
+
+      sessionNoteIn.value = w.note || "";
+      sessionNoteIn.onchange = () => {
+        w.note = sessionNoteIn.value;
+        saveState();
+      };
 
       let tot = 0;
       let done = 0;
@@ -1652,18 +1764,23 @@
         card.className = "square-card card-pad";
         const restSec = ex.restSec || 90;
         const isAdviceOpen = openAdviceIds.has(ex.id);
+        const muscleKey = detectMuscle(ex.name);
 
         card.innerHTML = `
           <div class="card-top-bar">
             <div>
               <div style="font-weight:800;font-size:0.98rem;">${escapeHtml(ex.name)}</div>
-              <div style="font-size:0.73rem;color:var(--text-muted);">${escapeHtml(MUSCLE_LABELS[detectMuscle(ex.name)] || "")} • Target ${escapeHtml(ex.repsTarget || "8-12")}</div>
+              <div style="font-size:0.73rem;color:var(--text-muted);">${escapeHtml(MUSCLE_LABELS[muscleKey] || "")} • Target ${escapeHtml(ex.repsTarget || "8-12")}</div>
             </div>
             <div style="display:flex;align-items:center;gap:5px;flex-shrink:0;">
               <button type="button" class="rest-tag ex-rest-btn">⏱ ${restSec}s</button>
-              <button type="button" class="action-btn soft-orange ex-tip-btn">💡 Consiglio</button>
+              <button type="button" class="action-btn soft-orange ex-swap-btn" title="Sostituisci esercizio">⇄</button>
+              <button type="button" class="action-btn soft-orange ex-tip-btn">💡</button>
               <button type="button" class="action-btn ex-add-set">+ Serie</button>
             </div>
+          </div>
+          <div class="row-flex" style="margin-bottom:8px;">
+            <input type="text" class="sq-input ex-note-in" style="padding:6px 10px;font-size:0.8rem;" placeholder="Nota esercizio (es. presa, gomito, sensazione)..." value="${escapeHtml(ex.note || "")}" />
           </div>
           <div class="sets-head">
             <span>Set</span>
@@ -1675,8 +1792,22 @@
           <div class="advice-box ${isAdviceOpen ? "" : "hidden"} ex-advice-panel">${getExerciseDetailedAdvice(ex)}</div>
         `;
 
+        card.querySelector(".ex-note-in").onchange = (ev) => {
+          ex.note = ev.target.value;
+          saveState();
+        };
+
         card.querySelector(".ex-rest-btn").onclick = () => {
           launchFullscreenTimer(restSec, ex.name);
+        };
+
+        card.querySelector(".ex-swap-btn").onclick = () => {
+          const rec = suggestExerciseForBodyAndMuscle(muscleKey);
+          const choice = prompt(`Sostituisci "${ex.name}" con:`, rec.name);
+          if (!choice || !choice.trim()) return;
+          ex.name = choice.trim();
+          saveState();
+          renderAllenamento();
         };
 
         card.querySelector(".ex-tip-btn").onclick = () => {
@@ -1733,6 +1864,7 @@
       state.activeWorkout.exercises.push({
         id: uid("wex"),
         name: name.trim(),
+        note: "",
         repsTarget: "8-12",
         restSec: 90,
         sets: [
@@ -1756,9 +1888,15 @@
       state.history.unshift({
         id: uid("h"),
         routineName: state.activeWorkout.routineName,
+        note: state.activeWorkout.note || "",
+        dateIso: new Date().toISOString(),
         dateStr: new Date().toLocaleDateString("it-IT", { day: "2-digit", month: "2-digit", year: "numeric" }),
         doneSets,
-        volumeKg: Math.round(vol)
+        volumeKg: Math.round(vol),
+        exercisesSnap: state.activeWorkout.exercises.map((ex) => ({
+          name: ex.name,
+          sets: ex.sets
+        }))
       });
       state.activeWorkout = null;
       ensureWorkoutLoaded();
@@ -1780,16 +1918,114 @@
           <div style="display:flex;align-items:center;justify-content:space-between;gap:8px;">
             <div>
               <div style="font-weight:800;font-size:0.9rem;">${escapeHtml(h.routineName)}</div>
-              <div style="font-size:0.72rem;color:var(--text-muted);">${escapeHtml(h.dateStr)} • ${h.doneSets} serie</div>
+              <div style="font-size:0.72rem;color:var(--text-muted);">${escapeHtml(h.dateStr)} • ${h.doneSets} serie${h.note ? ` • ${escapeHtml(h.note)}` : ""}</div>
             </div>
-            <span class="rest-tag">${h.volumeKg.toLocaleString("it-IT")} kg</span>
+            <span class="rest-tag">${Number(h.volumeKg || 0).toLocaleString("it-IT")} kg</span>
           </div>
         `;
         box.appendChild(card);
       });
     }
 
-    // SEZIONE PT
+    // SEZIONE 4: PROFILO (PROGRAMMA SETTIMANALE, RAPPORTO SETTIMANALE, MASSIMALI)
+    function syncProfileInputsFromState() {
+      document.getElementById("profileHeightInput").value = state.profile.heightCm || "";
+      document.getElementById("profileWeightInput").value = state.profile.weightKg || "";
+      document.getElementById("profileSomatotypeInput").value = state.profile.somatotype || "";
+      document.getElementById("geminiApiKeyInput").value = geminiApiKey;
+    }
+
+    function renderProfiloSection() {
+      // Rapporto settimanale (ultimi 7 giorni)
+      const now = Date.now();
+      const sevenDaysMs = 7 * 24 * 60 * 60 * 1000;
+      const recent = (state.history || []).filter((h) => {
+        const t = h.dateIso ? new Date(h.dateIso).getTime() : now;
+        return !Number.isNaN(t) && (now - t) <= sevenDaysMs;
+      });
+      const wkSource = recent.length ? recent : state.history;
+      const wCount = wkSource.length;
+      const sCount = wkSource.reduce((a, b) => a + (b.doneSets || 0), 0);
+      const vSum = wkSource.reduce((a, b) => a + (b.volumeKg || 0), 0);
+
+      document.getElementById("kpiWorkoutsCount").textContent = String(wCount);
+      document.getElementById("kpiSetsCount").textContent = String(sCount);
+      document.getElementById("kpiVolumeKg").textContent = `${vSum.toLocaleString("it-IT")} kg`;
+
+      // Programma settimanale
+      const planBox = document.getElementById("weeklyPlanContainer");
+      planBox.innerHTML = "";
+      DAYS.forEach((day) => {
+        const row = document.createElement("div");
+        row.className = "day-row";
+        const assignedId = state.weeklyPlan[day] || "";
+        row.innerHTML = `
+          <span class="day-badge">${day}</span>
+          <select class="sq-select day-routine-sel" style="padding:6px 8px;font-size:0.82rem;">
+            <option value="">Riposo / Libero</option>
+            ${state.routines.map((r) => `<option value="${r.id}" ${r.id === assignedId ? "selected" : ""}>${escapeHtml(r.emoji || "🐀")} ${escapeHtml(r.name)}</option>`).join("")}
+          </select>
+          <button type="button" class="sq-icon-btn day-go-btn" title="Avvia scheda">▶</button>
+        `;
+        const sel = row.querySelector(".day-routine-sel");
+        sel.onchange = () => {
+          state.weeklyPlan[day] = sel.value;
+          saveState();
+        };
+        row.querySelector(".day-go-btn").onclick = () => {
+          if (!sel.value) return;
+          startRoutine(sel.value);
+        };
+        planBox.appendChild(row);
+      });
+
+      // Massimali (PR / 1RM stimato)
+      const prBox = document.getElementById("maxLiftsContainer");
+      const prs = computePersonalRecords();
+      if (!prs.length) {
+        prBox.innerHTML = `<div style="font-size:0.78rem;color:var(--text-muted);">Completa e spunta almeno una serie con peso e ripetizioni in <strong>Allenamento</strong> per vedere i tuoi massimali.</div>`;
+      } else {
+        prBox.innerHTML = "";
+        prs.slice(0, 8).forEach((pr) => {
+          const line = document.createElement("div");
+          line.className = "ex-item-line";
+          line.innerHTML = `
+            <div>
+              <div style="font-weight:700;">${escapeHtml(pr.name)}</div>
+              <div style="font-size:0.72rem;color:var(--text-muted);">Max spinto: ${pr.maxKg} kg × ${pr.bestRepsAtMax} rip</div>
+            </div>
+            <span class="rest-tag">1RM ~${pr.est1rm.toFixed(1)} kg</span>
+          `;
+          prBox.appendChild(line);
+        });
+      }
+    }
+
+    document.getElementById("saveProfileSectionBtn").onclick = () => {
+      state.profile.heightCm = document.getElementById("profileHeightInput").value.trim();
+      state.profile.weightKg = document.getElementById("profileWeightInput").value.trim();
+      state.profile.somatotype = document.getElementById("profileSomatotypeInput").value;
+      geminiApiKey = document.getElementById("geminiApiKeyInput").value.trim();
+      localStorage.setItem(GEMINI_KEY_STORAGE, geminiApiKey);
+      saveState();
+      renderSchede();
+      if (activeNav === "allenamento") renderAllenamento();
+    };
+
+    document.getElementById("createGymCodeBtn").onclick = () => {
+      const code = `RAT-${Math.floor(1000 + Math.random() * 9000)}`;
+      bindCloudProfile(code);
+    };
+
+    document.getElementById("joinGymCodeBtn").onclick = () => {
+      const inp = document.getElementById("joinGymCodeInput");
+      const val = inp.value.trim();
+      if (!val) return;
+      inp.value = "";
+      bindCloudProfile(val);
+    };
+
+    // SEZIONE PT + CALCOLATORE DISCHI
     document.getElementById("generatePtRoutineBtn").onclick = () => {
       const split = document.getElementById("ptSplitSelect").value;
       const goal = document.getElementById("ptGoalSelect").value;
@@ -1838,7 +2074,7 @@
         return `Progressione carichi (${bodyStr}):\nQuando chiudi tutte le serie al limite alto del range di ripetizioni con buona tecnica, aggiungi +1–2.5 kg nella seduta successiva.`;
       }
 
-      let somaTip = "Imposta il tuo tipo di corpo nel Profilo per consigli su misura.";
+      let somaTip = "Imposta il tuo tipo di corpo in Profilo per consigli su misura.";
       if (somatotype === "ectomorfo") somaTip = "Come ectomorfo punta su esercizi base, carichi progressivi, recuperi buoni e surplus calorico costante.";
       else if (somatotype === "endomorfo") somaTip = "Come endomorfo cura la qualità esecutiva, i tempi di recupero e l'abbinamento con attività quotidiana.";
       else if (somatotype === "mesomorfo") somaTip = "Come mesomorfo hai ottima reattività agli stimoli: alterna fasi di forza e volume controllato.";
@@ -1886,6 +2122,27 @@
 
     document.getElementById("ptBodyAdviceBtn").onclick = () => {
       askPt("Come devo impostare esercizi, serie e recuperi in base alla mia altezza, peso e tipo di corpo?");
+    };
+
+    document.getElementById("calcPlatesBtn").onclick = () => {
+      const total = parseFloat(document.getElementById("targetBarKgInput").value);
+      const bar = parseFloat(document.getElementById("barWeightSelect").value) || 20;
+      const box = document.getElementById("platesResultBox");
+      box.classList.remove("hidden");
+      if (!total || total <= bar) {
+        box.innerHTML = `Inserisci un carico maggiore del bilanciere (${bar} kg).`;
+        return;
+      }
+      let perSide = (total - bar) / 2;
+      const plates = [25, 20, 15, 10, 5, 2.5, 1.25];
+      const used = [];
+      for (const p of plates) {
+        while (perSide >= p - 0.001) {
+          used.push(`${p} kg`);
+          perSide -= p;
+        }
+      }
+      box.innerHTML = `<strong>Per lato (${((total - bar) / 2).toFixed(2)} kg):</strong> ${used.length ? escapeHtml(used.join(" + ")) : "Solo bilanciere"}${perSide > 0.05 ? ` (resto ${perSide.toFixed(2)} kg)` : ""}`;
     };
 
     // TIMER DI RECUPERO A TUTTO SCHERMO
@@ -1989,48 +2246,11 @@
       startTimerLoop();
     };
 
-    // MODALE PROFILO
-    const profileModal = document.getElementById("profileModal");
-    document.getElementById("openProfileBtn").onclick = () => {
-      document.getElementById("profileHeightInput").value = state.profile.heightCm || "";
-      document.getElementById("profileWeightInput").value = state.profile.weightKg || "";
-      document.getElementById("profileSomatotypeInput").value = state.profile.somatotype || "";
-      document.getElementById("geminiApiKeyInput").value = geminiApiKey;
-      updateHeaderAndProfileBadges();
-      profileModal.classList.add("open");
-    };
-    document.getElementById("closeProfileModalBtn").onclick = () => profileModal.classList.remove("open");
-
-    document.getElementById("saveProfilePrefsBtn").onclick = () => {
-      state.profile.heightCm = document.getElementById("profileHeightInput").value.trim();
-      state.profile.weightKg = document.getElementById("profileWeightInput").value.trim();
-      state.profile.somatotype = document.getElementById("profileSomatotypeInput").value;
-      geminiApiKey = document.getElementById("geminiApiKeyInput").value.trim();
-      localStorage.setItem(GEMINI_KEY_STORAGE, geminiApiKey);
-      saveState();
-      renderSchede();
-      renderAllenamento();
-      profileModal.classList.remove("open");
-    };
-
-    document.getElementById("createGymCodeBtn").onclick = () => {
-      const code = `RAT-${Math.floor(1000 + Math.random() * 9000)}`;
-      bindCloudProfile(code);
-      profileModal.classList.remove("open");
-    };
-
-    document.getElementById("joinGymCodeBtn").onclick = () => {
-      const inp = document.getElementById("joinGymCodeInput");
-      const val = inp.value.trim();
-      if (!val) return;
-      inp.value = "";
-      bindCloudProfile(val);
-      profileModal.classList.remove("open");
-    };
-
+    syncProfileInputsFromState();
     updateHeaderAndProfileBadges();
     updateTimerUI();
     renderSchede();
+    renderProfiloSection();
 
     if (profileCode) bindCloudProfile(profileCode);
     signInAnonymously(auth).catch(() => {});
