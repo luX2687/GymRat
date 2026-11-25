@@ -1,0 +1,1801 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Gym Bubble" />
+  <meta name="theme-color" content="#050507" />
+  <title>Gym Bubble — Schede &amp; Allenamento</title>
+  <style>
+    :root {
+      --bg-base: #050507;
+      --bg-gradient:
+        radial-gradient(circle at 14% 8%, rgba(249, 115, 22, 0.22) 0%, transparent 48%),
+        radial-gradient(circle at 86% 18%, rgba(255, 255, 255, 0.08) 0%, transparent 52%),
+        radial-gradient(circle at 50% 100%, rgba(234, 88, 12, 0.16) 0%, transparent 60%),
+        linear-gradient(170deg, #050507 0%, #0b0b0f 55%, #070709 100%);
+      --glass: rgba(24, 24, 28, 0.62);
+      --glass-strong: rgba(30, 30, 36, 0.84);
+      --glass-soft: rgba(255, 255, 255, 0.05);
+      --border-glass: rgba(255, 255, 255, 0.13);
+      --border-orange: rgba(249, 115, 22, 0.42);
+      --text-main: #fafafa;
+      --text-muted: #a1a1aa;
+      --orange: #f97316;
+      --orange-bright: #fb923c;
+      --orange-soft: rgba(249, 115, 22, 0.16);
+      --ok-soft: rgba(34, 197, 94, 0.16);
+      --ok-border: rgba(34, 197, 94, 0.45);
+      --ok-text: #86efac;
+      --pill: 9999px;
+      --bubble: 40px;
+      --bubble-sm: 28px;
+      --shadow-glass:
+        0 14px 34px rgba(0, 0, 0, 0.55),
+        inset 0 1px 0 rgba(255, 255, 255, 0.14);
+      --shadow-float:
+        0 20px 44px rgba(0, 0, 0, 0.72),
+        0 0 26px rgba(249, 115, 22, 0.14),
+        inset 0 1px 0 rgba(255, 255, 255, 0.18);
+      --ease-bubble: cubic-bezier(0.32, 0.72, 0, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      margin: 0;
+      width: 100%;
+      min-height: 100dvh;
+      overflow-x: clip;
+      overscroll-behavior: none;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+      background: var(--bg-gradient);
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      padding-bottom: calc(114px + env(safe-area-inset-bottom));
+      position: relative;
+    }
+
+    .ambient-layer {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(56px);
+      will-change: transform;
+    }
+
+    .orb-orange {
+      width: 300px;
+      height: 300px;
+      top: 5%;
+      right: -80px;
+      background: radial-gradient(circle, rgba(249, 115, 22, 0.28) 0%, rgba(234, 88, 12, 0.06) 68%, transparent 100%);
+      animation: orbFloatA 18s ease-in-out infinite alternate;
+    }
+
+    .orb-white {
+      width: 280px;
+      height: 280px;
+      top: 38%;
+      left: -85px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.11) 0%, rgba(161, 161, 170, 0.03) 70%, transparent 100%);
+      animation: orbFloatB 22s ease-in-out infinite alternate;
+    }
+
+    .orb-warm {
+      width: 340px;
+      height: 340px;
+      bottom: 8%;
+      right: 6%;
+      background: radial-gradient(circle, rgba(251, 146, 60, 0.18) 0%, transparent 72%);
+      animation: orbFloatC 20s ease-in-out infinite alternate;
+    }
+
+    @keyframes orbFloatA {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(-36px, 32px) scale(1.08); }
+    }
+
+    @keyframes orbFloatB {
+      0% { transform: translate(0, 0) scale(0.96); }
+      100% { transform: translate(40px, -28px) scale(1.06); }
+    }
+
+    @keyframes orbFloatC {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(-28px, -34px) scale(1.07); }
+    }
+
+    button, .dock, .bubble-card, .pill-btn, .circle-btn, .check-circle {
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
+    }
+
+    .glass,
+    .glass-strong {
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(26px) saturate(175%);
+      -webkit-backdrop-filter: blur(26px) saturate(175%);
+      border: 1px solid var(--border-glass);
+      box-shadow: var(--shadow-glass);
+    }
+
+    .glass {
+      background: var(--glass);
+    }
+
+    .glass-strong {
+      background: var(--glass-strong);
+    }
+
+    .glass-orange {
+      border-color: var(--border-orange);
+      box-shadow:
+        0 14px 34px rgba(0, 0, 0, 0.58),
+        0 0 24px rgba(249, 115, 22, 0.12),
+        inset 0 1px 0 rgba(255, 255, 255, 0.16);
+    }
+
+    .glass::before,
+    .glass-strong::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        122deg,
+        rgba(255, 255, 255, 0.16) 0%,
+        rgba(249, 115, 22, 0.06) 35%,
+        transparent 64%,
+        rgba(255, 255, 255, 0.08) 100%
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .glass > *,
+    .glass-strong > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      padding: calc(12px + env(safe-area-inset-top)) 16px 12px;
+      background: rgba(5, 5, 7, 0.72);
+      backdrop-filter: blur(26px) saturate(180%);
+      -webkit-backdrop-filter: blur(26px) saturate(180%);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .topbar-inner {
+      max-width: 680px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .brand-title {
+      margin: 0;
+      font-size: 1.22rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: var(--text-main);
+    }
+
+    .brand-title span {
+      color: var(--orange-bright);
+    }
+
+    .brand-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      flex-shrink: 0;
+    }
+
+    .sync-pill {
+      border-radius: var(--pill);
+      padding: 7px 12px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: var(--text-main);
+      font-weight: 700;
+      font-size: 0.76rem;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: transform 0.2s var(--ease-bubble), border-color 0.2s ease;
+    }
+
+    .sync-pill:active {
+      transform: scale(0.94);
+    }
+
+    .timer-bubble {
+      border-radius: var(--pill);
+      padding: 7px 13px;
+      background: var(--orange-soft);
+      border: 1px solid var(--border-orange);
+      color: var(--orange-bright);
+      font-weight: 800;
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: transform 0.2s var(--ease-bubble), background 0.2s ease;
+    }
+
+    .timer-bubble:active {
+      transform: scale(0.94);
+    }
+
+    .app-shell {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .view {
+      display: none;
+    }
+
+    .view.active {
+      display: block;
+      animation: bubbleEnter 0.46s var(--ease-bubble) both;
+    }
+
+    @keyframes bubbleEnter {
+      0% {
+        opacity: 0;
+        transform: scale(0.95) translateY(12px);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .bubble-box {
+      border-radius: var(--bubble);
+      padding: 16px;
+      margin-bottom: 14px;
+    }
+
+    .section-heading-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .section-heading {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .orange-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--orange);
+      box-shadow: 0 0 10px rgba(249, 115, 22, 0.85);
+    }
+
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .form-row:last-child {
+      margin-bottom: 0;
+    }
+
+    input, select, textarea {
+      font-size: 16px;
+      font-family: inherit;
+    }
+
+    .pill-input,
+    .pill-select {
+      flex: 1 1 135px;
+      min-width: 0;
+      border-radius: var(--pill);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(12, 12, 16, 0.78);
+      padding: 10px 16px;
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .pill-input::placeholder {
+      color: #71717a;
+    }
+
+    .pill-input:focus,
+    .pill-select:focus {
+      border-color: var(--orange-bright);
+      background: rgba(18, 18, 23, 0.95);
+      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2);
+    }
+
+    .pill-btn {
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-main);
+      border-radius: var(--pill);
+      padding: 9px 15px;
+      font-size: 0.83rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: transform 0.22s var(--ease-bubble), background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .pill-btn:active {
+      transform: scale(0.94);
+    }
+
+    .pill-btn.orange {
+      background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+      color: #ffffff;
+      border-color: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 8px 22px rgba(249, 115, 22, 0.34);
+    }
+
+    .pill-btn.soft-orange {
+      background: var(--orange-soft);
+      color: var(--orange-bright);
+      border-color: var(--border-orange);
+    }
+
+    .circle-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: var(--pill);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.07);
+      color: var(--text-main);
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      transition: transform 0.18s var(--ease-bubble), background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .circle-btn:active {
+      transform: scale(0.9);
+    }
+
+    .stack {
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+
+    .routine-bubble {
+      border-radius: var(--bubble);
+      padding: 15px 18px;
+      transition: transform 0.28s var(--ease-bubble), border-color 0.24s ease;
+    }
+
+    .routine-bubble.selected-routine {
+      border-color: var(--border-orange);
+      background: linear-gradient(145deg, rgba(249, 115, 22, 0.14), rgba(24, 24, 28, 0.72));
+    }
+
+    .routine-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .routine-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+
+    .round-badge {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--pill);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      display: grid;
+      place-items: center;
+      font-size: 1.15rem;
+      flex-shrink: 0;
+    }
+
+    .round-badge.orange-ring {
+      border-color: var(--border-orange);
+      background: var(--orange-soft);
+    }
+
+    .routine-name {
+      font-weight: 800;
+      font-size: 1rem;
+      letter-spacing: -0.015em;
+    }
+
+    .routine-meta {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 12px;
+    }
+
+    .bubble-chip {
+      border-radius: var(--pill);
+      padding: 5px 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.11);
+      color: #e4e4e7;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .bubble-chip strong {
+      color: var(--orange-bright);
+    }
+
+    .editor-drawer {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      animation: bubbleEnter 0.34s var(--ease-bubble) both;
+    }
+
+    .ex-row-bubble {
+      border-radius: var(--bubble-sm);
+      padding: 11px 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .routine-selector-strip {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+
+    .routine-selector-strip::-webkit-scrollbar {
+      display: none;
+    }
+
+    .routine-pill-tab {
+      border-radius: var(--pill);
+      padding: 9px 16px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(24, 24, 28, 0.65);
+      color: var(--text-muted);
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: all 0.24s var(--ease-bubble);
+    }
+
+    .routine-pill-tab.active {
+      background: var(--orange-soft);
+      color: var(--orange-bright);
+      border-color: var(--border-orange);
+      box-shadow: 0 0 18px rgba(249, 115, 22, 0.2);
+    }
+
+    .workout-ex-bubble {
+      border-radius: var(--bubble);
+      padding: 16px;
+      transition: border-color 0.25s ease;
+    }
+
+    .workout-ex-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .workout-ex-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .workout-ex-sub {
+      font-size: 0.75rem;
+      color: var(--orange-bright);
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .sets-header-labels {
+      display: grid;
+      grid-template-columns: 36px 1fr 1fr 40px;
+      gap: 8px;
+      padding: 0 6px 6px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      text-align: center;
+    }
+
+    .set-pill-row {
+      display: grid;
+      grid-template-columns: 36px 1fr 1fr 40px;
+      gap: 8px;
+      align-items: center;
+      border-radius: var(--pill);
+      padding: 6px 8px;
+      margin-bottom: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      transition: background 0.22s ease, border-color 0.22s ease, transform 0.22s var(--ease-bubble);
+    }
+
+    .set-pill-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .set-pill-row.done {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.14), rgba(249, 115, 22, 0.08));
+      border-color: var(--ok-border);
+    }
+
+    .set-num-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      display: grid;
+      place-items: center;
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .set-pill-row.done .set-num-circle {
+      background: var(--ok-soft);
+      border-color: var(--ok-border);
+      color: var(--ok-text);
+    }
+
+    .set-circle-input {
+      width: 100%;
+      border-radius: var(--pill);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(8, 8, 11, 0.82);
+      color: var(--text-main);
+      padding: 7px 10px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 16px;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .set-circle-input:focus {
+      border-color: var(--orange-bright);
+      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.22);
+    }
+
+    .check-circle {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.06);
+      color: var(--text-main);
+      font-weight: 900;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: all 0.22s var(--ease-bubble);
+    }
+
+    .set-pill-row.done .check-circle {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      border-color: #86efac;
+      color: #052e16;
+      transform: scale(1.06);
+    }
+
+    .empty-bubble {
+      border-radius: var(--bubble);
+      padding: 24px 18px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.86rem;
+    }
+
+    .dock-wrap {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: calc(14px + env(safe-area-inset-bottom));
+      z-index: 35;
+      padding: 0 18px;
+      pointer-events: none;
+    }
+
+    .dock {
+      pointer-events: auto;
+      max-width: 440px;
+      margin: 0 auto;
+      border-radius: var(--pill);
+      padding: 6px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+      box-shadow: var(--shadow-float);
+    }
+
+    .dock-btn {
+      border: none;
+      background: transparent;
+      border-radius: var(--pill);
+      padding: 9px 10px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      transition: all 0.28s var(--ease-bubble);
+    }
+
+    .dock-slot {
+      width: 22px;
+      height: 22px;
+      display: grid;
+      place-items: center;
+    }
+
+    .dock-icon {
+      width: 17px;
+      height: 17px;
+      stroke: currentColor;
+      stroke-width: 1.9;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      fill: none;
+    }
+
+    .dock-emoji {
+      font-size: 1.08rem;
+      line-height: 1;
+      display: none;
+      animation: popEmoji 0.28s var(--ease-bubble) both;
+    }
+
+    .dock-btn.active {
+      background: linear-gradient(135deg, rgba(249, 115, 22, 0.24), rgba(234, 88, 12, 0.14));
+      color: #ffffff;
+      border: 1px solid var(--border-orange);
+      box-shadow: 0 6px 18px rgba(249, 115, 22, 0.22);
+    }
+
+    .dock-btn.active .dock-icon {
+      display: none;
+    }
+
+    .dock-btn.active .dock-emoji {
+      display: inline-block;
+    }
+
+    @keyframes popEmoji {
+      0% { transform: scale(0.7); }
+      100% { transform: scale(1.08); }
+    }
+
+    .modal-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+    }
+
+    .modal-bg.open {
+      display: flex;
+      animation: bubbleEnter 0.32s var(--ease-bubble) both;
+    }
+
+    .timer-modal-card {
+      width: 100%;
+      max-width: 380px;
+      border-radius: 44px;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .timer-ring-box {
+      width: 152px;
+      height: 152px;
+      border-radius: 50%;
+      margin: 12px auto 16px;
+      border: 3px solid var(--border-orange);
+      background: radial-gradient(circle at 50% 35%, rgba(249, 115, 22, 0.22), rgba(15, 15, 20, 0.9));
+      box-shadow: 0 0 32px rgba(249, 115, 22, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .timer-digits {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+    }
+
+    .timer-sub {
+      font-size: 0.72rem;
+      color: var(--orange-bright);
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    .code-pill {
+      border-radius: var(--pill);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px dashed var(--border-orange);
+      padding: 10px 14px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--orange-bright);
+      margin-bottom: 12px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-layer" aria-hidden="true">
+    <span class="orb orb-orange"></span>
+    <span class="orb orb-white"></span>
+    <span class="orb orb-warm"></span>
+  </div>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div>
+        <h1 class="brand-title">Gym<span>Bubble</span></h1>
+        <div class="brand-sub" id="headerSubtitle">Locale • Pronto</div>
+      </div>
+      <div class="topbar-actions">
+        <button type="button" class="sync-pill" id="openSyncBtn">☁️ <span id="syncCodeLabel">Sync</span></button>
+        <button type="button" class="timer-bubble" id="openTimerBtn">
+          <span>⏱</span>
+          <span id="headerTimerText">90s</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <!-- MACRO SEZIONE 1: SCHEDE -->
+    <section id="view-schede" class="view active">
+      <div class="bubble-box glass glass-orange">
+        <div class="section-heading-row">
+          <div class="section-heading">
+            <span class="orange-dot"></span>
+            <span>Nuova scheda</span>
+          </div>
+        </div>
+        <form id="createRoutineForm">
+          <div class="form-row">
+            <input type="text" id="newRoutineName" class="pill-input" placeholder="Nome scheda (es. Push A, Full Body, Gambe...)" required />
+            <input type="text" id="newRoutineEmoji" class="pill-input" style="max-width: 84px; text-align:center;" placeholder="🔥" maxlength="4" aria-label="Emoji scheda" />
+            <button type="submit" class="pill-btn orange">+ Crea</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="section-heading-row" style="padding: 0 4px;">
+        <div class="section-heading">
+          <span class="orange-dot"></span>
+          <span>Le tue schede</span>
+        </div>
+        <span style="font-size:0.75rem;color:var(--text-muted);" id="routinesCountLabel">0 schede</span>
+      </div>
+
+      <div id="routinesListContainer" class="stack"></div>
+    </section>
+
+    <!-- MACRO SEZIONE 2: ALLENAMENTO LIVE -->
+    <section id="view-allenamento" class="view">
+      <div class="bubble-box glass glass-orange">
+        <div class="section-heading-row">
+          <div class="section-heading">
+            <span class="orange-dot"></span>
+            <span>Scegli scheda</span>
+          </div>
+          <span style="font-size:0.75rem;color:var(--orange-bright);font-weight:700;" id="workoutProgressLabel">0 / 0 serie</span>
+        </div>
+
+        <div class="routine-selector-strip" id="workoutRoutineTabs"></div>
+
+        <div class="form-row" style="margin-top: 12px; align-items:center; justify-content:space-between;">
+          <button type="button" class="pill-btn soft-orange" id="addFreeExerciseBtn">+ Esercizio extra</button>
+          <button type="button" class="pill-btn orange" id="finishWorkoutBtn">✓ Chiudi &amp; salva sessione</button>
+        </div>
+      </div>
+
+      <div id="workoutExercisesContainer" class="stack"></div>
+
+      <div style="margin-top: 18px;">
+        <div class="section-heading-row" style="padding: 0 4px;">
+          <div class="section-heading">
+            <span class="orange-dot"></span>
+            <span>Sessioni completate</span>
+          </div>
+        </div>
+        <div id="workoutHistoryContainer" class="stack"></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- DOCK IN BASSO A 2 MACROSEZIONI -->
+  <nav class="dock-wrap" aria-label="Navigazione principale">
+    <div class="dock glass-strong">
+      <button type="button" class="dock-btn active" data-nav="schede">
+        <span class="dock-slot" aria-hidden="true">
+          <svg class="dock-icon" viewBox="0 0 24 24">
+            <rect x="4" y="4" width="16" height="16" rx="5" />
+            <path d="M8 9h8M8 13h8M8 17h5" />
+          </svg>
+          <span class="dock-emoji">📋</span>
+        </span>
+        <span>Schede</span>
+      </button>
+
+      <button type="button" class="dock-btn" data-nav="allenamento">
+        <span class="dock-slot" aria-hidden="true">
+          <svg class="dock-icon" viewBox="0 0 24 24">
+            <path d="M6.5 9v6M4 10.5v3M17.5 9v6M20 10.5v3M6.5 12h11" />
+          </svg>
+          <span class="dock-emoji">🏋️</span>
+        </span>
+        <span>Allenamento</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- TIMER RECUPERO CIRCOLARE -->
+  <div class="modal-bg" id="timerModal">
+    <div class="timer-modal-card glass-strong glass-orange">
+      <div class="section-heading" style="justify-content:center;">
+        <span class="orange-dot"></span>
+        <span>Timer recupero</span>
+      </div>
+
+      <div class="timer-ring-box">
+        <div class="timer-digits" id="timerDisplay">01:30</div>
+        <div class="timer-sub" id="timerStatusText">Pronto</div>
+      </div>
+
+      <div class="form-row" style="justify-content:center;">
+        <button type="button" class="pill-btn" data-preset-sec="60">60s</button>
+        <button type="button" class="pill-btn" data-preset-sec="90">90s</button>
+        <button type="button" class="pill-btn" data-preset-sec="120">2m</button>
+        <button type="button" class="pill-btn" data-preset-sec="180">3m</button>
+      </div>
+
+      <div class="form-row" style="justify-content:center; margin-top:10px;">
+        <button type="button" class="pill-btn orange" id="toggleTimerBtn">Avvia</button>
+        <button type="button" class="pill-btn" id="resetTimerBtn">Reset</button>
+        <button type="button" class="pill-btn" id="closeTimerModalBtn">Chiudi</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SYNC FIREBASE CLOUD -->
+  <div class="modal-bg" id="syncModal">
+    <div class="timer-modal-card glass-strong glass-orange">
+      <div class="section-heading" style="justify-content:center; margin-bottom:8px;">
+        <span class="orange-dot"></span>
+        <span>Sincronizzazione Firebase</span>
+      </div>
+      <p style="margin:0 0 12px; font-size:0.8rem; color:var(--text-muted); line-height:1.45;">
+        Usa un codice palestra per sincronizzare schede e allenamenti su Firestore tra i tuoi dispositivi.
+      </p>
+
+      <div id="currentSyncCodeBox" class="hidden">
+        <div class="code-pill" id="currentSyncCodeText"></div>
+      </div>
+
+      <div class="form-row" style="justify-content:center;">
+        <button type="button" class="pill-btn orange" id="createGymCodeBtn" style="width:100%;">+ Genera nuovo codice</button>
+      </div>
+
+      <div class="form-row" style="margin-top:8px;">
+        <input type="text" id="joinGymCodeInput" class="pill-input" placeholder="Codice (es. GYM-4821)" style="text-transform:uppercase;" />
+        <button type="button" class="pill-btn soft-orange" id="joinGymCodeBtn">Collega</button>
+      </div>
+
+      <div class="form-row" style="justify-content:center; margin-top:10px;">
+        <button type="button" class="pill-btn" id="closeSyncModalBtn">Chiudi</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-analytics.js";
+    import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js";
+    import {
+      getFirestore,
+      doc,
+      getDoc,
+      setDoc,
+      onSnapshot,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/13.4.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyC3dKtKUA23mlFGYI-aBoYtdJt2gJgLXco",
+      authDomain: "dispensa-spesa.firebaseapp.com",
+      projectId: "dispensa-spesa",
+      storageBucket: "dispensa-spesa.firebasestorage.app",
+      messagingSenderId: "988990942142",
+      appId: "1:988990942142:web:e221814c43282611b4e7ef",
+      measurementId: "G-SPDC4SXVHR"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    try {
+      getAnalytics(app);
+    } catch {
+      // Analytics non disponibile in contesti offline o locali
+    }
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const EXERCISE_CATALOG = [
+      "Panca piana bilanciere",
+      "Panca inclinata manubri",
+      "Chest press / Macchina petto",
+      "Croci ai cavi / Manubri",
+      "Dip alle parallele",
+      "Lat machine avanti",
+      "Trazioni alla sbarra",
+      "Rematore con bilanciere",
+      "Rematore con manubrio",
+      "Pulley basso / Row machine",
+      "Pullover ai cavi / Manubrio",
+      "Lento avanti bilanciere / Military press",
+      "Spinte manubri sopra la testa",
+      "Alzate laterali manubri / Cavi",
+      "Alzate posteriori / Reverse fly",
+      "Curl bilanciere / EZ bicipiti",
+      "Curl manubri a martello",
+      "Curl ai cavi",
+      "French press / Skullcrusher",
+      "Pushdown tricipiti ai cavi",
+      "Estensioni tricipiti sopra la testa",
+      "Squat con bilanciere",
+      "Leg press / Pressa 45°",
+      "Affondi camminati / Bulgari",
+      "Leg extension",
+      "Leg curl sdraiato / Seduto",
+      "Stacco rumeno / RDL",
+      "Hip thrust bilanciere",
+      "Calf raise in piedi / Seduto",
+      "Crunch / Addominali ai cavi",
+      "Plank"
+    ];
+
+    const STORAGE_KEY = "gym_bubble_state_v1";
+    const GYM_CODE_KEY = "gym_bubble_cloud_code";
+
+    const defaultState = {
+      routines: [
+        {
+          id: "r-push",
+          name: "Push A",
+          emoji: "🔥",
+          exercises: [
+            { id: "e-1", name: "Panca piana bilanciere", sets: 4, repsTarget: "6-8", restSec: 120 },
+            { id: "e-2", name: "Panca inclinata manubri", sets: 3, repsTarget: "8-10", restSec: 90 },
+            { id: "e-3", name: "Alzate laterali manubri / Cavi", sets: 4, repsTarget: "12-15", restSec: 60 },
+            { id: "e-4", name: "Pushdown tricipiti ai cavi", sets: 3, repsTarget: "10-12", restSec: 75 }
+          ]
+        },
+        {
+          id: "r-pull",
+          name: "Pull B",
+          emoji: "⚡",
+          exercises: [
+            { id: "e-5", name: "Lat machine avanti", sets: 4, repsTarget: "8-10", restSec: 90 },
+            { id: "e-6", name: "Pulley basso / Row machine", sets: 3, repsTarget: "8-12", restSec: 90 },
+            { id: "e-7", name: "Curl bilanciere / EZ bicipiti", sets: 3, repsTarget: "8-12", restSec: 75 }
+          ]
+        }
+      ],
+      selectedRoutineId: "r-push",
+      editingRoutineId: null,
+      activeWorkout: null,
+      history: []
+    };
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return structuredClone(defaultState);
+        const parsed = JSON.parse(raw);
+        return {
+          routines: Array.isArray(parsed.routines) ? parsed.routines : structuredClone(defaultState.routines),
+          selectedRoutineId: parsed.selectedRoutineId || (parsed.routines?.[0]?.id ?? null),
+          editingRoutineId: parsed.editingRoutineId || null,
+          activeWorkout: parsed.activeWorkout || null,
+          history: Array.isArray(parsed.history) ? parsed.history : []
+        };
+      } catch {
+        return structuredClone(defaultState);
+      }
+    }
+
+    let state = loadState();
+    let gymCode = (localStorage.getItem(GYM_CODE_KEY) || "").trim().toUpperCase();
+    let unsubGymDoc = null;
+    let isApplyingCloudUpdate = false;
+
+    const headerSubtitle = document.getElementById("headerSubtitle");
+    const syncCodeLabel = document.getElementById("syncCodeLabel");
+
+    function updateSyncHeader() {
+      if (gymCode) {
+        syncCodeLabel.textContent = gymCode;
+        headerSubtitle.textContent = `Firebase • ${gymCode}`;
+        document.getElementById("currentSyncCodeBox").classList.remove("hidden");
+        document.getElementById("currentSyncCodeText").textContent = gymCode;
+      } else {
+        syncCodeLabel.textContent = "Sync";
+        headerSubtitle.textContent = "Locale • Pronto";
+        document.getElementById("currentSyncCodeBox").classList.add("hidden");
+      }
+    }
+
+    async function pushStateToCloud() {
+      if (!gymCode || isApplyingCloudUpdate) return;
+      try {
+        await setDoc(
+          doc(db, "gymWorkspaces", gymCode),
+          {
+            routines: state.routines,
+            selectedRoutineId: state.selectedRoutineId,
+            activeWorkout: state.activeWorkout,
+            history: state.history,
+            updatedAt: serverTimestamp()
+          },
+          { merge: true }
+        );
+      } catch (err) {
+        headerSubtitle.textContent = `Locale (${err.code || "sync"})`;
+      }
+    }
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      pushStateToCloud();
+    }
+
+    function bindCloudGym(code) {
+      const clean = (code || "").trim().toUpperCase();
+      if (!clean) return;
+      gymCode = clean;
+      localStorage.setItem(GYM_CODE_KEY, gymCode);
+      updateSyncHeader();
+
+      if (typeof unsubGymDoc === "function") {
+        unsubGymDoc();
+        unsubGymDoc = null;
+      }
+
+      const ref = doc(db, "gymWorkspaces", gymCode);
+      unsubGymDoc = onSnapshot(ref, async (snap) => {
+        if (!snap.exists()) {
+          await setDoc(ref, {
+            routines: state.routines,
+            selectedRoutineId: state.selectedRoutineId,
+            activeWorkout: state.activeWorkout,
+            history: state.history,
+            updatedAt: serverTimestamp()
+          });
+          return;
+        }
+        const data = snap.data() || {};
+        isApplyingCloudUpdate = true;
+        if (Array.isArray(data.routines)) state.routines = data.routines;
+        if (data.selectedRoutineId !== undefined) state.selectedRoutineId = data.selectedRoutineId;
+        if (data.activeWorkout !== undefined) state.activeWorkout = data.activeWorkout;
+        if (Array.isArray(data.history)) state.history = data.history;
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        isApplyingCloudUpdate = false;
+        headerSubtitle.textContent = `Sincronizzato • ${gymCode}`;
+        renderSchede();
+        if (activeNav === "allenamento") renderAllenamento();
+      }, (err) => {
+        headerSubtitle.textContent = `Locale (${err.code || "permessi"})`;
+      });
+    }
+
+    function uid(prefix = "id") {
+      return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}`;
+    }
+
+    function escapeHtml(str) {
+      return String(str ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function buildExerciseSelectHtml(idAttr, filterText = "") {
+      const q = filterText.trim().toLowerCase();
+      const filtered = EXERCISE_CATALOG.filter((ex) => !q || ex.toLowerCase().includes(q));
+      return `
+        <select id="${idAttr}" class="pill-select">
+          <option value="">Catalogo esercizi...</option>
+          ${filtered.map((ex) => `<option value="${escapeHtml(ex)}">${escapeHtml(ex)}</option>`).join("")}
+        </select>
+      `;
+    }
+
+    let activeNav = "schede";
+    document.querySelectorAll(".dock-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        activeNav = btn.dataset.nav;
+        document.querySelectorAll(".dock-btn").forEach((b) => b.classList.toggle("active", b === btn));
+        document.querySelectorAll(".view").forEach((v) => v.classList.remove("active"));
+        const view = document.getElementById(`view-${activeNav}`);
+        void view.offsetWidth;
+        view.classList.add("active");
+        if (activeNav === "allenamento") {
+          ensureWorkoutLoadedForSelectedRoutine();
+          renderAllenamento();
+        }
+      });
+    });
+
+    document.getElementById("createRoutineForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const nameInput = document.getElementById("newRoutineName");
+      const emojiInput = document.getElementById("newRoutineEmoji");
+      const name = nameInput.value.trim();
+      if (!name) return;
+      const emoji = emojiInput.value.trim() || "🔥";
+
+      const newRoutine = {
+        id: uid("r"),
+        name,
+        emoji,
+        exercises: []
+      };
+
+      state.routines.unshift(newRoutine);
+      state.selectedRoutineId = newRoutine.id;
+      state.editingRoutineId = newRoutine.id;
+      nameInput.value = "";
+      emojiInput.value = "";
+      saveState();
+      renderSchede();
+    });
+
+    function startRoutineInWorkout(routineId) {
+      const routine = state.routines.find((r) => r.id === routineId);
+      if (!routine) return;
+      state.selectedRoutineId = routine.id;
+      state.activeWorkout = {
+        routineId: routine.id,
+        routineName: `${routine.emoji || "🔥"} ${routine.name}`,
+        startedAt: new Date().toISOString(),
+        exercises: (routine.exercises || []).map((ex) => ({
+          id: uid("wex"),
+          name: ex.name,
+          repsTarget: ex.repsTarget || "8-12",
+          restSec: ex.restSec || 90,
+          sets: Array.from({ length: Math.max(1, ex.sets || 3) }, (_, idx) => ({
+            num: idx + 1,
+            kg: "",
+            reps: "",
+            done: false
+          }))
+        }))
+      };
+      saveState();
+
+      const allenamentoBtn = document.querySelector('.dock-btn[data-nav="allenamento"]');
+      if (allenamentoBtn) allenamentoBtn.click();
+    }
+
+    function ensureWorkoutLoadedForSelectedRoutine() {
+      const routine = state.routines.find((r) => r.id === state.selectedRoutineId) || state.routines[0];
+      if (!routine) {
+        state.activeWorkout = null;
+        return;
+      }
+      state.selectedRoutineId = routine.id;
+      if (!state.activeWorkout || state.activeWorkout.routineId !== routine.id) {
+        state.activeWorkout = {
+          routineId: routine.id,
+          routineName: `${routine.emoji || "🔥"} ${routine.name}`,
+          startedAt: new Date().toISOString(),
+          exercises: (routine.exercises || []).map((ex) => ({
+            id: uid("wex"),
+            name: ex.name,
+            repsTarget: ex.repsTarget || "8-12",
+            restSec: ex.restSec || 90,
+            sets: Array.from({ length: Math.max(1, ex.sets || 3) }, (_, idx) => ({
+              num: idx + 1,
+              kg: "",
+              reps: "",
+              done: false
+            }))
+          }))
+        };
+        saveState();
+      }
+    }
+
+    function renderSchede() {
+      const container = document.getElementById("routinesListContainer");
+      const countLabel = document.getElementById("routinesCountLabel");
+      countLabel.textContent = `${state.routines.length} ${state.routines.length === 1 ? "scheda" : "schede"}`;
+
+      if (!state.routines.length) {
+        container.innerHTML = `<div class="empty-bubble glass">Nessuna scheda ancora. Crea la tua prima scheda qui sopra!</div>`;
+        return;
+      }
+
+      container.innerHTML = "";
+      state.routines.forEach((routine) => {
+        const isEditing = state.editingRoutineId === routine.id;
+        const isSelected = state.selectedRoutineId === routine.id;
+        const card = document.createElement("div");
+        card.className = `routine-bubble glass ${isSelected ? "selected-routine" : ""}`;
+
+        const exCount = (routine.exercises || []).length;
+        const totalSets = (routine.exercises || []).reduce((acc, ex) => acc + (ex.sets || 0), 0);
+
+        card.innerHTML = `
+          <div class="routine-header">
+            <div class="routine-title-wrap">
+              <span class="round-badge ${isSelected ? "orange-ring" : ""}">${escapeHtml(routine.emoji || "🔥")}</span>
+              <div style="min-width:0;">
+                <div class="routine-name">${escapeHtml(routine.name)}</div>
+                <div class="routine-meta">${exCount} ${exCount === 1 ? "esercizio" : "esercizi"} • ${totalSets} serie</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
+              <button type="button" class="pill-btn orange" data-start-id="${routine.id}">▶ Avvia</button>
+              <button type="button" class="circle-btn" data-edit-id="${routine.id}" title="Modifica esercizi">${isEditing ? "⌄" : "✎"}</button>
+              <button type="button" class="circle-btn" data-del-routine="${routine.id}" title="Elimina scheda">✕</button>
+            </div>
+          </div>
+        `;
+
+        if (exCount > 0) {
+          const chips = document.createElement("div");
+          chips.className = "chip-row";
+          routine.exercises.forEach((ex) => {
+            const chip = document.createElement("span");
+            chip.className = "bubble-chip";
+            chip.innerHTML = `${escapeHtml(ex.name)} <strong>${ex.sets}×${escapeHtml(ex.repsTarget || "10")}</strong>`;
+            chips.appendChild(chip);
+          });
+          card.appendChild(chips);
+        }
+
+        if (isEditing) {
+          const drawer = document.createElement("div");
+          drawer.className = "editor-drawer";
+          drawer.innerHTML = `
+            <div class="form-row">
+              <input type="search" class="pill-input ex-search-input" placeholder="Cerca nel catalogo esercizi..." />
+            </div>
+            <div class="form-row">
+              ${buildExerciseSelectHtml("exPresetSelect")}
+              <input type="text" class="pill-input ex-custom-input" placeholder="Oppure scrivi qualsiasi esercizio..." />
+            </div>
+            <div class="form-row">
+              <input type="number" class="pill-input ex-sets-input" style="max-width:86px;" min="1" max="15" value="3" placeholder="Serie" />
+              <input type="text" class="pill-input ex-reps-input" style="max-width:105px;" value="8-12" placeholder="Rip. (es. 8-12)" />
+              <input type="number" class="pill-input ex-rest-input" style="max-width:94px;" min="15" max="600" step="15" value="90" placeholder="Rec (s)" />
+              <button type="button" class="pill-btn soft-orange ex-add-btn">+ Aggiungi</button>
+            </div>
+            <div class="stack ex-list-box" style="margin-top:10px;"></div>
+          `;
+
+          const searchEl = drawer.querySelector(".ex-search-input");
+          const presetEl = drawer.querySelector("#exPresetSelect");
+          const customEl = drawer.querySelector(".ex-custom-input");
+          const setsEl = drawer.querySelector(".ex-sets-input");
+          const repsEl = drawer.querySelector(".ex-reps-input");
+          const restEl = drawer.querySelector(".ex-rest-input");
+          const addBtn = drawer.querySelector(".ex-add-btn");
+          const listBox = drawer.querySelector(".ex-list-box");
+
+          searchEl.addEventListener("input", () => {
+            const q = searchEl.value.trim().toLowerCase();
+            const matches = EXERCISE_CATALOG.filter((item) => !q || item.toLowerCase().includes(q));
+            presetEl.innerHTML = `<option value="">Catalogo esercizi...</option>` +
+              matches.map((item) => `<option value="${escapeHtml(item)}">${escapeHtml(item)}</option>`).join("");
+            if (q && matches.length === 1) presetEl.value = matches[0];
+          });
+
+          addBtn.addEventListener("click", () => {
+            const exName = customEl.value.trim() || presetEl.value.trim();
+            if (!exName) return;
+            routine.exercises = routine.exercises || [];
+            routine.exercises.push({
+              id: uid("ex"),
+              name: exName,
+              sets: Math.max(1, parseInt(setsEl.value, 10) || 3),
+              repsTarget: repsEl.value.trim() || "8-12",
+              restSec: Math.max(15, parseInt(restEl.value, 10) || 90)
+            });
+            customEl.value = "";
+            presetEl.value = "";
+            searchEl.value = "";
+            saveState();
+            renderSchede();
+          });
+
+          (routine.exercises || []).forEach((ex, idx) => {
+            const row = document.createElement("div");
+            row.className = "ex-row-bubble";
+            row.innerHTML = `
+              <div>
+                <div style="font-weight:700;font-size:0.88rem;">${escapeHtml(ex.name)}</div>
+                <div style="font-size:0.74rem;color:var(--text-muted);">${ex.sets} serie • target ${escapeHtml(ex.repsTarget || "10")} • rec ${ex.restSec || 90}s</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:5px;">
+                <button type="button" class="circle-btn ex-minus">−</button>
+                <span style="font-weight:800;font-size:0.82rem;min-width:16px;text-align:center;">${ex.sets}</span>
+                <button type="button" class="circle-btn ex-plus">+</button>
+                <button type="button" class="circle-btn ex-remove">✕</button>
+              </div>
+            `;
+            row.querySelector(".ex-minus").onclick = () => {
+              if (ex.sets > 1) {
+                ex.sets -= 1;
+              } else {
+                routine.exercises.splice(idx, 1);
+              }
+              saveState();
+              renderSchede();
+            };
+            row.querySelector(".ex-plus").onclick = () => {
+              ex.sets = (ex.sets || 1) + 1;
+              saveState();
+              renderSchede();
+            };
+            row.querySelector(".ex-remove").onclick = () => {
+              routine.exercises.splice(idx, 1);
+              saveState();
+              renderSchede();
+            };
+            listBox.appendChild(row);
+          });
+
+          card.appendChild(drawer);
+        }
+
+        card.querySelector("[data-start-id]").onclick = () => startRoutineInWorkout(routine.id);
+        card.querySelector("[data-edit-id]").onclick = () => {
+          state.selectedRoutineId = routine.id;
+          state.editingRoutineId = state.editingRoutineId === routine.id ? null : routine.id;
+          saveState();
+          renderSchede();
+        };
+        card.querySelector("[data-del-routine]").onclick = () => {
+          state.routines = state.routines.filter((r) => r.id !== routine.id);
+          if (state.selectedRoutineId === routine.id) {
+            state.selectedRoutineId = state.routines[0]?.id || null;
+            state.activeWorkout = null;
+          }
+          if (state.editingRoutineId === routine.id) state.editingRoutineId = null;
+          saveState();
+          renderSchede();
+          renderAllenamento();
+        };
+
+        container.appendChild(card);
+      });
+    }
+
+    function renderAllenamento() {
+      const tabsEl = document.getElementById("workoutRoutineTabs");
+      const listEl = document.getElementById("workoutExercisesContainer");
+      const progressEl = document.getElementById("workoutProgressLabel");
+
+      tabsEl.innerHTML = "";
+      state.routines.forEach((r) => {
+        const tab = document.createElement("button");
+        tab.type = "button";
+        tab.className = `routine-pill-tab ${r.id === state.selectedRoutineId ? "active" : ""}`;
+        tab.textContent = `${r.emoji || "🔥"} ${r.name}`;
+        tab.onclick = () => {
+          state.selectedRoutineId = r.id;
+          state.activeWorkout = null;
+          ensureWorkoutLoadedForSelectedRoutine();
+          saveState();
+          renderSchede();
+          renderAllenamento();
+        };
+        tabsEl.appendChild(tab);
+      });
+
+      const workout = state.activeWorkout;
+      if (!workout) {
+        progressEl.textContent = "0 / 0 serie";
+        listEl.innerHTML = `<div class="empty-bubble glass">Crea una scheda nella sezione <strong>Schede</strong> per iniziare ad allenarti.</div>`;
+        renderHistory();
+        return;
+      }
+
+      let totalSets = 0;
+      let doneSets = 0;
+      workout.exercises.forEach((ex) => {
+        totalSets += ex.sets.length;
+        doneSets += ex.sets.filter((s) => s.done).length;
+      });
+      progressEl.textContent = `${doneSets} / ${totalSets} serie`;
+
+      if (!workout.exercises.length) {
+        listEl.innerHTML = `<div class="empty-bubble glass">Questa scheda non ha ancora esercizi. Premi <strong>+ Esercizio extra</strong> qui sopra per aggiungerne uno al volo!</div>`;
+        renderHistory();
+        return;
+      }
+
+      listEl.innerHTML = "";
+      workout.exercises.forEach((ex) => {
+        const card = document.createElement("div");
+        card.className = "workout-ex-bubble glass";
+
+        card.innerHTML = `
+          <div class="workout-ex-top">
+            <div>
+              <div class="workout-ex-title">${escapeHtml(ex.name)}</div>
+              <div class="workout-ex-sub">Target ${escapeHtml(ex.repsTarget || "8-12")} • Recupero ${ex.restSec || 90}s</div>
+            </div>
+            <button type="button" class="pill-btn soft-orange add-set-btn">+ Serie</button>
+          </div>
+          <div class="sets-header-labels">
+            <span>Set</span>
+            <span>Kg</span>
+            <span>Rip</span>
+            <span>✓</span>
+          </div>
+          <div class="sets-stack"></div>
+        `;
+
+        card.querySelector(".add-set-btn").onclick = () => {
+          ex.sets.push({
+            num: ex.sets.length + 1,
+            kg: ex.sets[ex.sets.length - 1]?.kg || "",
+            reps: ex.sets[ex.sets.length - 1]?.reps || "",
+            done: false
+          });
+          saveState();
+          renderAllenamento();
+        };
+
+        const setsStack = card.querySelector(".sets-stack");
+        ex.sets.forEach((s, setIdx) => {
+          const row = document.createElement("div");
+          row.className = `set-pill-row ${s.done ? "done" : ""}`;
+
+          row.innerHTML = `
+            <span class="set-num-circle">${setIdx + 1}</span>
+            <input type="number" step="0.5" min="0" class="set-circle-input kg-in" placeholder="kg" value="${escapeHtml(s.kg)}" />
+            <input type="number" min="0" class="set-circle-input reps-in" placeholder="rip" value="${escapeHtml(s.reps)}" />
+            <button type="button" class="check-circle">${s.done ? "✓" : ""}</button>
+          `;
+
+          row.querySelector(".kg-in").addEventListener("change", (ev) => {
+            s.kg = ev.target.value;
+            saveState();
+          });
+          row.querySelector(".reps-in").addEventListener("change", (ev) => {
+            s.reps = ev.target.value;
+            saveState();
+          });
+          row.querySelector(".check-circle").addEventListener("click", () => {
+            s.done = !s.done;
+            saveState();
+            renderAllenamento();
+            if (s.done) {
+              setTimerSeconds(ex.restSec || 90, true);
+            }
+          });
+
+          setsStack.appendChild(row);
+        });
+
+        listEl.appendChild(card);
+      });
+
+      renderHistory();
+    }
+
+    document.getElementById("addFreeExerciseBtn").addEventListener("click", () => {
+      ensureWorkoutLoadedForSelectedRoutine();
+      if (!state.activeWorkout) return;
+      const custom = prompt("Nome esercizio extra (es. Alzate laterali, Curl manubri):");
+      if (!custom || !custom.trim()) return;
+      state.activeWorkout.exercises.push({
+        id: uid("wex"),
+        name: custom.trim(),
+        repsTarget: "8-12",
+        restSec: 90,
+        sets: [
+          { num: 1, kg: "", reps: "", done: false },
+          { num: 2, kg: "", reps: "", done: false },
+          { num: 3, kg: "", reps: "", done: false }
+        ]
+      });
+      saveState();
+      renderAllenamento();
+    });
+
+    document.getElementById("finishWorkoutBtn").addEventListener("click", () => {
+      if (!state.activeWorkout) return;
+      const doneSetsCount = state.activeWorkout.exercises.reduce(
+        (acc, ex) => acc + ex.sets.filter((s) => s.done).length,
+        0
+      );
+      const totalVolumeKg = state.activeWorkout.exercises.reduce((acc, ex) => {
+        return acc + ex.sets.reduce((sAcc, s) => {
+          if (!s.done) return sAcc;
+          const w = parseFloat(s.kg) || 0;
+          const r = parseInt(s.reps, 10) || 0;
+          return sAcc + w * r;
+        }, 0);
+      }, 0);
+
+      const now = new Date();
+      state.history.unshift({
+        id: uid("hist"),
+        routineName: state.activeWorkout.routineName,
+        dateStr: now.toLocaleDateString("it-IT", { day: "2-digit", month: "2-digit", year: "numeric" }),
+        doneSets: doneSetsCount,
+        volumeKg: Math.round(totalVolumeKg)
+      });
+
+      state.activeWorkout = null;
+      ensureWorkoutLoadedForSelectedRoutine();
+      saveState();
+      renderAllenamento();
+    });
+
+    function renderHistory() {
+      const histContainer = document.getElementById("workoutHistoryContainer");
+      if (!state.history.length) {
+        histContainer.innerHTML = `<div class="empty-bubble glass">Nessuna sessione salvata ancora.</div>`;
+        return;
+      }
+
+      histContainer.innerHTML = "";
+      state.history.slice(0, 6).forEach((item) => {
+        const bubble = document.createElement("div");
+        bubble.className = "routine-bubble glass";
+        bubble.innerHTML = `
+          <div class="routine-header">
+            <div>
+              <div class="routine-name">${escapeHtml(item.routineName)}</div>
+              <div class="routine-meta">${escapeHtml(item.dateStr)} • ${item.doneSets} serie completate</div>
+            </div>
+            <span class="bubble-chip"><strong>${item.volumeKg.toLocaleString("it-IT")} kg</strong> volume</span>
+          </div>
+        `;
+        histContainer.appendChild(bubble);
+      });
+    }
+
+    // TIMER DI RECUPERO
+    const timerModal = document.getElementById("timerModal");
+    const timerDisplay = document.getElementById("timerDisplay");
+    const timerStatusText = document.getElementById("timerStatusText");
+    const headerTimerText = document.getElementById("headerTimerText");
+    const toggleTimerBtn = document.getElementById("toggleTimerBtn");
+
+    let timerDefaultSec = 90;
+    let remainingSec = 90;
+    let timerInterval = null;
+
+    function formatMMSS(sec) {
+      const s = Math.max(0, sec);
+      const m = Math.floor(s / 60);
+      const r = s % 60;
+      return `${String(m).padStart(2, "0")}:${String(r).padStart(2, "0")}`;
+    }
+
+    function updateTimerUI() {
+      timerDisplay.textContent = formatMMSS(remainingSec);
+      headerTimerText.textContent = timerInterval ? formatMMSS(remainingSec) : `${timerDefaultSec}s`;
+      timerStatusText.textContent = timerInterval ? "In recupero..." : (remainingSec === 0 ? "Finito!" : "Pronto");
+      toggleTimerBtn.textContent = timerInterval ? "Pausa" : "Avvia";
+    }
+
+    function stopTimer() {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+      updateTimerUI();
+    }
+
+    function startTimer() {
+      if (remainingSec <= 0) remainingSec = timerDefaultSec;
+      stopTimer();
+      timerInterval = setInterval(() => {
+        remainingSec -= 1;
+        if (remainingSec <= 0) {
+          remainingSec = 0;
+          stopTimer();
+        } else {
+          updateTimerUI();
+        }
+      }, 1000);
+      updateTimerUI();
+    }
+
+    function setTimerSeconds(sec, autoStart = false) {
+      timerDefaultSec = sec;
+      remainingSec = sec;
+      stopTimer();
+      if (autoStart) startTimer();
+      else updateTimerUI();
+    }
+
+    document.getElementById("openTimerBtn").addEventListener("click", () => {
+      updateTimerUI();
+      timerModal.classList.add("open");
+    });
+
+    document.getElementById("closeTimerModalBtn").addEventListener("click", () => {
+      timerModal.classList.remove("open");
+    });
+
+    document.querySelectorAll("[data-preset-sec]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        setTimerSeconds(parseInt(btn.dataset.presetSec, 10) || 90, false);
+      });
+    });
+
+    toggleTimerBtn.addEventListener("click", () => {
+      if (timerInterval) stopTimer();
+      else startTimer();
+    });
+
+    document.getElementById("resetTimerBtn").addEventListener("click", () => {
+      setTimerSeconds(timerDefaultSec, false);
+    });
+
+    // MODALE SYNC FIREBASE
+    const syncModal = document.getElementById("syncModal");
+    document.getElementById("openSyncBtn").addEventListener("click", () => {
+      updateSyncHeader();
+      syncModal.classList.add("open");
+    });
+    document.getElementById("closeSyncModalBtn").addEventListener("click", () => {
+      syncModal.classList.remove("open");
+    });
+    document.getElementById("createGymCodeBtn").addEventListener("click", () => {
+      const code = `GYM-${Math.floor(1000 + Math.random() * 9000)}`;
+      bindCloudGym(code);
+      syncModal.classList.remove("open");
+    });
+    document.getElementById("joinGymCodeBtn").addEventListener("click", () => {
+      const input = document.getElementById("joinGymCodeInput");
+      const val = input.value.trim();
+      if (!val) return;
+      input.value = "";
+      bindCloudGym(val);
+      syncModal.classList.remove("open");
+    });
+
+    updateSyncHeader();
+    updateTimerUI();
+    renderSchede();
+
+    if (gymCode) {
+      bindCloudGym(gymCode);
+    }
+
+    signInAnonymously(auth).catch(() => {
+      if (!gymCode) headerSubtitle.textContent = "Locale • Pronto";
+    });
+
+    onAuthStateChanged(auth, (user) => {
+      if (user && gymCode) {
+        bindCloudGym(gymCode);
+      }
+    });
+  </script>
+</body>
+</html>
