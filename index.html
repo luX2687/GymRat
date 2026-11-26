@@ -14,15 +14,22 @@
   <style>
     :root {
       --bg-black: #050505;
-      --bg-surface: rgba(18, 18, 21, 0.9);
-      --bg-surface-dim: rgba(11, 11, 13, 0.58);
+      --bg-surface: rgba(18, 18, 22, 0.94);
+      --bg-surface-dim: rgba(12, 12, 15, 0.68);
+      --bg-elevated: rgba(26, 26, 32, 0.92);
       --glass-grey: rgba(145, 148, 158, 0.16);
       --border-dim: rgba(255, 255, 255, 0.08);
-      --border-lit: rgba(255, 178, 102, 0.56);
+      --border-subtle: rgba(255, 255, 255, 0.14);
+      --border-lit: rgba(255, 178, 102, 0.58);
       --glow-amber: rgba(255, 168, 76, 0.24);
+      --accent-amber: #ffb266;
+      --accent-amber-soft: #ffe0be;
+      --danger-bg: rgba(239, 68, 68, 0.22);
+      --danger-border: rgba(248, 113, 113, 0.65);
+      --danger-text: #fca5a5;
       --text-main: #f6f6f8;
       --text-muted: #8c8f99;
-      --ok-bg: rgba(34, 197, 94, 0.2);
+      --ok-bg: rgba(34, 197, 94, 0.18);
       --ok-border: rgba(74, 222, 128, 0.52);
       --ease-glide: cubic-bezier(0.22, 0.72, 0.2, 1);
     }
@@ -43,15 +50,22 @@
 
     body {
       font-family: "Plus Jakarta Sans", "Trebuchet MS", sans-serif;
-      background: var(--bg-black);
+      background:
+        radial-gradient(circle at 50% -10%, rgba(255, 178, 102, 0.09), transparent 48%),
+        var(--bg-black);
       color: var(--text-main);
-      padding-bottom: calc(124px + env(safe-area-inset-bottom));
+      padding-bottom: calc(128px + env(safe-area-inset-bottom));
       position: relative;
+      font-variant-numeric: tabular-nums;
     }
 
     h1, h2, h3, .brand-font {
       font-family: "Fredoka", "Trebuchet MS", sans-serif;
       letter-spacing: -0.01em;
+    }
+
+    .tabular {
+      font-variant-numeric: tabular-nums;
     }
 
     button, .dock, .section-card, .circle-btn, .check-box, .set-badge, .set-row {
@@ -64,12 +78,13 @@
       background: var(--bg-surface-dim);
       border: 1px solid var(--border-dim);
       border-radius: 18px;
-      opacity: 0.72;
+      opacity: 0.78;
       transition:
         opacity 0.26s var(--ease-glide),
         border-color 0.26s var(--ease-glide),
         box-shadow 0.26s var(--ease-glide),
-        background 0.26s var(--ease-glide);
+        background 0.26s var(--ease-glide),
+        transform 0.26s var(--ease-glide);
     }
 
     .section-card:hover,
@@ -79,16 +94,16 @@
       background: var(--bg-surface);
       border-color: var(--border-lit);
       box-shadow:
-        0 10px 30px rgba(0, 0, 0, 0.7),
+        0 12px 32px rgba(0, 0, 0, 0.72),
         0 0 24px var(--glow-amber),
-        inset 0 1px 0 rgba(255, 212, 160, 0.22);
+        inset 0 1px 0 rgba(255, 224, 190, 0.18);
     }
 
     .circle-btn {
       width: 38px;
       height: 38px;
       border-radius: 50%;
-      border: 1px solid rgba(255, 255, 255, 0.16);
+      border: 1px solid var(--border-subtle);
       background: var(--glass-grey);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
@@ -100,7 +115,7 @@
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      transition: transform 0.18s var(--ease-glide), border-color 0.2s ease, box-shadow 0.2s ease;
+      transition: transform 0.18s var(--ease-glide), border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
     }
 
     .circle-btn:hover,
@@ -120,14 +135,14 @@
     }
 
     .circle-btn.solid {
-      background: rgba(246, 246, 248, 0.94);
+      background: rgba(246, 246, 248, 0.95);
       color: #050505;
       border-color: #ffffff;
     }
 
     .pill-btn {
       border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.16);
+      border: 1px solid var(--border-subtle);
       background: var(--glass-grey);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
@@ -141,7 +156,8 @@
       align-items: center;
       justify-content: center;
       gap: 5px;
-      transition: transform 0.18s var(--ease-glide), border-color 0.2s ease, box-shadow 0.2s ease;
+      font-variant-numeric: tabular-nums;
+      transition: transform 0.18s var(--ease-glide), border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
     }
 
     .pill-btn:hover {
@@ -154,7 +170,7 @@
     }
 
     .pill-btn.solid {
-      background: rgba(246, 246, 248, 0.94);
+      background: rgba(246, 246, 248, 0.95);
       color: #050505;
       border-color: #ffffff;
       font-weight: 800;
@@ -165,10 +181,10 @@
       top: 0;
       z-index: 30;
       padding: calc(10px + env(safe-area-inset-top)) 14px 10px;
-      background: rgba(5, 5, 5, 0.9);
+      background: rgba(5, 5, 5, 0.88);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 1px solid var(--border-dim);
     }
 
     .topbar-inner {
@@ -186,13 +202,13 @@
       gap: 8px;
       padding: 7px 14px;
       border-radius: 999px;
-      background: rgba(255, 178, 102, 0.15);
+      background: rgba(255, 178, 102, 0.16);
       border: 1px solid var(--border-lit);
       box-shadow: 0 0 18px var(--glow-amber);
       font-family: "Fredoka", "Trebuchet MS", sans-serif;
       font-size: 1.06rem;
       font-weight: 700;
-      color: #ffe0be;
+      color: var(--accent-amber-soft);
       max-width: calc(100% - 54px);
       overflow: hidden;
       text-overflow: ellipsis;
@@ -216,13 +232,14 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      color: #ffb266;
+      color: var(--accent-amber);
     }
 
     .brand-sub {
       font-size: 0.68rem;
       color: var(--text-muted);
       margin-top: 1px;
+      letter-spacing: 0.01em;
     }
 
     .bust-icon {
@@ -296,7 +313,7 @@
     }
 
     .pad {
-      padding: 13px;
+      padding: 14px;
     }
 
     .head-row {
@@ -307,14 +324,16 @@
     }
 
     .sec-title {
-      font-size: 0.9rem;
-      font-weight: 700;
+      font-size: 0.92rem;
+      font-weight: 800;
       color: var(--text-main);
+      letter-spacing: -0.01em;
     }
 
     .muted-xs {
-      font-size: 0.7rem;
+      font-size: 0.69rem;
       color: var(--text-muted);
+      letter-spacing: 0.01em;
     }
 
     input, select, textarea {
@@ -326,17 +345,19 @@
     .clean-select {
       flex: 1 1 110px;
       min-width: 0;
-      border-radius: 11px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      background: rgba(9, 9, 11, 0.92);
-      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid var(--border-dim);
+      background: rgba(9, 9, 12, 0.94);
+      padding: 8px 11px;
       color: var(--text-main);
       outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
     }
 
     .clean-input:focus,
     .clean-select:focus {
       border-color: var(--border-lit);
+      box-shadow: 0 0 0 3px rgba(255, 178, 102, 0.12);
     }
 
     .row-gap {
@@ -348,16 +369,16 @@
     /* ANATOMIA DETTAGLIATA (FRONTE + RETRO) */
     .anatomy-panel {
       margin-top: 10px;
-      padding: 8px 10px;
+      padding: 10px;
       border-radius: 14px;
-      background: rgba(8, 8, 10, 0.82);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: linear-gradient(180deg, rgba(11, 11, 15, 0.92), rgba(7, 7, 9, 0.92));
+      border: 1px solid var(--border-dim);
     }
 
     .anatomy-svg {
       width: 100%;
-      max-width: 248px;
-      height: 158px;
+      max-width: 256px;
+      height: 162px;
       display: block;
       margin: 0 auto;
     }
@@ -372,7 +393,7 @@
 
     .anat-striation {
       fill: none;
-      stroke: rgba(255, 255, 255, 0.14);
+      stroke: rgba(255, 255, 255, 0.15);
       stroke-width: 0.75;
       stroke-linecap: round;
     }
@@ -386,7 +407,7 @@
 
     .anat-muscle.active-m {
       fill: rgba(255, 178, 102, 0.88);
-      stroke: #ffe3c4;
+      stroke: #ffe6ca;
       stroke-width: 1.3;
     }
 
@@ -395,11 +416,52 @@
       width: 44px;
       height: 44px;
       border-radius: 12px;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      padding: 4px;
+      background: linear-gradient(145deg, rgba(255, 178, 102, 0.08), rgba(255, 255, 255, 0.025));
+      border: 1px solid var(--border-subtle);
+      padding: 5px;
       flex-shrink: 0;
       color: #ffd5a6;
+    }
+
+    /* GRAFICO PULITO VOLUME & CARICHI */
+    .chart-box {
+      margin-top: 8px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(9, 9, 12, 0.88);
+      border: 1px solid var(--border-dim);
+    }
+
+    .chart-svg {
+      width: 100%;
+      height: 92px;
+      display: block;
+    }
+
+    .chart-bar {
+      fill: rgba(255, 178, 102, 0.35);
+      stroke: rgba(255, 178, 102, 0.85);
+      stroke-width: 1.1;
+      rx: 4;
+      transition: fill 0.2s ease;
+    }
+
+    .chart-bar.peak {
+      fill: rgba(255, 178, 102, 0.82);
+    }
+
+    .chart-line {
+      fill: none;
+      stroke: #ffd5a6;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .chart-grid {
+      stroke: rgba(255, 255, 255, 0.07);
+      stroke-width: 0.8;
+      stroke-dasharray: 2 3;
     }
 
     .live-metrics-strip {
@@ -407,27 +469,28 @@
       align-items: center;
       justify-content: space-between;
       gap: 10px;
-      padding-top: 8px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 9px;
+      border-top: 1px solid var(--border-dim);
     }
 
     .metric-pair {
       display: flex;
       align-items: baseline;
-      gap: 14px;
+      gap: 16px;
     }
 
     .metric-val {
-      font-size: 0.95rem;
+      font-size: 0.98rem;
       font-weight: 800;
       color: var(--text-main);
+      font-variant-numeric: tabular-nums;
     }
 
     .ex-row {
       padding: 8px 10px;
-      border-radius: 11px;
+      border-radius: 12px;
       background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-dim);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -451,34 +514,37 @@
       padding: 6px 12px;
       font-size: 0.74rem;
       font-weight: 700;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-dim);
+      background: rgba(255, 255, 255, 0.035);
       color: var(--text-muted);
       cursor: pointer;
       white-space: nowrap;
       flex-shrink: 0;
+      transition: all 0.2s var(--ease-glide);
     }
 
     .tab-pill.active {
-      background: rgba(255, 178, 102, 0.22);
+      background: rgba(255, 178, 102, 0.2);
       color: #ffd5a6;
       border-color: var(--border-lit);
+      box-shadow: 0 0 14px rgba(255, 168, 76, 0.14);
     }
 
     .equip-chip {
       border-radius: 999px;
-      padding: 4px 9px;
+      padding: 4px 10px;
       font-size: 0.68rem;
       font-weight: 700;
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      background: rgba(255, 255, 255, 0.035);
       color: var(--text-muted);
       cursor: pointer;
+      transition: all 0.18s var(--ease-glide);
     }
 
     .equip-chip.active {
       background: rgba(255, 178, 102, 0.22);
-      color: #ffe0be;
+      color: var(--accent-amber-soft);
       border-color: var(--border-lit);
     }
 
@@ -487,46 +553,69 @@
       grid-template-columns: 36px 1.1fr 1fr 1fr 34px;
       gap: 6px;
       padding: 0 2px 5px;
-      font-size: 0.65rem;
+      font-size: 0.64rem;
       font-weight: 700;
       color: var(--text-muted);
       text-transform: uppercase;
+      letter-spacing: 0.04em;
       text-align: center;
     }
 
+    .set-swipe-wrap {
+      position: relative;
+      border-radius: 11px;
+      margin-bottom: 6px;
+      overflow: hidden;
+      background: linear-gradient(90deg, transparent 35%, var(--danger-bg) 100%);
+    }
+
+    .set-swipe-wrap:last-child {
+      margin-bottom: 0;
+    }
+
+    .set-swipe-hint {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--danger-text);
+      pointer-events: none;
+    }
+
     .set-row {
+      position: relative;
+      z-index: 1;
       display: grid;
       grid-template-columns: 36px 1.1fr 1fr 1fr 34px;
       gap: 6px;
       align-items: center;
       padding: 5px 6px;
-      margin-bottom: 6px;
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 11px;
+      background: rgba(16, 16, 20, 0.96);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       touch-action: pan-y;
-      transition: transform 0.2s var(--ease-glide), opacity 0.2s ease, background 0.2s ease;
-    }
-
-    .set-row:last-child {
-      margin-bottom: 0;
+      transition: transform 0.2s var(--ease-glide), opacity 0.2s ease, background 0.2s ease, border-color 0.2s ease;
     }
 
     .set-row.done {
-      background: var(--ok-bg);
+      background: linear-gradient(90deg, rgba(22, 46, 31, 0.94), rgba(34, 197, 94, 0.22));
       border-color: var(--ok-border);
     }
 
     .set-row.swipe-armed {
-      background: rgba(239, 68, 68, 0.24);
-      border-color: rgba(248, 113, 113, 0.6);
+      background: rgba(58, 16, 20, 0.96);
+      border-color: var(--danger-border);
     }
 
     .set-badge {
       width: 30px;
       height: 28px;
       border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.16);
+      border: 1px solid var(--border-subtle);
       background: var(--glass-grey);
       color: var(--text-main);
       font-weight: 800;
@@ -534,6 +623,7 @@
       cursor: pointer;
       display: grid;
       place-items: center;
+      font-variant-numeric: tabular-nums;
     }
 
     .set-badge.type-w { color: #fcd34d; border-color: rgba(252, 211, 77, 0.45); }
@@ -548,50 +638,64 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      font-variant-numeric: tabular-nums;
     }
 
     .set-in {
       width: 100%;
       border-radius: 9px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      background: rgba(8, 8, 10, 0.92);
+      border: 1px solid var(--border-dim);
+      background: rgba(8, 8, 11, 0.94);
       color: var(--text-main);
       padding: 6px 6px;
       text-align: center;
       font-weight: 700;
       font-size: 16px;
+      font-variant-numeric: tabular-nums;
       outline: none;
+      transition: border-color 0.18s ease;
+    }
+
+    .set-in:focus {
+      border-color: var(--border-lit);
     }
 
     .check-box {
       width: 30px;
       height: 30px;
-      border-radius: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 9px;
+      border: 1px solid var(--border-subtle);
       background: var(--glass-grey);
       color: var(--text-main);
       font-weight: 900;
       cursor: pointer;
       display: grid;
       place-items: center;
+      transition: transform 0.16s var(--ease-glide), background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .check-box:active {
+      transform: scale(0.9);
     }
 
     .set-row.done .check-box {
       background: #4ade80;
       border-color: #bbf7d0;
       color: #052e16;
+      box-shadow: 0 0 12px rgba(74, 222, 128, 0.35);
     }
 
     .note-box {
       margin-top: 8px;
       padding: 10px 12px;
-      border-radius: 11px;
+      border-radius: 12px;
       background: rgba(255, 255, 255, 0.035);
-      border: 1px solid rgba(255, 255, 255, 0.09);
+      border: 1px solid var(--border-dim);
       font-size: 0.78rem;
-      line-height: 1.44;
+      line-height: 1.46;
       color: var(--text-main);
       white-space: pre-line;
+      font-variant-numeric: tabular-nums;
     }
 
     .kpi-grid {
@@ -602,9 +706,9 @@
 
     .kpi-cell {
       padding: 10px;
-      border-radius: 11px;
+      border-radius: 12px;
       background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-dim);
       text-align: center;
     }
 
@@ -612,6 +716,7 @@
       font-size: 1rem;
       font-weight: 800;
       color: var(--text-main);
+      font-variant-numeric: tabular-nums;
     }
 
     .day-line {
@@ -622,11 +727,11 @@
       padding: 6px 8px;
       border-radius: 11px;
       background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-dim);
     }
 
     .empty-box {
-      padding: 20px 14px;
+      padding: 22px 14px;
       text-align: center;
       color: var(--text-muted);
       font-size: 0.82rem;
@@ -654,15 +759,19 @@
       margin: 0 auto;
       border-radius: 16px;
       padding: 9px 12px;
-      background: rgba(18, 18, 21, 0.95);
+      background: rgba(18, 18, 22, 0.96);
       border: 1px solid var(--border-lit);
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.8), 0 0 22px var(--glow-amber);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.82), 0 0 22px var(--glow-amber);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 8px;
+    }
+
+    #restTimerDigits {
+      font-variant-numeric: tabular-nums;
     }
 
     .dock-wrap {
@@ -684,9 +793,9 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 4px;
-      background: rgba(18, 18, 21, 0.92);
-      border: 1px solid rgba(255, 255, 255, 0.14);
-      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.82);
+      background: rgba(18, 18, 22, 0.94);
+      border: 1px solid var(--border-subtle);
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.84);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
     }
@@ -720,7 +829,7 @@
       width: 12px;
       height: 5px;
       border-radius: 999px;
-      background: #ffb266;
+      background: var(--accent-amber);
       box-shadow: 0 0 10px rgba(255, 178, 102, 0.85);
       margin-top: 1px;
     }
@@ -843,6 +952,7 @@
             <button type="button" class="pill-btn" id="refreshReadinessBtn">Calcola</button>
           </div>
           <div class="note-box" id="ptReadinessBox"></div>
+          <div class="chart-box" id="ptVolumeChartBox"></div>
         </div>
 
         <div class="section-card pad">
@@ -936,6 +1046,7 @@
               <div class="muted-xs">Volume</div>
             </div>
           </div>
+          <div class="chart-box" id="profileVolumeChartBox"></div>
         </div>
 
         <div class="section-card pad">
@@ -1066,21 +1177,20 @@
       return "petto";
     }
 
-    // ILLUSTRAZIONE DEDICATA PER OGNI ESERCIZIO
     function renderExerciseIllustrationSvg(exName) {
       const m = detectMuscle(exName);
       const n = (exName || "").toLowerCase();
 
       if (m === "petto") {
         if (n.includes("croci") || n.includes("butterfly") || n.includes("pec")) {
-          return `<svg class="ex-thumb-svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          return `<svg class="ex-thumb-svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round">
             <circle cx="24" cy="11" r="4"/>
             <path d="M16 20h16l-2 15H18l-2-15z"/>
             <path d="M16 21L6 16M32 21l10-5"/>
             <path d="M11 25c4 3 9 4 13 4s9-1 13-4" stroke-dasharray="2 2"/>
           </svg>`;
         }
-        return `<svg class="ex-thumb-svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+        return `<svg class="ex-thumb-svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round">
           <circle cx="24" cy="11" r="4"/>
           <path d="M15 21h18l-2 14H17l-2-14z"/>
           <path d="M15 22l-6 9M33 22l6 9"/>
@@ -1089,7 +1199,7 @@
       }
 
       if (m === "schiena") {
-        return `<svg class="ex-thumb-svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+        return `<svg class="ex-thumb-svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round">
           <circle cx="24" cy="10" r="4"/>
           <path d="M16 19h16l-3 15H19l-3-15z"/>
           <path d="M16 20l-6 11M32 20l6 11"/>
@@ -1098,7 +1208,7 @@
       }
 
       if (m === "spalle") {
-        return `<svg class="ex-thumb-svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+        return `<svg class="ex-thumb-svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round">
           <circle cx="24" cy="14" r="4"/>
           <path d="M17 22h14v14H17z"/>
           <path d="M17 23L7 12M31 23l10-11"/>
@@ -1108,7 +1218,7 @@
       }
 
       if (m === "braccia") {
-        return `<svg class="ex-thumb-svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+        return `<svg class="ex-thumb-svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round">
           <circle cx="20" cy="11" r="4"/>
           <path d="M16 20h10v16H16z"/>
           <path d="M26 22l11 3-4 10"/>
@@ -1118,49 +1228,43 @@
 
       if (m === "gambe") {
         if (n.includes("curl") || n.includes("leg curl")) {
-          return `<svg class="ex-thumb-svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+          return `<svg class="ex-thumb-svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round">
             <path d="M10 26h22l8 8"/>
             <path d="M28 26l-4 12"/>
             <circle cx="9" cy="22" r="3"/>
           </svg>`;
         }
-        return `<svg class="ex-thumb-svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+        return `<svg class="ex-thumb-svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round">
           <circle cx="24" cy="10" r="3.5"/>
           <path d="M24 14v11l-8 14M24 25l8 14"/>
           <path d="M13 17h22"/>
         </svg>`;
       }
 
-      return `<svg class="ex-thumb-svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+      return `<svg class="ex-thumb-svg" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round">
         <circle cx="14" cy="18" r="3.5"/>
         <path d="M16 22l12 8 11-2"/>
         <path d="M24 27l-5 12M32 29l4 10"/>
       </svg>`;
     }
 
-    // ANATOMIA MUSCOLARE PIÙ DETTAGLIATA (FRONTE + RETRO)
     function renderDetailedAnatomySvg(activeMusclesSet) {
       const m = (key) => (activeMusclesSet.has(key) ? "active-m" : "");
       return `
         <svg class="anatomy-svg" viewBox="0 0 280 186" aria-hidden="true">
-          <!-- ANATOMIA FRONTALE DETTAGLIATA -->
           <g transform="translate(18, 6)">
             <ellipse class="anat-outline" cx="48" cy="15" rx="9.5" ry="11.5" />
             <path class="anat-outline" d="M42.5 26 L53.5 26 L55 33 L41 33 Z" />
-            <!-- Deltoidi anteriori/laterali -->
             <path class="anat-muscle ${m("spalle")}" d="M41 32 Q26 35 19 48 L28 52 Q33 41 42 36 Z" />
             <path class="anat-muscle ${m("spalle")}" d="M55 32 Q70 35 77 48 L68 52 Q63 41 54 36 Z" />
-            <!-- Pettorali con fibre -->
             <path class="anat-muscle ${m("petto")}" d="M29 39 Q39 37 48 41 L47 57 Q36 58 28 52 Z" />
             <path class="anat-muscle ${m("petto")}" d="M67 39 Q57 37 48 41 L49 57 Q60 58 68 52 Z" />
             <line class="anat-striation" x1="31" y1="45" x2="45" y2="46" />
             <line class="anat-striation" x1="51" y1="46" x2="65" y2="45" />
-            <!-- Bicipiti e avambracci -->
             <path class="anat-muscle ${m("braccia")}" d="M19 50 Q26 52 25 74 L16 72 Q15 60 19 50 Z" />
             <path class="anat-outline" d="M16 74 L24 76 L18 106 L11 104 Z" />
             <path class="anat-muscle ${m("braccia")}" d="M77 50 Q70 52 71 74 L80 72 Q81 60 77 50 Z" />
             <path class="anat-outline" d="M80 74 L72 76 L78 106 L85 104 Z" />
-            <!-- Retto addominale (6 blocchi) + obliqui -->
             <rect class="anat-muscle ${m("addome")}" x="39" y="59" width="8" height="9" rx="2.5" />
             <rect class="anat-muscle ${m("addome")}" x="49" y="59" width="8" height="9" rx="2.5" />
             <rect class="anat-muscle ${m("addome")}" x="39.5" y="70" width="7.5" height="9" rx="2.5" />
@@ -1168,41 +1272,81 @@
             <rect class="anat-muscle ${m("addome")}" x="40" y="81" width="7" height="8" rx="2.5" />
             <rect class="anat-muscle ${m("addome")}" x="49" y="81" width="7" height="8" rx="2.5" />
             <path class="anat-outline" d="M33 91 L63 91 L61 102 L35 102 Z" />
-            <!-- Quadricipiti (retto femorale + vasti) -->
             <path class="anat-muscle ${m("gambe")}" d="M34 103 L46.5 103 L45 140 L31 138 Z" />
             <path class="anat-muscle ${m("gambe")}" d="M49.5 103 L62 103 L65 138 L51 140 Z" />
             <line class="anat-striation" x1="39" y1="106" x2="38" y2="136" />
             <line class="anat-striation" x1="57" y1="106" x2="58" y2="136" />
-            <!-- Tibiali / Polpacci -->
             <path class="anat-muscle ${m("gambe")}" d="M32 142 L43 142 L41 170 L33 170 Z" />
             <path class="anat-muscle ${m("gambe")}" d="M53 142 L64 142 L63 170 L55 170 Z" />
           </g>
 
-          <!-- ANATOMIA POSTERIORE DETTAGLIATA -->
           <g transform="translate(162, 6)">
             <ellipse class="anat-outline" cx="48" cy="15" rx="9.5" ry="11.5" />
             <path class="anat-outline" d="M42.5 26 L53.5 26 L55 33 L41 33 Z" />
-            <!-- Deltoidi posteriori -->
             <path class="anat-muscle ${m("spalle")}" d="M27 36 L41 33 L37 47 L23 49 Z" />
             <path class="anat-muscle ${m("spalle")}" d="M69 36 L55 33 L59 47 L73 49 Z" />
-            <!-- Gran dorsale / Trapezi / Schiena -->
             <path class="anat-muscle ${m("schiena")}" d="M41 33 L55 33 L60 65 L48 79 L36 65 Z" />
             <line class="anat-striation" x1="48" y1="35" x2="48" y2="75" />
             <path class="anat-striation" d="M40 46 L48 54 L56 46" />
-            <!-- Tricipiti -->
             <path class="anat-muscle ${m("braccia")}" d="M23 50 L30 52 L27 76 L19 74 Z" />
             <path class="anat-outline" d="M19 76 L26 78 L20 106 L13 104 Z" />
             <path class="anat-muscle ${m("braccia")}" d="M73 50 L66 52 L69 76 L77 74 Z" />
             <path class="anat-outline" d="M77 76 L70 78 L76 106 L83 104 Z" />
-            <!-- Glutei e ischiocrurali -->
             <path class="anat-muscle ${m("gambe")}" d="M34 80 L47 80 L47 103 L33 103 Z" />
             <path class="anat-muscle ${m("gambe")}" d="M49 80 L62 80 L63 103 L49 103 Z" />
             <path class="anat-muscle ${m("gambe")}" d="M33 105 L46 105 L44.5 140 L31 138 Z" />
             <path class="anat-muscle ${m("gambe")}" d="M50 105 L63 105 L65 138 L51.5 140 Z" />
-            <!-- Gastrocnemi / Polpacci -->
             <path class="anat-muscle ${m("gambe")}" d="M32 142 L43 142 L41 170 L33 170 Z" />
             <path class="anat-muscle ${m("gambe")}" d="M53 142 L64 142 L63 170 L55 170 Z" />
           </g>
+        </svg>
+      `;
+    }
+
+    function renderVolumeChartSvg(historyList) {
+      const sessions = (historyList || []).slice(0, 7).reverse();
+      if (!sessions.length) {
+        return `<div class="muted-xs" style="text-align:center;padding:12px 4px;">Nessun dato volume recente</div>`;
+      }
+      const vols = sessions.map((s) => Math.max(0, Number(s.volumeKg) || 0));
+      const maxVal = Math.max(...vols, 1);
+      const w = 320;
+      const h = 92;
+      const padTop = 12;
+      const padBot = 20;
+      const chartH = h - padTop - padBot;
+      const stepX = w / sessions.length;
+      const barW = Math.min(28, Math.max(12, stepX * 0.52));
+
+      const bars = vols.map((v, i) => {
+        const bh = Math.max(4, (v / maxVal) * chartH);
+        const x = i * stepX + (stepX - barW) / 2;
+        const y = padTop + (chartH - bh);
+        const isPeak = v === Math.max(...vols) && v > 0;
+        const lbl = sessions[i].dateStr ? sessions[i].dateStr.slice(0, 5) : `#${i + 1}`;
+        return `
+          <rect class="chart-bar ${isPeak ? "peak" : ""}" x="${x.toFixed(1)}" y="${y.toFixed(1)}" width="${barW.toFixed(1)}" height="${bh.toFixed(1)}" />
+          <text x="${(x + barW / 2).toFixed(1)}" y="${h - 5}" text-anchor="middle" fill="#8c8f99" font-size="8.5" font-family="Plus Jakarta Sans, sans-serif">${escapeHtml(lbl)}</text>
+        `;
+      }).join("");
+
+      const points = vols.map((v, i) => {
+        const bh = Math.max(4, (v / maxVal) * chartH);
+        const x = i * stepX + stepX / 2;
+        const y = padTop + (chartH - bh);
+        return `${x.toFixed(1)},${y.toFixed(1)}`;
+      }).join(" ");
+
+      return `
+        <div class="head-row" style="margin-bottom:4px;">
+          <span class="muted-xs">Andamento volume sessioni</span>
+          <span class="muted-xs" style="color:#ffd5a6;font-weight:700;">Max ${Math.round(Math.max(...vols)).toLocaleString("it-IT")} kg</span>
+        </div>
+        <svg class="chart-svg" viewBox="0 0 ${w} ${h}" aria-hidden="true">
+          <line class="chart-grid" x1="8" y1="${padTop}" x2="${w - 8}" y2="${padTop}" />
+          <line class="chart-grid" x1="8" y1="${(padTop + chartH / 2).toFixed(1)}" x2="${w - 8}" y2="${(padTop + chartH / 2).toFixed(1)}" />
+          ${bars}
+          ${vols.length > 1 ? `<polyline class="chart-line" points="${points}" />` : ""}
         </svg>
       `;
     }
@@ -1304,6 +1448,7 @@
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
       updateHeaderAndProfileBadges();
       renderProfiloSection();
+      renderReadinessAnalysis();
       pushToCloud();
     }
 
@@ -1349,6 +1494,7 @@
         updateHeaderAndProfileBadges();
         renderSchede();
         renderProfiloSection();
+        renderReadinessAnalysis();
         if (activeNav === "allenamento") renderAllenamento();
       }, () => {});
     }
@@ -1539,7 +1685,6 @@
       return `${ex.name}${eqStr} — ${baseTip}${prStr}`;
     }
 
-    // SCHEDE: SOLO NOME + AVVIA + ANATOMIA DETTAGLIATA (SENZA ELENCO ESERCIZI APERTO)
     function renderSchede() {
       const list = document.getElementById("routinesListContainer");
       const countLabel = document.getElementById("routinesCountLabel");
@@ -1575,7 +1720,7 @@
           const editor = document.createElement("div");
           editor.style.marginTop = "10px";
           editor.style.paddingTop = "10px";
-          editor.style.borderTop = "1px solid rgba(255,255,255,0.08)";
+          editor.style.borderTop = "1px solid var(--border-dim)";
 
           editor.innerHTML = `
             <div class="row-gap" style="margin-bottom:8px;">
@@ -1836,7 +1981,8 @@
       }
     }, 1000);
 
-    function attachSwipeRightToDelete(rowEl, onDelete) {
+    // SWIPE A SINISTRA PER ELIMINARE UNA SERIE
+    function attachSwipeLeftToDelete(rowEl, hintEl, onDelete) {
       let startX = null;
       let startY = null;
       let dx = 0;
@@ -1852,26 +1998,35 @@
         const moveX = clientX - startX;
         const moveY = clientY - startY;
         if (Math.abs(moveY) > Math.abs(moveX) && dx === 0) return;
-        if (moveX > 0) {
-          dx = Math.min(moveX, 120);
+        if (moveX < 0) {
+          dx = Math.max(moveX, -124);
           rowEl.style.transform = `translateX(${dx}px)`;
-          rowEl.classList.toggle("swipe-armed", dx >= 68);
+          const armed = dx <= -66;
+          rowEl.classList.toggle("swipe-armed", armed);
+          if (hintEl) {
+            hintEl.style.opacity = String(Math.min(1, Math.abs(dx) / 66));
+            hintEl.textContent = armed ? "Rilascia" : "Elimina";
+          }
         }
       };
 
       const onEnd = () => {
         if (startX === null) return;
-        const shouldDelete = dx >= 68;
+        const shouldDelete = dx <= -66;
         startX = null;
         startY = null;
         if (shouldDelete) {
-          rowEl.style.transform = "translateX(100%)";
+          rowEl.style.transform = "translateX(-100%)";
           rowEl.style.opacity = "0";
           setTimeout(onDelete, 160);
         } else {
           dx = 0;
           rowEl.style.transform = "";
           rowEl.classList.remove("swipe-armed");
+          if (hintEl) {
+            hintEl.style.opacity = "0";
+            hintEl.textContent = "Elimina";
+          }
         }
       };
 
@@ -2065,6 +2220,14 @@
           const modeClass = curMode !== "N" ? `type-${curMode.toLowerCase()}` : "";
           const prevLabel = getPreviousSetLabel(ex.name, i);
 
+          const wrap = document.createElement("div");
+          wrap.className = "set-swipe-wrap";
+
+          const hint = document.createElement("span");
+          hint.className = "set-swipe-hint";
+          hint.style.opacity = "0";
+          hint.textContent = "Elimina";
+
           const line = document.createElement("div");
           line.className = `set-row ${s.done ? "done" : ""}`;
           line.innerHTML = `
@@ -2093,13 +2256,15 @@
             }
           };
 
-          attachSwipeRightToDelete(line, () => {
+          attachSwipeLeftToDelete(line, hint, () => {
             ex.sets.splice(i, 1);
             saveState();
             renderAllenamento();
           });
 
-          setsList.appendChild(line);
+          wrap.appendChild(hint);
+          wrap.appendChild(line);
+          setsList.appendChild(wrap);
         });
 
         list.appendChild(card);
@@ -2374,6 +2539,9 @@
       document.getElementById("kpiSetsCount").textContent = String(wkSource.reduce((a, b) => a + (b.doneSets || 0), 0));
       document.getElementById("kpiVolumeKg").textContent = `${wkSource.reduce((a, b) => a + (b.volumeKg || 0), 0).toLocaleString("it-IT")} kg`;
 
+      const chartBox = document.getElementById("profileVolumeChartBox");
+      if (chartBox) chartBox.innerHTML = renderVolumeChartSvg(state.history);
+
       const planBox = document.getElementById("weeklyPlanContainer");
       planBox.innerHTML = "";
       DAYS.forEach((day) => {
@@ -2477,6 +2645,8 @@
 
     function renderReadinessAnalysis() {
       const box = document.getElementById("ptReadinessBox");
+      const chartBox = document.getElementById("ptVolumeChartBox");
+      if (chartBox) chartBox.innerHTML = renderVolumeChartSvg(state.history);
       if (!box) return;
       const now = Date.now();
       const dayMs = 24 * 60 * 60 * 1000;
