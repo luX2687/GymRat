@@ -7,24 +7,23 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="GymRat 🐀" />
   <meta name="theme-color" content="#050505" />
-  <title>GymRat 🐀 — Schede, Allenamento, PT &amp; Profilo</title>
+  <title>GymRat 🐀</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
       --bg-black: #050505;
-      --bg-surface: rgba(16, 16, 18, 0.86);
-      --bg-surface-dim: rgba(12, 12, 14, 0.58);
-      --glass-grey: rgba(135, 138, 146, 0.16);
+      --bg-surface: rgba(18, 18, 21, 0.88);
+      --bg-surface-dim: rgba(11, 11, 13, 0.56);
+      --glass-grey: rgba(145, 148, 158, 0.16);
       --border-dim: rgba(255, 255, 255, 0.08);
-      --border-lit: rgba(255, 178, 102, 0.52);
+      --border-lit: rgba(255, 178, 102, 0.54);
       --glow-amber: rgba(255, 168, 76, 0.24);
-      --text-main: #f4f4f6;
-      --text-muted: #8b8e98;
-      --ok-bg: rgba(34, 197, 94, 0.22);
-      --ok-border: rgba(74, 222, 128, 0.55);
-      --ok-text: #86efac;
+      --text-main: #f6f6f8;
+      --text-muted: #8c8f99;
+      --ok-bg: rgba(34, 197, 94, 0.2);
+      --ok-border: rgba(74, 222, 128, 0.52);
       --ease-smooth: cubic-bezier(0.22, 0.85, 0.25, 1);
     }
 
@@ -46,7 +45,7 @@
       font-family: "Plus Jakarta Sans", "Trebuchet MS", sans-serif;
       background: var(--bg-black);
       color: var(--text-main);
-      padding-bottom: calc(122px + env(safe-area-inset-bottom));
+      padding-bottom: calc(124px + env(safe-area-inset-bottom));
       position: relative;
     }
 
@@ -61,11 +60,10 @@
       -webkit-touch-callout: none;
     }
 
-    /* SEZIONI OSCURATE/SPENTE CHE SI ILLUMINANO CON LUCE ARANCIONE CHIARO AL PASSAGGIO / SCORRIMENTO */
     .section-card {
       background: var(--bg-surface-dim);
       border: 1px solid var(--border-dim);
-      border-radius: 16px;
+      border-radius: 18px;
       opacity: 0.72;
       transition:
         opacity 0.24s var(--ease-smooth),
@@ -81,9 +79,9 @@
       background: var(--bg-surface);
       border-color: var(--border-lit);
       box-shadow:
-        0 8px 28px rgba(0, 0, 0, 0.65),
-        0 0 26px var(--glow-amber),
-        inset 0 1px 0 rgba(255, 204, 148, 0.24);
+        0 10px 30px rgba(0, 0, 0, 0.7),
+        0 0 24px var(--glow-amber),
+        inset 0 1px 0 rgba(255, 212, 160, 0.22);
     }
 
     .circle-btn {
@@ -122,7 +120,7 @@
     }
 
     .circle-btn.solid {
-      background: rgba(244, 244, 246, 0.92);
+      background: rgba(246, 246, 248, 0.94);
       color: #050505;
       border-color: #ffffff;
     }
@@ -134,7 +132,7 @@
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       color: var(--text-main);
-      font-size: 0.76rem;
+      font-size: 0.75rem;
       font-weight: 700;
       padding: 7px 13px;
       cursor: pointer;
@@ -156,13 +154,12 @@
     }
 
     .pill-btn.solid {
-      background: rgba(244, 244, 246, 0.92);
+      background: rgba(246, 246, 248, 0.94);
       color: #050505;
       border-color: #ffffff;
       font-weight: 800;
     }
 
-    /* TOPBAR CON BUSTO PROFILO IN ALTO A DESTRA (SENZA TIMER IN ALTO) */
     .topbar {
       position: sticky;
       top: 0;
@@ -183,6 +180,25 @@
       gap: 10px;
     }
 
+    .header-bubble {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: rgba(255, 178, 102, 0.15);
+      border: 1px solid var(--border-lit);
+      box-shadow: 0 0 18px var(--glow-amber);
+      font-family: "Fredoka", "Trebuchet MS", sans-serif;
+      font-size: 1.06rem;
+      font-weight: 700;
+      color: #ffe0be;
+      max-width: calc(100% - 54px);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
     .brand-title {
       margin: 0;
       font-size: 1.24rem;
@@ -194,7 +210,7 @@
     }
 
     .brand-sub {
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       color: var(--text-muted);
       margin-top: 1px;
     }
@@ -245,13 +261,13 @@
     }
 
     .sec-title {
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       font-weight: 700;
       color: var(--text-main);
     }
 
     .muted-xs {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       color: var(--text-muted);
     }
 
@@ -262,12 +278,12 @@
 
     .clean-input,
     .clean-select {
-      flex: 1 1 120px;
+      flex: 1 1 110px;
       min-width: 0;
       border-radius: 11px;
       border: 1px solid rgba(255, 255, 255, 0.12);
       background: rgba(9, 9, 11, 0.92);
-      padding: 9px 11px;
+      padding: 8px 10px;
       color: var(--text-main);
       outline: none;
     }
@@ -283,19 +299,18 @@
       gap: 8px;
     }
 
-    /* ANATOMIA MUSCOLARE DEFINITA */
     .anatomy-panel {
-      margin-top: 10px;
-      padding: 8px 10px;
+      margin-top: 8px;
+      padding: 6px 8px;
       border-radius: 12px;
-      background: rgba(8, 8, 10, 0.78);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(8, 8, 10, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.07);
     }
 
     .anatomy-svg {
       width: 100%;
-      max-width: 220px;
-      height: 142px;
+      max-width: 210px;
+      height: 132px;
       display: block;
       margin: 0 auto;
     }
@@ -321,19 +336,23 @@
       stroke-width: 1.25;
     }
 
-    /* ALLENAMENTO STILE LIVE WORKOUT */
-    .live-stats-bar {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr) auto;
-      gap: 8px;
+    .live-metrics-strip {
+      display: flex;
       align-items: center;
-      margin-top: 10px;
-      padding-top: 10px;
+      justify-content: space-between;
+      gap: 10px;
+      padding-top: 8px;
       border-top: 1px solid rgba(255, 255, 255, 0.08);
     }
 
-    .live-stat-val {
-      font-size: 0.9rem;
+    .metric-pair {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+    }
+
+    .metric-val {
+      font-size: 0.95rem;
       font-weight: 800;
       color: var(--text-main);
     }
@@ -364,7 +383,7 @@
     .tab-pill {
       border-radius: 999px;
       padding: 6px 12px;
-      font-size: 0.76rem;
+      font-size: 0.74rem;
       font-weight: 700;
       border: 1px solid rgba(255, 255, 255, 0.12);
       background: rgba(255, 255, 255, 0.04);
@@ -380,12 +399,29 @@
       border-color: var(--border-lit);
     }
 
+    .equip-chip {
+      border-radius: 999px;
+      padding: 4px 9px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .equip-chip.active {
+      background: rgba(255, 178, 102, 0.22);
+      color: #ffe0be;
+      border-color: var(--border-lit);
+    }
+
     .sets-head {
       display: grid;
-      grid-template-columns: 36px 1.15fr 1fr 1fr 34px;
+      grid-template-columns: 36px 1.1fr 1fr 1fr 34px;
       gap: 6px;
       padding: 0 2px 5px;
-      font-size: 0.66rem;
+      font-size: 0.65rem;
       font-weight: 700;
       color: var(--text-muted);
       text-transform: uppercase;
@@ -394,7 +430,7 @@
 
     .set-row {
       display: grid;
-      grid-template-columns: 36px 1.15fr 1fr 1fr 34px;
+      grid-template-columns: 36px 1.1fr 1fr 1fr 34px;
       gap: 6px;
       align-items: center;
       padding: 5px 6px;
@@ -427,28 +463,13 @@
       place-items: center;
     }
 
-    .set-badge.type-w {
-      color: #fcd34d;
-      border-color: rgba(252, 211, 77, 0.45);
-    }
-
-    .set-badge.type-d {
-      color: #93c5fd;
-      border-color: rgba(147, 197, 253, 0.45);
-    }
-
-    .set-badge.type-f {
-      color: #fca5a5;
-      border-color: rgba(252, 165, 165, 0.45);
-    }
-
-    .set-badge.type-s {
-      color: #c4b5fd;
-      border-color: rgba(196, 181, 253, 0.45);
-    }
+    .set-badge.type-w { color: #fcd34d; border-color: rgba(252, 211, 77, 0.45); }
+    .set-badge.type-d { color: #93c5fd; border-color: rgba(147, 197, 253, 0.45); }
+    .set-badge.type-f { color: #fca5a5; border-color: rgba(252, 165, 165, 0.45); }
+    .set-badge.type-s { color: #c4b5fd; border-color: rgba(196, 181, 253, 0.45); }
 
     .prev-cell {
-      font-size: 0.74rem;
+      font-size: 0.72rem;
       color: var(--text-muted);
       text-align: center;
       white-space: nowrap;
@@ -538,7 +559,6 @@
       font-size: 0.82rem;
     }
 
-    /* TIMER A SCHERMO SOTTO (APPARE QUANDO PREMI LA SPUNTA) */
     .bottom-rest-timer {
       position: fixed;
       left: 0;
@@ -561,9 +581,9 @@
       margin: 0 auto;
       border-radius: 16px;
       padding: 9px 12px;
-      background: rgba(18, 18, 21, 0.94);
+      background: rgba(18, 18, 21, 0.95);
       border: 1px solid var(--border-lit);
-      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.78), 0 0 22px var(--glow-amber);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.8), 0 0 22px var(--glow-amber);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       display: flex;
@@ -572,7 +592,6 @@
       gap: 8px;
     }
 
-    /* DOCK IN BASSO CON BUBBLE */
     .dock-wrap {
       position: fixed;
       left: 0;
@@ -592,9 +611,9 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 4px;
-      background: rgba(18, 18, 21, 0.9);
+      background: rgba(18, 18, 21, 0.92);
       border: 1px solid rgba(255, 255, 255, 0.14);
-      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 14px 32px rgba(0, 0, 0, 0.82);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
     }
@@ -615,9 +634,7 @@
       transition: all 0.2s var(--ease-smooth);
     }
 
-    .dock-btn:hover {
-      color: #ffd5a6;
-    }
+    .dock-btn:hover { color: #ffd5a6; }
 
     .dock-btn.active {
       color: var(--text-main);
@@ -625,7 +642,6 @@
       box-shadow: 0 0 18px var(--glow-amber);
     }
 
-    /* Bubble indicatore sotto la sezione attiva */
     .dock-btn.active::after {
       content: "";
       width: 12px;
@@ -636,19 +652,17 @@
       margin-top: 1px;
     }
 
-    .hidden {
-      display: none !important;
-    }
+    .hidden { display: none !important; }
   </style>
 </head>
 <body>
-  <!-- HEADER CON BUSTO PROFILO IN ALTO A DESTRA -->
   <header class="topbar">
     <div class="topbar-inner">
-      <div>
+      <div id="headerBrandDefault">
         <h1 class="brand-title"><span>🐀</span><span>GymRat</span></h1>
-        <div class="brand-sub" id="bodyStatsSub">Altezza e peso in Profilo</div>
+        <div class="brand-sub" id="bodyStatsSub"></div>
       </div>
+      <div class="header-bubble hidden" id="headerRoutineBubble"></div>
       <button type="button" class="circle-btn" id="openProfileSectionBtn" aria-label="Profilo" title="Profilo">
         <svg class="bust-icon" viewBox="0 0 24 24" aria-hidden="true">
           <circle cx="12" cy="7" r="4" />
@@ -666,15 +680,15 @@
           <div class="head-row">
             <div>
               <div class="sec-title">Schede</div>
-              <div class="muted-xs" id="routinesCountLabel">0 schede</div>
+              <div class="muted-xs" id="routinesCountLabel">0</div>
             </div>
             <button type="button" class="circle-btn solid" id="toggleNewRoutineBtn" title="Crea scheda">+</button>
           </div>
 
           <form id="createRoutineForm" class="hidden" style="margin-top:12px;">
             <div class="row-gap">
-              <input type="text" id="newRoutineName" class="clean-input" placeholder="Nome scheda..." required />
-              <input type="text" id="newRoutineEmoji" class="clean-input" style="max-width:66px;text-align:center;" placeholder="🐀" maxlength="4" aria-label="Emoji" />
+              <input type="text" id="newRoutineName" class="clean-input" placeholder="Nome..." required />
+              <input type="text" id="newRoutineEmoji" class="clean-input" style="max-width:64px;text-align:center;" placeholder="🐀" maxlength="4" aria-label="Emoji" />
               <button type="submit" class="circle-btn solid" title="Salva">✓</button>
             </div>
           </form>
@@ -688,30 +702,31 @@
     <section id="view-allenamento" class="view">
       <div class="stack">
         <div class="section-card pad">
-          <div class="head-row" style="margin-bottom:10px;">
-            <div class="sec-title">Registra allenamento</div>
-            <button type="button" class="pill-btn" id="addFreeExerciseBtn">+ Esercizio</button>
+          <div class="head-row" style="margin-bottom:8px;">
+            <div class="tabs-row" id="workoutRoutineTabs"></div>
+            <button type="button" class="circle-btn sm" id="addFreeExerciseBtn" title="Aggiungi esercizio">+</button>
           </div>
-          <div class="tabs-row" id="workoutRoutineTabs"></div>
 
-          <div class="live-stats-bar">
-            <div>
-              <div class="muted-xs">Durata</div>
-              <div class="live-stat-val" id="liveDurationVal">0s</div>
-            </div>
-            <div>
-              <div class="muted-xs">Volume</div>
-              <div class="live-stat-val" id="liveVolumeVal">0 kg</div>
-            </div>
-            <div>
-              <div class="muted-xs">Serie</div>
-              <div class="live-stat-val" id="liveSetsVal">0</div>
+          <div class="live-metrics-strip">
+            <div class="metric-pair">
+              <div>
+                <div class="muted-xs">⏱</div>
+                <div class="metric-val" id="liveDurationVal">0s</div>
+              </div>
+              <div>
+                <div class="muted-xs">⚖️</div>
+                <div class="metric-val" id="liveVolumeVal">0 kg</div>
+              </div>
+              <div>
+                <div class="muted-xs">✓</div>
+                <div class="metric-val" id="liveSetsVal">0</div>
+              </div>
             </div>
             <button type="button" class="pill-btn solid" id="finishWorkoutBtn">Termina</button>
           </div>
 
-          <div class="row-gap" style="margin-top:10px;">
-            <input type="text" id="sessionNoteInput" class="clean-input" placeholder="Nota sessione..." />
+          <div class="row-gap" style="margin-top:8px;">
+            <input type="text" id="sessionNoteInput" class="clean-input" style="padding:6px 10px;font-size:0.8rem;" placeholder="Nota..." />
           </div>
         </div>
 
@@ -725,46 +740,55 @@
       <div class="stack">
         <div class="section-card pad">
           <div class="head-row" style="margin-bottom:10px;">
-            <div class="sec-title">Personal Trainer</div>
-            <span class="muted-xs" id="ptProfileSummary">Profilo non impostato</span>
+            <div class="sec-title">PT · Split</div>
+            <span class="muted-xs" id="ptProfileSummary"></span>
           </div>
           <div class="row-gap">
             <select id="ptSplitSelect" class="clean-select">
-              <option value="ppl">Push / Pull / Legs</option>
+              <option value="ppl">PPL</option>
               <option value="upper_lower">Upper / Lower</option>
               <option value="full_body">Full Body</option>
             </select>
             <select id="ptGoalSelect" class="clean-select">
-              <option value="ipertrofia">Ipertrofia (8-12)</option>
-              <option value="forza">Forza (4-6)</option>
-              <option value="tonificazione">Resistenza (12-15)</option>
+              <option value="ipertrofia">8-12</option>
+              <option value="forza">4-6</option>
+              <option value="tonificazione">12-15</option>
             </select>
             <button type="button" class="pill-btn solid" id="generatePtRoutineBtn">Genera</button>
           </div>
         </div>
 
+        <!-- NUOVA FUNZIONE PT: PRONTEZZA & CARICO (ACWR / READINESS) -->
         <div class="section-card pad">
           <div class="head-row" style="margin-bottom:8px;">
-            <div class="sec-title">Consiglio PT</div>
-            <button type="button" class="pill-btn" id="ptBodyAdviceBtn">Sul mio corpo</button>
+            <div class="sec-title">PT · Prontezza &amp; Carico</div>
+            <button type="button" class="pill-btn" id="refreshReadinessBtn">Calcola</button>
           </div>
-          <div class="note-box" id="ptCoachOutput">Imposta altezza, peso e tipo di corpo in Profilo per consigli su misura.</div>
+          <div class="note-box" id="ptReadinessBox">Tocca Calcola per analizzare carico, recupero e intensità consigliata.</div>
+        </div>
+
+        <div class="section-card pad">
+          <div class="head-row" style="margin-bottom:8px;">
+            <div class="sec-title">PT · Coach</div>
+            <button type="button" class="pill-btn" id="ptBodyAdviceBtn">Corpo</button>
+          </div>
+          <div class="note-box" id="ptCoachOutput">Chiedi al PT o genera una scheda.</div>
           <div class="row-gap" style="margin-top:8px;">
-            <input type="text" id="ptQuestionInput" class="clean-input" placeholder="Chiedi al PT..." />
+            <input type="text" id="ptQuestionInput" class="clean-input" placeholder="Domanda..." />
             <button type="button" class="circle-btn solid" id="ptAskBtn" title="Invia">→</button>
           </div>
         </div>
 
         <div class="section-card pad">
           <div class="head-row" style="margin-bottom:8px;">
-            <div class="sec-title">Dischi bilanciere</div>
+            <div class="sec-title">PT · Dischi</div>
           </div>
           <div class="row-gap">
-            <input type="number" id="targetBarKgInput" class="clean-input" step="2.5" min="20" placeholder="Totale kg" />
-            <select id="barWeightSelect" class="clean-select" style="max-width:124px;">
-              <option value="20">Barra 20 kg</option>
-              <option value="15">Barra 15 kg</option>
-              <option value="10">Barra 10 kg</option>
+            <input type="number" id="targetBarKgInput" class="clean-input" step="2.5" min="20" placeholder="Kg" />
+            <select id="barWeightSelect" class="clean-select" style="max-width:116px;">
+              <option value="20">20 kg</option>
+              <option value="15">15 kg</option>
+              <option value="10">10 kg</option>
             </select>
             <button type="button" class="pill-btn" id="calcPlatesBtn">Calcola</button>
           </div>
@@ -778,16 +802,16 @@
       <div class="stack">
         <div class="section-card pad">
           <div class="head-row" style="margin-bottom:10px;">
-            <div class="sec-title">Profilo &amp; Dati corporei</div>
+            <div class="sec-title">Profilo</div>
             <span class="muted-xs" id="profileCodeBadge">Locale</span>
           </div>
           <div class="row-gap" style="margin-bottom:8px;">
-            <input type="number" id="profileHeightInput" class="clean-input" min="100" max="240" placeholder="Altezza (cm)" />
-            <input type="number" id="profileWeightInput" class="clean-input" step="0.1" min="30" max="250" placeholder="Peso (kg)" />
+            <input type="number" id="profileHeightInput" class="clean-input" min="100" max="240" placeholder="Altezza cm" />
+            <input type="number" id="profileWeightInput" class="clean-input" step="0.1" min="30" max="250" placeholder="Peso kg" />
           </div>
           <div class="row-gap" style="margin-bottom:8px;">
             <select id="profileSomatotypeInput" class="clean-select">
-              <option value="">Tipo di corpo...</option>
+              <option value="">Somatotipo...</option>
               <option value="ectomorfo">Ectomorfo</option>
               <option value="mesomorfo">Mesomorfo</option>
               <option value="endomorfo">Endomorfo</option>
@@ -796,20 +820,19 @@
           </div>
           <div class="row-gap" style="margin-bottom:8px;">
             <button type="button" class="pill-btn" id="createGymCodeBtn">+ Cloud</button>
-            <input type="text" id="joinGymCodeInput" class="clean-input" placeholder="Codice cloud" style="text-transform:uppercase;" />
+            <input type="text" id="joinGymCodeInput" class="clean-input" placeholder="Codice" style="text-transform:uppercase;" />
             <button type="button" class="pill-btn" id="joinGymCodeBtn">Collega</button>
           </div>
           <div class="row-gap">
-            <input type="password" id="geminiApiKeyInput" class="clean-input" placeholder="Chiave API Gemini (per import CSV IA & PT)" />
+            <input type="password" id="geminiApiKeyInput" class="clean-input" placeholder="Gemini API Key" />
             <button type="button" class="pill-btn solid" id="saveProfileSectionBtn">Salva</button>
           </div>
         </div>
 
         <div class="section-card pad">
           <div class="head-row" style="margin-bottom:8px;">
-            <div class="sec-title">Importa CSV (anche con IA)</div>
+            <div class="sec-title">Import CSV</div>
           </div>
-          <div class="muted-xs" style="margin-bottom:10px;">Carica un file .csv: estrae le schede e, se hai la chiave API Gemini, le interpreta anche tramite IA.</div>
           <div class="row-gap">
             <input type="file" id="csvFileInput" accept=".csv,text/csv" class="clean-input" style="padding:7px;" />
             <button type="button" class="pill-btn solid" id="importCsvBtn">Importa</button>
@@ -819,8 +842,7 @@
 
         <div class="section-card pad">
           <div class="head-row" style="margin-bottom:10px;">
-            <div class="sec-title">Rapporto settimanale</div>
-            <span class="muted-xs">7 giorni</span>
+            <div class="sec-title">7d</div>
           </div>
           <div class="kpi-grid">
             <div class="kpi-cell">
@@ -840,14 +862,14 @@
 
         <div class="section-card pad">
           <div class="head-row" style="margin-bottom:10px;">
-            <div class="sec-title">Programma settimanale</div>
+            <div class="sec-title">Settimana</div>
           </div>
           <div id="weeklyPlanContainer" class="stack" style="gap:6px;"></div>
         </div>
 
         <div class="section-card pad">
           <div class="head-row" style="margin-bottom:10px;">
-            <div class="sec-title">Massimali (PR / 1RM)</div>
+            <div class="sec-title">PR / 1RM</div>
           </div>
           <div id="maxLiftsContainer" class="stack" style="gap:6px;"></div>
         </div>
@@ -855,13 +877,13 @@
     </section>
   </main>
 
-  <!-- TIMER DI RECUPERO IN BASSO SOPRA LA BARRA -->
+  <!-- TIMER IN BASSO -->
   <div class="bottom-rest-timer" id="bottomRestTimer" role="region" aria-label="Timer recupero">
     <div class="rest-bar-card">
       <button type="button" class="pill-btn" id="sub15Btn">−15</button>
       <div style="text-align:center;min-width:0;">
         <div style="font-size:1.18rem;font-weight:800;line-height:1.05;" id="restTimerDigits">01:30</div>
-        <div class="muted-xs" id="restTimerContext" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Recupero</div>
+        <div class="muted-xs" id="restTimerContext" style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis;"></div>
       </div>
       <div class="row-gap" style="gap:6px;">
         <button type="button" class="pill-btn" id="add15Btn">+15</button>
@@ -917,35 +939,62 @@
       gambe: "Gambe"
     };
 
+    // CATALOGO AMPIO CON ATTREZZATURE SELEZIONABILI (Manubri / Cavi / Macchinario)
     const EXERCISE_CATALOG = [
-      { name: "Panca piana bilanciere", muscle: "petto", rest: 120, tip: "Scapole addotte e discesa controllata al petto." },
-      { name: "Panca inclinata manubri", muscle: "petto", rest: 90, tip: "Inclinazione 30° con traiettoria verso il petto alto." },
-      { name: "Croci ai cavi / Manubri", muscle: "petto", rest: 75, tip: "Gomiti leggermente flessi e costanti." },
-      { name: "Lat machine avanti", muscle: "schiena", rest: 90, tip: "Tira portando i gomiti verso il fianco senza slanci." },
-      { name: "Rematore con bilanciere", muscle: "schiena", rest: 105, tip: "Schiena neutra e trazione guidata verso l'addome." },
-      { name: "Pulley basso / Row machine", muscle: "schiena", rest: 90, tip: "Petto aperto e chiusura scapolare controllata." },
-      { name: "Lento avanti bilanciere", muscle: "spalle", rest: 120, tip: "Core attivo e spinta lineare sopra la testa." },
-      { name: "Alzate laterali manubri / Cavi", muscle: "spalle", rest: 60, tip: "Sali con i gomiti verso l'esterno senza alzare i trapezi." },
-      { name: "Alzate posteriori / Reverse fly", muscle: "spalle", rest: 60, tip: "Focus sul deltoide posteriore." },
-      { name: "Curl bilanciere / EZ bicipiti", muscle: "braccia", rest: 75, tip: "Gomiti fermi lungo i fianchi e discesa completa." },
-      { name: "Pushdown tricipiti ai cavi", muscle: "braccia", rest: 75, tip: "Distendi in basso tenendo i gomiti bloccati." },
-      { name: "Squat con bilanciere", muscle: "gambe", rest: 150, tip: "Baricentro stabile e ginocchia in linea col piede." },
-      { name: "Leg press / Pressa 45°", muscle: "gambe", rest: 120, tip: "Mantieni il bacino ben saldo sul sedile." },
-      { name: "Stacco rumeno / RDL", muscle: "gambe", rest: 120, tip: "Spingi il bacino indietro con schiena neutra." },
-      { name: "Leg curl sdraiato / Seduto", muscle: "gambe", rest: 75, tip: "Movimento controllato senza strappi." },
-      { name: "Calf raise in piedi / Seduto", muscle: "gambe", rest: 60, tip: "Pausa in basso e spinta decisa." },
-      { name: "Plank", muscle: "addome", rest: 60, tip: "Linea retta testa-bacino-talloni e addome attivo." }
+      // PETTO
+      { name: "Panca piana bilanciere", muscle: "petto", rest: 120, equips: ["Bilanciere"], tip: "Scapole addotte e discesa controllata al petto." },
+      { name: "Chest press", muscle: "petto", rest: 90, equips: ["Macchinario", "Cavi"], tip: "Spinta continua con spalle basse." },
+      { name: "Panca inclinata", muscle: "petto", rest: 90, equips: ["Manubri", "Macchinario", "Cavi"], tip: "Angolo 30° per il petto alto." },
+      { name: "Croci", muscle: "petto", rest: 75, equips: ["Cavi", "Manubri", "Macchinario"], tip: "Arco ampio e tensione costante sul pettorale." },
+      { name: "Butterfly / Pec deck", muscle: "petto", rest: 75, equips: ["Macchinario", "Cavi"], tip: "Chiusura controllata senza perdere l'adduzione." },
+      { name: "Pullover", muscle: "petto", rest: 75, equips: ["Manubri", "Cavi"], tip: "Allungamento dorsale/pettorale controllato." },
+
+      // SCHIENA
+      { name: "Lat machine", muscle: "schiena", rest: 90, equips: ["Macchinario", "Cavi"], tip: "Tira portando i gomiti verso il fianco." },
+      { name: "Rematore", muscle: "schiena", rest: 105, equips: ["Bilanciere", "Manubri", "Cavi", "Macchinario"], tip: "Schiena neutra e chiusura scapolare." },
+      { name: "Pulley / Row basso", muscle: "schiena", rest: 90, equips: ["Cavi", "Macchinario"], tip: "Busto stabile e trazione verso l'addome basso." },
+      { name: "Pullover ai cavi / Lat alto", muscle: "schiena", rest: 75, equips: ["Cavi", "Macchinario"], tip: "Focus sul gran dorsale a braccia quasi tese." },
+      { name: "T-Bar row", muscle: "schiena", rest: 105, equips: ["Macchinario", "Bilanciere"], tip: "Massima contrazione centrale della schiena." },
+
+      // SPALLE
+      { name: "Lento / Shoulder press", muscle: "spalle", rest: 105, equips: ["Manubri", "Bilanciere", "Macchinario"], tip: "Spinta verticale controllata senza inarcare troppo." },
+      { name: "Alzate laterali", muscle: "spalle", rest: 60, equips: ["Manubri", "Cavi", "Macchinario"], tip: "Isolamento del deltoide laterale con gomiti morbidi." },
+      { name: "Alzate frontali", muscle: "spalle", rest: 60, equips: ["Cavi", "Manubri"], tip: "Salita fino all'altezza delle spalle senza slancio." },
+      { name: "Alzate posteriori / Reverse fly", muscle: "spalle", rest: 60, equips: ["Cavi", "Manubri", "Macchinario"], tip: "Focus sul deltoide posteriore." },
+      { name: "Tirate al mento / Upright row", muscle: "spalle", rest: 75, equips: ["Cavi", "Bilanciere", "Manubri"], tip: "Gomiti alti e traiettoria vicina al busto." },
+
+      // BRACCIA
+      { name: "Curl bicipiti", muscle: "braccia", rest: 75, equips: ["Cavi", "Manubri", "Bilanciere", "Macchinario"], tip: "Gomiti fissi ai fianchi e contrazione di picco." },
+      { name: "Curl a martello / Hammer", muscle: "braccia", rest: 75, equips: ["Manubri", "Cavi"], tip: "Presa neutra per brachioradiale e bicipite." },
+      { name: "Curl panca Scott / Preacher", muscle: "braccia", rest: 75, equips: ["Macchinario", "Manubri", "Bilanciere"], tip: "Isolamento del bicipite senza slanci." },
+      { name: "Pushdown tricipiti", muscle: "braccia", rest: 75, equips: ["Cavi", "Macchinario"], tip: "Estensione completa con gomiti bloccati." },
+      { name: "Estensioni tricipiti sopra la testa", muscle: "braccia", rest: 75, equips: ["Cavi", "Manubri"], tip: "Allungamento del capo lungo del tricipite." },
+      { name: "Skull crusher / French press", muscle: "braccia", rest: 75, equips: ["Bilanciere", "Manubri", "Cavi"], tip: "Discesa controllata e spinta sui tricipiti." },
+
+      // GAMBE
+      { name: "Squat", muscle: "gambe", rest: 150, equips: ["Bilanciere", "Macchinario"], tip: "Profondità controllata e baricentro stabile." },
+      { name: "Leg press / Pressa", muscle: "gambe", rest: 120, equips: ["Macchinario"], tip: "Bacino ben saldo e spinta uniforme." },
+      { name: "Leg extension", muscle: "gambe", rest: 75, equips: ["Macchinario"], tip: "Isolamento del quadricipite con pausa in alto." },
+      { name: "Leg curl", muscle: "gambe", rest: 75, equips: ["Macchinario", "Cavi"], tip: "Flessione controllata per i femorali." },
+      { name: "Stacco rumeno / RDL", muscle: "gambe", rest: 120, equips: ["Bilanciere", "Manubri", "Cavi"], tip: "Anca indietro, schiena neutra e allungamento femorali." },
+      { name: "Affondi / Bulgarian split", muscle: "gambe", rest: 90, equips: ["Manubri", "Cavi", "Bilanciere"], tip: "Passo stabile e discesa verticale controllata." },
+      { name: "Hip thrust", muscle: "gambe", rest: 105, equips: ["Bilanciere", "Macchinario"], tip: "Estensione completa dell'anca e contrazione glutei." },
+      { name: "Calf raise / Polpacci", muscle: "gambe", rest: 60, equips: ["Macchinario", "Manubri", "Bilanciere"], tip: "Allungamento in basso e spinta decisa." },
+
+      // ADDOME
+      { name: "Crunch", muscle: "addome", rest: 60, equips: ["Cavi", "Macchinario", "Manubri"], tip: "Flessione del busto senza tirare il collo." },
+      { name: "Plank", muscle: "addome", rest: 60, equips: ["Corpo libero"], tip: "Core attivo e allineamento costante." }
     ];
 
     function detectMuscle(exerciseName) {
       const n = (exerciseName || "").toLowerCase();
       const found = EXERCISE_CATALOG.find((e) => e.name.toLowerCase() === n);
       if (found) return found.muscle;
-      if (n.includes("panca") || n.includes("petto") || n.includes("chest") || n.includes("croci") || n.includes("dip") || n.includes("butterfly") || n.includes("pec")) return "petto";
-      if (n.includes("lat") || n.includes("trazion") || n.includes("rematore") || n.includes("pulley") || n.includes("dorso") || n.includes("schiena")) return "schiena";
-      if (n.includes("spall") || n.includes("lento") || n.includes("alzate") || n.includes("military")) return "spalle";
-      if (n.includes("curl") || n.includes("bicip") || n.includes("tricip") || n.includes("pushdown") || n.includes("french")) return "braccia";
-      if (n.includes("squat") || n.includes("leg") || n.includes("pressa") || n.includes("affond") || n.includes("stacco") || n.includes("hip") || n.includes("calf") || n.includes("gambe")) return "gambe";
+      if (n.includes("panca") || n.includes("petto") || n.includes("chest") || n.includes("croci") || n.includes("butterfly") || n.includes("pec")) return "petto";
+      if (n.includes("lat") || n.includes("trazion") || n.includes("rematore") || n.includes("pulley") || n.includes("row") || n.includes("dorso") || n.includes("schiena")) return "schiena";
+      if (n.includes("spall") || n.includes("lento") || n.includes("shoulder") || n.includes("alzate") || n.includes("deltoid")) return "spalle";
+      if (n.includes("curl") || n.includes("bicip") || n.includes("tricip") || n.includes("pushdown") || n.includes("hammer") || n.includes("french") || n.includes("skull")) return "braccia";
+      if (n.includes("squat") || n.includes("leg") || n.includes("pressa") || n.includes("press") || n.includes("affond") || n.includes("stacco") || n.includes("hip") || n.includes("calf") || n.includes("gambe")) return "gambe";
       if (n.includes("addom") || n.includes("crunch") || n.includes("plank")) return "addome";
       return "petto";
     }
@@ -998,7 +1047,7 @@
       `;
     }
 
-    const STORAGE_KEY = "gymrat_live_v2";
+    const STORAGE_KEY = "gymrat_luxury_v3";
     const PROFILE_CODE_KEY = "gymrat_profile_code";
     const GEMINI_KEY_STORAGE = "gymrat_gemini_api_key";
 
@@ -1009,6 +1058,7 @@
       editingRoutineId: null,
       weeklyPlan: { Lun: "", Mar: "", Mer: "", Gio: "", Ven: "", Sab: "", Dom: "" },
       activeWorkout: null,
+      accumulatedSessionSec: 0,
       history: []
     };
 
@@ -1028,6 +1078,7 @@
           editingRoutineId: p.editingRoutineId ?? null,
           weeklyPlan: { ...emptyState.weeklyPlan, ...(p.weeklyPlan || {}) },
           activeWorkout: p.activeWorkout ?? null,
+          accumulatedSessionSec: parseInt(p.accumulatedSessionSec, 10) || 0,
           history: Array.isArray(p.history) ? p.history : []
         };
       } catch {
@@ -1048,17 +1099,24 @@
       if (heightCm) parts.push(`${heightCm} cm`);
       if (weightKg) parts.push(`${weightKg} kg`);
       if (somatotype) parts.push(somatotype.charAt(0).toUpperCase() + somatotype.slice(1));
-      return parts.length ? parts.join(" · ") : "Altezza e peso in Profilo";
+      return parts.join(" · ");
     }
 
     function updateHeaderAndProfileBadges() {
       document.getElementById("bodyStatsSub").textContent = getBodySummaryText();
       document.getElementById("profileCodeBadge").textContent = profileCode ? `Cloud: ${profileCode}` : "Locale";
       const ptSummary = document.getElementById("ptProfileSummary");
-      if (ptSummary) {
-        ptSummary.textContent = (state.profile.heightCm || state.profile.weightKg || state.profile.somatotype)
-          ? getBodySummaryText()
-          : "Profilo non impostato";
+      if (ptSummary) ptSummary.textContent = getBodySummaryText();
+
+      const brandDefault = document.getElementById("headerBrandDefault");
+      const routineBubble = document.getElementById("headerRoutineBubble");
+      if (activeNav === "allenamento" && state.activeWorkout) {
+        brandDefault.classList.add("hidden");
+        routineBubble.classList.remove("hidden");
+        routineBubble.textContent = state.activeWorkout.routineName || "Allenamento";
+      } else {
+        brandDefault.classList.remove("hidden");
+        routineBubble.classList.add("hidden");
       }
     }
 
@@ -1073,6 +1131,7 @@
             selectedRoutineId: state.selectedRoutineId,
             weeklyPlan: state.weeklyPlan,
             activeWorkout: state.activeWorkout,
+            accumulatedSessionSec: state.accumulatedSessionSec,
             history: state.history,
             updatedAt: serverTimestamp()
           },
@@ -1109,6 +1168,7 @@
             selectedRoutineId: state.selectedRoutineId,
             weeklyPlan: state.weeklyPlan,
             activeWorkout: state.activeWorkout,
+            accumulatedSessionSec: state.accumulatedSessionSec,
             history: state.history,
             updatedAt: serverTimestamp()
           });
@@ -1121,6 +1181,7 @@
         if (data.selectedRoutineId !== undefined) state.selectedRoutineId = data.selectedRoutineId;
         if (data.weeklyPlan) state.weeklyPlan = { ...emptyState.weeklyPlan, ...data.weeklyPlan };
         if (data.activeWorkout !== undefined) state.activeWorkout = data.activeWorkout;
+        if (data.accumulatedSessionSec !== undefined) state.accumulatedSessionSec = parseInt(data.accumulatedSessionSec, 10) || 0;
         if (Array.isArray(data.history)) state.history = data.history;
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
         isApplyingCloud = false;
@@ -1144,17 +1205,14 @@
         .replace(/"/g, "&quot;");
     }
 
-    // EFFETTO LUCE ARANCIONE CHIARO QUANDO SI SCORRE SULLE SEZIONI
     window.addEventListener("scroll", () => {
       const midY = window.innerHeight * 0.45;
       document.querySelectorAll(".view.active .section-card").forEach((card) => {
         const r = card.getBoundingClientRect();
-        const isNear = r.top < midY && r.bottom > 70;
-        card.classList.toggle("lit", isNear);
+        card.classList.toggle("lit", r.top < midY && r.bottom > 70);
       });
     }, { passive: true });
 
-    // NAVIGAZIONE IN BASSO CON BUBBLE
     let activeNav = "schede";
     function switchSection(navName) {
       activeNav = navName;
@@ -1163,6 +1221,7 @@
       const view = document.getElementById(`view-${navName}`);
       void view.offsetWidth;
       view.classList.add("active");
+      updateHeaderAndProfileBadges();
 
       if (navName === "allenamento") {
         ensureWorkoutLoaded();
@@ -1171,7 +1230,7 @@
         syncProfileInputsFromState();
         renderProfiloSection();
       } else if (navName === "pt") {
-        updateHeaderAndProfileBadges();
+        renderReadinessAnalysis();
       }
     }
 
@@ -1184,11 +1243,11 @@
       activeNav = "profilo";
       document.querySelectorAll(".view").forEach((v) => v.classList.remove("active"));
       document.getElementById("view-profilo").classList.add("active");
+      updateHeaderAndProfileBadges();
       syncProfileInputsFromState();
       renderProfiloSection();
     };
 
-    // CREA SCHEDA A SCOMPARSA/COMPARSA
     const toggleNewRoutineBtn = document.getElementById("toggleNewRoutineBtn");
     const createRoutineForm = document.getElementById("createRoutineForm");
 
@@ -1224,42 +1283,34 @@
     function suggestExerciseForBodyAndMuscle(muscleKey) {
       const pool = EXERCISE_CATALOG.filter((e) => e.muscle === muscleKey);
       const list = pool.length ? pool : EXERCISE_CATALOG;
-      const h = parseFloat(state.profile.heightCm) || 0;
-      const w = parseFloat(state.profile.weightKg) || 0;
       const soma = state.profile.somatotype || "";
-
       let recommended = list[0];
       let sets = 3;
       let reps = "8-12";
       let rest = recommended.rest;
-      let reason = "";
 
       if (soma === "ectomorfo") {
-        recommended = list.find((x) => x.name.includes("bilanciere") || x.name.includes("press") || x.name.includes("stacco") || x.name.includes("squat")) || list[0];
+        recommended = list.find((x) => x.equips.includes("Bilanciere") || x.equips.includes("Macchinario")) || list[0];
         sets = 3;
         reps = "6-10";
         rest = Math.max(recommended.rest, 105);
-        reason = "Multiarticolari e recuperi pieni.";
       } else if (soma === "endomorfo") {
-        recommended = list.find((x) => x.name.includes("manubri") || x.name.includes("cavi") || x.name.includes("pressa") || x.name.includes("curl")) || list[0];
+        recommended = list.find((x) => x.equips.includes("Cavi") || x.equips.includes("Manubri")) || list[0];
         sets = 4;
         reps = "10-15";
         rest = Math.min(recommended.rest, 75);
-        reason = "Volume controllato e ritmo costante.";
       } else if (soma === "mesomorfo") {
-        recommended = list[0];
         sets = 4;
         reps = "8-12";
-        rest = recommended.rest;
-        reason = "Progressione graduale su carichi e tecnica.";
-      } else {
-        reason = "Imposta altezza, peso e somatotipo in Profilo.";
       }
 
-      if (h >= 185) reason += " Controllo sulle leve lunghe.";
-      else if (w > 0 && w >= 90) reason += " Progressioni graduali sul carico.";
-
-      return { name: recommended.name, sets, reps, rest, reason };
+      return {
+        name: recommended.name,
+        equipment: recommended.equips?.[0] || "",
+        sets,
+        reps,
+        rest
+      };
     }
 
     function getPreviousSetLabel(exName, setIdx) {
@@ -1312,20 +1363,20 @@
 
     function getExerciseDetailedAdvice(ex) {
       const catItem = EXERCISE_CATALOG.find((e) => e.name.toLowerCase() === (ex.name || "").toLowerCase());
-      const baseTip = catItem ? catItem.tip : "Controlla il movimento e mantieni esecuzione pulita.";
+      const baseTip = catItem ? catItem.tip : "Esecuzione controllata.";
+      const eqStr = ex.equipment ? ` · ${ex.equipment}` : "";
       const pr = computePersonalRecords().find((r) => r.name.toLowerCase() === (ex.name || "").toLowerCase());
-      const prStr = pr ? ` PR: ${pr.maxKg} kg (1RM ~${pr.est1rm.toFixed(1)} kg).` : "";
-      return `${ex.name}: ${baseTip}${prStr} Profilo: ${getBodySummaryText()}.`;
+      const prStr = pr ? ` · PR ${pr.maxKg}kg (1RM ~${pr.est1rm.toFixed(1)}kg)` : "";
+      return `${ex.name}${eqStr} — ${baseTip}${prStr}`;
     }
 
-    // RENDER SCHEDE PULITE
     function renderSchede() {
       const list = document.getElementById("routinesListContainer");
       const countLabel = document.getElementById("routinesCountLabel");
-      countLabel.textContent = `${state.routines.length} ${state.routines.length === 1 ? "scheda" : "schede"}`;
+      countLabel.textContent = `${state.routines.length}`;
 
       if (!state.routines.length) {
-        list.innerHTML = `<div class="section-card empty-box">Nessuna scheda. Tocca + per crearne una o usa PT.</div>`;
+        list.innerHTML = `<div class="section-card empty-box">+</div>`;
         return;
       }
 
@@ -1342,7 +1393,7 @@
           <div class="head-row">
             <div>
               <div class="sec-title">${escapeHtml(routine.emoji || "🐀")} ${escapeHtml(routine.name)}</div>
-              <div class="muted-xs">${exList.length} esercizi · ${exList.reduce((a, b) => a + (b.sets || 0), 0)} serie</div>
+              <div class="muted-xs">${exList.length} ex · ${exList.reduce((a, b) => a + (b.sets || 0), 0)} set</div>
             </div>
             <div class="row-gap" style="gap:6px;">
               <button type="button" class="pill-btn solid" data-start="${routine.id}">Avvia</button>
@@ -1364,9 +1415,9 @@
             line.innerHTML = `
               <div>
                 <div style="font-weight:700;">${escapeHtml(ex.name)}</div>
-                <div class="muted-xs">${ex.sets} serie · ${escapeHtml(ex.repsTarget || "10")} · rec ${ex.restSec || 90}s</div>
+                <div class="muted-xs">${ex.sets} × ${escapeHtml(ex.repsTarget || "10")}${ex.equipment ? ` · ${escapeHtml(ex.equipment)}` : ""}</div>
               </div>
-              <span class="muted-xs">${escapeHtml(MUSCLE_LABELS[detectMuscle(ex.name)] || "")}</span>
+              <span class="muted-xs">${ex.restSec || 90}s</span>
             `;
             exStack.appendChild(line);
           });
@@ -1375,10 +1426,7 @@
 
         const anatBox = document.createElement("div");
         anatBox.className = "anatomy-panel";
-        anatBox.innerHTML = `
-          ${renderDefinedAnatomySvg(activeMuscles)}
-          <div class="muted-xs" style="text-align:center;margin-top:2px;">${Array.from(activeMuscles).map((k) => MUSCLE_LABELS[k] || k).join(" · ") || "Nessun muscolo"}</div>
-        `;
+        anatBox.innerHTML = renderDefinedAnatomySvg(activeMuscles);
         card.appendChild(anatBox);
 
         if (isEditing) {
@@ -1390,56 +1438,89 @@
           editor.innerHTML = `
             <div class="row-gap" style="margin-bottom:8px;">
               <select class="clean-select target-muscle-sel">
-                <option value="petto">Muscolo: Petto</option>
-                <option value="schiena">Muscolo: Schiena</option>
-                <option value="spalle">Muscolo: Spalle</option>
-                <option value="braccia">Muscolo: Braccia</option>
-                <option value="gambe">Muscolo: Gambe</option>
-                <option value="addome">Muscolo: Addome</option>
+                <option value="petto">Petto</option>
+                <option value="schiena">Schiena</option>
+                <option value="spalle">Spalle</option>
+                <option value="braccia">Braccia</option>
+                <option value="gambe">Gambe</option>
+                <option value="addome">Addome</option>
               </select>
-              <button type="button" class="pill-btn suggest-ex-btn">Consiglia</button>
-            </div>
-            <div class="note-box hidden ex-suggest-box" style="margin-bottom:8px;"></div>
-            <div class="row-gap" style="margin-bottom:8px;">
               <select class="clean-select ex-catalog-sel">
-                <option value="">Catalogo esercizi...</option>
-                ${EXERCISE_CATALOG.map((c) => `<option value="${escapeHtml(c.name)}" data-rest="${c.rest}">${escapeHtml(c.name)}</option>`).join("")}
+                <option value="">Esercizio...</option>
               </select>
-              <input type="text" class="clean-input ex-custom-in" placeholder="Esercizio..." />
+              <button type="button" class="pill-btn suggest-ex-btn">★</button>
+            </div>
+            <div class="row-gap equip-bar" style="margin-bottom:8px;gap:5px;">
+              <button type="button" class="equip-chip active" data-eq="">Tutti</button>
+              <button type="button" class="equip-chip" data-eq="Manubri">Manubri</button>
+              <button type="button" class="equip-chip" data-eq="Cavi">Cavi</button>
+              <button type="button" class="equip-chip" data-eq="Macchinario">Macchinario</button>
+            </div>
+            <div class="row-gap" style="margin-bottom:8px;">
+              <input type="text" class="clean-input ex-custom-in" placeholder="Nome esercizio..." />
+              <input type="text" class="clean-input ex-eq-in" style="max-width:118px;" placeholder="Manubri / Cavi / Macch." />
             </div>
             <div class="row-gap">
-              <input type="number" class="clean-input ex-sets-in" style="max-width:74px;" min="1" max="15" value="3" placeholder="Serie" />
-              <input type="text" class="clean-input ex-reps-in" style="max-width:92px;" value="8-12" placeholder="Rip." />
-              <input type="number" class="clean-input ex-rest-in" style="max-width:84px;" min="15" max="600" step="15" value="90" placeholder="Rec s" />
+              <input type="number" class="clean-input ex-sets-in" style="max-width:72px;" min="1" max="15" value="3" />
+              <input type="text" class="clean-input ex-reps-in" style="max-width:88px;" value="8-12" />
+              <input type="number" class="clean-input ex-rest-in" style="max-width:80px;" min="15" max="600" step="15" value="90" />
               <button type="button" class="circle-btn sm solid ex-add-btn" title="Aggiungi">+</button>
             </div>
             <div class="stack ex-edit-list" style="margin-top:10px;gap:6px;"></div>
           `;
 
           const mSel = editor.querySelector(".target-muscle-sel");
-          const sBtn = editor.querySelector(".suggest-ex-btn");
-          const sBox = editor.querySelector(".ex-suggest-box");
           const catSel = editor.querySelector(".ex-catalog-sel");
+          const sBtn = editor.querySelector(".suggest-ex-btn");
           const custIn = editor.querySelector(".ex-custom-in");
+          const eqIn = editor.querySelector(".ex-eq-in");
           const setsIn = editor.querySelector(".ex-sets-in");
           const repsIn = editor.querySelector(".ex-reps-in");
           const restIn = editor.querySelector(".ex-rest-in");
           const addBtn = editor.querySelector(".ex-add-btn");
           const editList = editor.querySelector(".ex-edit-list");
+          let selectedEquipFilter = "";
+
+          function populateMuscleCatalog() {
+            const mVal = mSel.value;
+            const filtered = EXERCISE_CATALOG.filter((c) => {
+              if (c.muscle !== mVal) return false;
+              if (!selectedEquipFilter) return true;
+              return (c.equips || []).includes(selectedEquipFilter);
+            });
+            catSel.innerHTML = `<option value="">Catalogo (${MUSCLE_LABELS[mVal]})...</option>` +
+              filtered.map((c) => `<option value="${escapeHtml(c.name)}" data-rest="${c.rest}" data-eqs="${escapeHtml((c.equips || []).join(", "))}">${escapeHtml(c.name)}</option>`).join("");
+          }
+
+          editor.querySelectorAll(".equip-chip").forEach((chip) => {
+            chip.onclick = () => {
+              selectedEquipFilter = chip.dataset.eq || "";
+              editor.querySelectorAll(".equip-chip").forEach((c) => c.classList.toggle("active", c === chip));
+              if (selectedEquipFilter) eqIn.value = selectedEquipFilter;
+              populateMuscleCatalog();
+            };
+          });
+
+          mSel.onchange = populateMuscleCatalog;
+          populateMuscleCatalog();
+
+          catSel.onchange = () => {
+            const opt = catSel.selectedOptions[0];
+            if (!opt || !opt.value) return;
+            custIn.value = opt.value;
+            if (opt.dataset.rest) restIn.value = opt.dataset.rest;
+            const eqs = (opt.dataset.eqs || "").split(",").map((s) => s.trim()).filter(Boolean);
+            if (selectedEquipFilter && eqs.includes(selectedEquipFilter)) eqIn.value = selectedEquipFilter;
+            else if (eqs.length) eqIn.value = eqs[0];
+          };
 
           sBtn.onclick = () => {
             const rec = suggestExerciseForBodyAndMuscle(mSel.value);
             custIn.value = rec.name;
+            eqIn.value = rec.equipment;
             setsIn.value = rec.sets;
             repsIn.value = rec.reps;
             restIn.value = rec.rest;
-            sBox.classList.remove("hidden");
-            sBox.textContent = `${rec.name} (${rec.sets}×${rec.reps}, ${rec.rest}s) — ${rec.reason}`;
-          };
-
-          catSel.onchange = () => {
-            const opt = catSel.selectedOptions[0];
-            if (opt && opt.dataset.rest) restIn.value = opt.dataset.rest;
           };
 
           addBtn.onclick = () => {
@@ -1449,6 +1530,7 @@
             routine.exercises.push({
               id: uid("ex"),
               name,
+              equipment: eqIn.value.trim() || selectedEquipFilter || "",
               sets: Math.max(1, parseInt(setsIn.value, 10) || 3),
               repsTarget: repsIn.value.trim() || "8-12",
               restSec: Math.max(15, parseInt(restIn.value, 10) || 90)
@@ -1465,7 +1547,7 @@
             row.innerHTML = `
               <div>
                 <div style="font-weight:700;">${escapeHtml(ex.name)}</div>
-                <div class="muted-xs">${ex.sets} serie · ${escapeHtml(ex.repsTarget || "10")}</div>
+                <div class="muted-xs">${ex.sets} set · ${escapeHtml(ex.repsTarget || "10")}${ex.equipment ? ` · ${escapeHtml(ex.equipment)}` : ""}</div>
               </div>
               <div class="row-gap" style="gap:4px;">
                 <button type="button" class="circle-btn sm ex-minus">−</button>
@@ -1531,6 +1613,7 @@
         exercises: (r.exercises || []).map((ex) => ({
           id: uid("wex"),
           name: ex.name,
+          equipment: ex.equipment || "",
           note: "",
           repsTarget: ex.repsTarget || "8-12",
           restSec: ex.restSec || 90,
@@ -1563,6 +1646,7 @@
           exercises: (r.exercises || []).map((ex) => ({
             id: uid("wex"),
             name: ex.name,
+            equipment: ex.equipment || "",
             note: "",
             repsTarget: ex.repsTarget || "8-12",
             restSec: ex.restSec || 90,
@@ -1579,8 +1663,14 @@
       }
     }
 
-    function formatElapsed(startedAt) {
-      const sec = Math.max(0, Math.floor((Date.now() - (startedAt || Date.now())) / 1000));
+    function getCurrentLiveSeconds() {
+      const activeSec = state.activeWorkout?.startedAt
+        ? Math.max(0, Math.floor((Date.now() - state.activeWorkout.startedAt) / 1000))
+        : 0;
+      return (state.accumulatedSessionSec || 0) + activeSec;
+    }
+
+    function formatElapsedSec(sec) {
       if (sec < 60) return `${sec}s`;
       const m = Math.floor(sec / 60);
       return `${m}m ${sec % 60}s`;
@@ -1588,7 +1678,7 @@
 
     setInterval(() => {
       if (activeNav === "allenamento" && state.activeWorkout) {
-        document.getElementById("liveDurationVal").textContent = formatElapsed(state.activeWorkout.startedAt);
+        document.getElementById("liveDurationVal").textContent = formatElapsedSec(getCurrentLiveSeconds());
       }
     }, 1000);
 
@@ -1616,11 +1706,11 @@
 
       const w = state.activeWorkout;
       if (!w) {
-        document.getElementById("liveDurationVal").textContent = "0s";
+        document.getElementById("liveDurationVal").textContent = formatElapsedSec(state.accumulatedSessionSec || 0);
         document.getElementById("liveVolumeVal").textContent = "0 kg";
         document.getElementById("liveSetsVal").textContent = "0";
         sessionNoteIn.value = "";
-        list.innerHTML = `<div class="section-card empty-box">Nessuna scheda attiva. Crea o avvia una scheda.</div>`;
+        list.innerHTML = `<div class="section-card empty-box">Avvia una scheda</div>`;
         renderHistory();
         return;
       }
@@ -1639,12 +1729,12 @@
         });
       });
 
-      document.getElementById("liveDurationVal").textContent = formatElapsed(w.startedAt);
+      document.getElementById("liveDurationVal").textContent = formatElapsedSec(getCurrentLiveSeconds());
       document.getElementById("liveVolumeVal").textContent = `${Math.round(totalVol)} kg`;
       document.getElementById("liveSetsVal").textContent = String(doneSets);
 
       if (!w.exercises.length) {
-        list.innerHTML = `<div class="section-card empty-box">Nessun esercizio. Tocca + Esercizio.</div>`;
+        list.innerHTML = `<div class="section-card empty-box">+</div>`;
         renderHistory();
         return;
       }
@@ -1655,35 +1745,48 @@
         card.className = "section-card pad";
         const restSec = ex.restSec || 90;
         const isAdviceOpen = openAdviceIds.has(ex.id);
-        const muscleKey = detectMuscle(ex.name);
+        const catItem = EXERCISE_CATALOG.find((c) => c.name.toLowerCase() === (ex.name || "").toLowerCase());
+        const equips = catItem?.equips || ["Manubri", "Cavi", "Macchinario"];
+        const curEquip = ex.equipment || "";
 
         card.innerHTML = `
-          <div class="head-row" style="margin-bottom:8px;">
+          <div class="head-row" style="margin-bottom:6px;">
             <div>
               <div class="sec-title">${escapeHtml(ex.name)}</div>
-              <div class="muted-xs">${escapeHtml(MUSCLE_LABELS[muscleKey] || "")} · Target ${escapeHtml(ex.repsTarget || "8-12")}</div>
+              <div class="muted-xs">${ex.sets.length} set · ${escapeHtml(ex.repsTarget || "8-12")}</div>
             </div>
             <div class="row-gap" style="gap:5px;">
-              <button type="button" class="pill-btn ex-rest-btn">Recupero ${restSec}s</button>
-              <button type="button" class="pill-btn ex-note-btn">Nota</button>
+              <button type="button" class="pill-btn ex-rest-btn">${restSec}s</button>
+              <button type="button" class="circle-btn sm ex-note-btn" title="Nota">✎</button>
               <button type="button" class="circle-btn sm ex-swap-btn" title="Sostituisci">⇄</button>
-              <button type="button" class="circle-btn sm ex-tip-btn" title="Consiglio">i</button>
+              <button type="button" class="circle-btn sm ex-tip-btn" title="Info">i</button>
             </div>
           </div>
+          <div class="row-gap" style="margin-bottom:8px;gap:5px;">
+            ${equips.map((eq) => `<button type="button" class="equip-chip ${curEquip === eq ? "active" : ""}" data-set-eq="${escapeHtml(eq)}">${escapeHtml(eq)}</button>`).join("")}
+          </div>
           <div class="row-gap ${ex.note ? "" : "hidden"} ex-note-wrap" style="margin-bottom:8px;">
-            <input type="text" class="clean-input ex-note-in" style="padding:6px 10px;font-size:0.8rem;" placeholder="Nota esercizio..." value="${escapeHtml(ex.note || "")}" />
+            <input type="text" class="clean-input ex-note-in" style="padding:6px 10px;font-size:0.8rem;" placeholder="Nota..." value="${escapeHtml(ex.note || "")}" />
           </div>
           <div class="sets-head">
-            <span>Serie</span>
-            <span>Precedente</span>
+            <span>Set</span>
+            <span>Prev</span>
             <span>Kg</span>
             <span>Rip</span>
             <span>✓</span>
           </div>
           <div class="sets-list"></div>
-          <button type="button" class="pill-btn ex-add-set" style="width:100%;margin-top:8px;border-radius:11px;">+ Aggiungi serie</button>
+          <button type="button" class="pill-btn ex-add-set" style="width:100%;margin-top:8px;border-radius:11px;">+ Set</button>
           <div class="note-box ${isAdviceOpen ? "" : "hidden"} ex-advice-panel">${escapeHtml(getExerciseDetailedAdvice(ex))}</div>
         `;
+
+        card.querySelectorAll("[data-set-eq]").forEach((btn) => {
+          btn.onclick = () => {
+            ex.equipment = ex.equipment === btn.dataset.setEq ? "" : btn.dataset.setEq;
+            saveState();
+            renderAllenamento();
+          };
+        });
 
         const noteWrap = card.querySelector(".ex-note-wrap");
         const noteIn = card.querySelector(".ex-note-in");
@@ -1694,7 +1797,7 @@
         noteIn.onchange = (ev) => { ex.note = ev.target.value; saveState(); };
 
         card.querySelector(".ex-rest-btn").onclick = () => {
-          const nextR = prompt("Recupero in secondi:", String(restSec));
+          const nextR = prompt("Recupero (s):", String(restSec));
           const parsed = parseInt(nextR || "", 10);
           if (parsed >= 5) {
             ex.restSec = parsed;
@@ -1704,7 +1807,7 @@
         };
 
         card.querySelector(".ex-swap-btn").onclick = () => {
-          const rec = suggestExerciseForBodyAndMuscle(muscleKey);
+          const rec = suggestExerciseForBodyAndMuscle(detectMuscle(ex.name));
           const choice = prompt(`Sostituisci "${ex.name}" con:`, rec.name);
           if (!choice || !choice.trim()) return;
           ex.name = choice.trim();
@@ -1740,14 +1843,13 @@
           const line = document.createElement("div");
           line.className = `set-row ${s.done ? "done" : ""}`;
           line.innerHTML = `
-            <button type="button" class="set-badge ${modeClass}" title="Cambia tipo serie (W/N/D/F/S)">${escapeHtml(badgeText)}</button>
+            <button type="button" class="set-badge ${modeClass}">${escapeHtml(badgeText)}</button>
             <span class="prev-cell">${escapeHtml(prevLabel)}</span>
             <input type="number" step="0.5" min="0" class="set-in kg-in" placeholder="kg" value="${escapeHtml(s.kg)}" />
             <input type="number" min="0" class="set-in reps-in" placeholder="rip" value="${escapeHtml(s.reps)}" />
             <button type="button" class="check-box">${s.done ? "✓" : ""}</button>
           `;
 
-          // Cliccando sul numeretto / W cicla tra riscaldamento (W), normale (N), dropset (D), cedimento (F), superserie (S)
           line.querySelector(".set-badge").onclick = () => {
             const idx = SET_MODES.indexOf(s.mode || "N");
             s.mode = SET_MODES[(idx + 1) % SET_MODES.length];
@@ -1762,7 +1864,7 @@
             saveState();
             renderAllenamento();
             if (s.done) {
-              startBottomRestTimer(restSec, `${ex.name} · Serie ${badgeText}`);
+              startBottomRestTimer(restSec, `${ex.name} · ${badgeText}`);
             }
           };
           setsList.appendChild(line);
@@ -1782,6 +1884,7 @@
       state.activeWorkout.exercises.push({
         id: uid("wex"),
         name: name.trim(),
+        equipment: "",
         note: "",
         repsTarget: "8-12",
         restSec: 90,
@@ -1797,6 +1900,9 @@
 
     document.getElementById("finishWorkoutBtn").onclick = () => {
       if (!state.activeWorkout) return;
+      const sessionSec = getCurrentLiveSeconds();
+      state.accumulatedSessionSec = sessionSec;
+
       const doneSets = state.activeWorkout.exercises.reduce((a, ex) => a + ex.sets.filter((s) => s.done).length, 0);
       const vol = state.activeWorkout.exercises.reduce((a, ex) => a + ex.sets.reduce((sa, s) => {
         if (!s.done) return sa;
@@ -1807,6 +1913,7 @@
         id: uid("h"),
         routineName: state.activeWorkout.routineName,
         note: state.activeWorkout.note || "",
+        durationSec: sessionSec,
         dateIso: new Date().toISOString(),
         dateStr: new Date().toLocaleDateString("it-IT", { day: "2-digit", month: "2-digit", year: "numeric" }),
         doneSets,
@@ -1832,11 +1939,12 @@
       state.history.slice(0, 5).forEach((h) => {
         const card = document.createElement("div");
         card.className = "section-card pad";
+        const durText = h.durationSec ? ` · ${formatElapsedSec(h.durationSec)}` : "";
         card.innerHTML = `
           <div class="head-row">
             <div>
               <div style="font-weight:700;font-size:0.88rem;">${escapeHtml(h.routineName)}</div>
-              <div class="muted-xs">${escapeHtml(h.dateStr)} · ${h.doneSets} serie${h.note ? ` · ${escapeHtml(h.note)}` : ""}</div>
+              <div class="muted-xs">${escapeHtml(h.dateStr)}${durText} · ${h.doneSets} set</div>
             </div>
             <span class="muted-xs" style="font-weight:800;color:var(--text-main);">${Number(h.volumeKg || 0).toLocaleString("it-IT")} kg</span>
           </div>
@@ -1845,7 +1953,7 @@
       });
     }
 
-    // IMPORTAZIONE CSV (LOCALE + OPZIONALE IA GEMINI)
+    // IMPORT CSV CON SEPARAZIONE NETTA PER SCHEDA ED ESERCIZIO
     function parseCsvFallback(text) {
       const lines = text.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
       if (!lines.length) return [];
@@ -1868,7 +1976,7 @@
       const hasHeader = firstCols.some((c) => ["exercise", "esercizio", "title", "workout", "scheda", "weight", "peso", "reps", "ripetizioni"].includes(c));
       const startIdx = hasHeader ? 1 : 0;
 
-      const idxWorkout = hasHeader ? firstCols.findIndex((c) => ["workout", "scheda", "title", "session"].includes(c)) : -1;
+      const idxWorkout = hasHeader ? firstCols.findIndex((c) => ["workout", "scheda", "title", "session", "routine"].includes(c)) : -1;
       const idxEx = hasHeader ? firstCols.findIndex((c) => ["exercise", "esercizio", "name", "movement"].includes(c)) : 0;
       const idxWeight = hasHeader ? firstCols.findIndex((c) => ["weight", "peso", "kg"].includes(c)) : 1;
       const idxReps = hasHeader ? firstCols.findIndex((c) => ["reps", "ripetizioni", "rep"].includes(c)) : 2;
@@ -1876,11 +1984,13 @@
       const rows = [];
       for (let i = startIdx; i < lines.length; i++) {
         const cols = splitRow(lines[i]);
-        const exName = (cols[idxEx >= 0 ? idxEx : 0] || "").replace(/^"|"$/g, "");
+        const exName = (cols[idxEx >= 0 ? idxEx : 0] || "").replace(/^"|"$/g, "").trim();
         if (!exName) continue;
         const kgVal = parseFloat((cols[idxWeight >= 0 ? idxWeight : 1] || "").replace(",", ".")) || 0;
         const repsVal = parseInt((cols[idxReps >= 0 ? idxReps : 2] || "0"), 10) || 0;
-        const routineName = idxWorkout >= 0 && cols[idxWorkout] ? cols[idxWorkout].replace(/^"|"$/g, "") : "Scheda CSV";
+        const routineName = idxWorkout >= 0 && cols[idxWorkout]
+          ? cols[idxWorkout].replace(/^"|"$/g, "").trim()
+          : (detectMuscle(exName) ? MUSCLE_LABELS[detectMuscle(exName)] : "Scheda CSV");
         rows.push({ routineName, exName, kgVal, repsVal });
       }
       return rows;
@@ -1898,7 +2008,7 @@
             body: JSON.stringify({
               contents: [{
                 parts: [{
-                  text: `Estrai le schede e gli esercizi da questo CSV di allenamento e rispondi SOLO con un JSON array valido di oggetti {"routineName":"...","exName":"...","kgVal":0,"repsVal":0}. CSV:\n${csvText.slice(0, 8000)}`
+                  text: `Analizza questo CSV di allenamento e restituisci SOLO un JSON array di oggetti {"routineName":"nome scheda","exName":"nome esercizio","kgVal":0,"repsVal":0}. Separa bene ogni scheda e ogni singolo esercizio. CSV:\n${csvText.slice(0, 9000)}`
                 }]
               }]
             })
@@ -1933,21 +2043,24 @@
         return;
       }
 
-      statusBox.textContent = "Lettura CSV in corso...";
+      statusBox.textContent = "...";
       const reader = new FileReader();
       reader.onload = async () => {
         const rows = await parseCsvWithAiIfAvailable(String(reader.result || ""));
         if (!rows.length) {
-          statusBox.textContent = "Nessuna scheda o esercizio riconosciuto nel file.";
+          statusBox.textContent = "Nessun esercizio trovato.";
           return;
         }
 
+        // Raggruppa per SCHEDA -> ESERCIZIO -> SERIE
         const grouped = new Map();
         rows.forEach((item) => {
-          if (!grouped.has(item.routineName)) grouped.set(item.routineName, new Map());
-          const exMap = grouped.get(item.routineName);
-          if (!exMap.has(item.exName)) exMap.set(item.exName, []);
-          exMap.get(item.exName).push({
+          const rKey = item.routineName || "Scheda CSV";
+          const eKey = item.exName;
+          if (!grouped.has(rKey)) grouped.set(rKey, new Map());
+          const exMap = grouped.get(rKey);
+          if (!exMap.has(eKey)) exMap.set(eKey, []);
+          exMap.get(eKey).push({
             kg: item.kgVal ? String(item.kgVal) : "",
             reps: item.repsVal ? String(item.repsVal) : "",
             done: true
@@ -1955,6 +2068,8 @@
         });
 
         let createdR = 0;
+        let createdEx = 0;
+
         grouped.forEach((exMap, rName) => {
           const exercisesForRoutine = [];
           const exercisesSnap = [];
@@ -1962,9 +2077,11 @@
           let totalVol = 0;
 
           exMap.forEach((setsList, exName) => {
+            createdEx += 1;
             exercisesForRoutine.push({
               id: uid("ex"),
               name: exName,
+              equipment: "",
               sets: Math.max(1, setsList.length),
               repsTarget: setsList[0]?.reps || "8-12",
               restSec: 90
@@ -1993,7 +2110,7 @@
           state.history.unshift({
             id: uid("h"),
             routineName: `📥 ${rName}`,
-            note: "Importato da CSV",
+            note: "CSV",
             dateIso: new Date().toISOString(),
             dateStr: new Date().toLocaleDateString("it-IT", { day: "2-digit", month: "2-digit", year: "numeric" }),
             doneSets: totalSets,
@@ -2004,12 +2121,12 @@
 
         saveState();
         renderSchede();
-        statusBox.textContent = `Importate ${createdR} ${createdR === 1 ? "scheda" : "schede"} da CSV${geminiApiKey ? " con IA" : ""}.`;
+        statusBox.textContent = `${createdR} schede · ${createdEx} esercizi${geminiApiKey ? " · IA" : ""}`;
       };
       reader.readAsText(file);
     };
 
-    // SEZIONE 4: PROFILO
+    // PROFILO
     function syncProfileInputsFromState() {
       document.getElementById("profileHeightInput").value = state.profile.heightCm || "";
       document.getElementById("profileWeightInput").value = state.profile.weightKg || "";
@@ -2038,7 +2155,7 @@
         row.innerHTML = `
           <span class="muted-xs" style="font-weight:800;color:var(--text-main);">${day}</span>
           <select class="clean-select day-routine-sel" style="padding:6px 8px;font-size:0.8rem;">
-            <option value="">Riposo</option>
+            <option value="">—</option>
             ${state.routines.map((r) => `<option value="${r.id}" ${r.id === assignedId ? "selected" : ""}>${escapeHtml(r.emoji || "🐀")} ${escapeHtml(r.name)}</option>`).join("")}
           </select>
           <button type="button" class="circle-btn sm day-go-btn" title="Avvia">▶</button>
@@ -2052,7 +2169,7 @@
       const prBox = document.getElementById("maxLiftsContainer");
       const prs = computePersonalRecords();
       if (!prs.length) {
-        prBox.innerHTML = `<div class="muted-xs">Completa serie in Allenamento o importa un CSV per i massimali.</div>`;
+        prBox.innerHTML = `<div class="muted-xs">—</div>`;
       } else {
         prBox.innerHTML = "";
         prs.slice(0, 8).forEach((pr) => {
@@ -2061,7 +2178,7 @@
           line.innerHTML = `
             <div>
               <div style="font-weight:700;">${escapeHtml(pr.name)}</div>
-              <div class="muted-xs">Max: ${pr.maxKg} kg × ${pr.bestRepsAtMax} rip</div>
+              <div class="muted-xs">${pr.maxKg} kg × ${pr.bestRepsAtMax}</div>
             </div>
             <span class="muted-xs" style="font-weight:800;color:var(--text-main);">1RM ~${pr.est1rm.toFixed(1)} kg</span>
           `;
@@ -2093,7 +2210,7 @@
       bindCloudProfile(val);
     };
 
-    // PT + CALCOLATORE DISCHI
+    // PT: SPLIT, PRONTEZZA & CARICO, COACH, DISCHI
     document.getElementById("generatePtRoutineBtn").onclick = () => {
       const split = document.getElementById("ptSplitSelect").value;
       const goal = document.getElementById("ptGoalSelect").value;
@@ -2101,23 +2218,23 @@
       const setsMap = { ipertrofia: 3, forza: 4, tonificazione: 3 };
       const repsTarget = repsMap[goal] || "8-12";
       const sets = setsMap[goal] || 3;
-      const mk = (name, restSec) => ({ id: uid("ex"), name, sets, repsTarget, restSec });
+      const mk = (name, equipment, restSec) => ({ id: uid("ex"), name, equipment, sets, repsTarget, restSec });
 
       let routines = [];
       if (split === "ppl") {
         routines = [
-          { id: uid("r"), name: "Push", emoji: "🐀", exercises: [mk("Panca piana bilanciere", 120), mk("Panca inclinata manubri", 90), mk("Alzate laterali manubri / Cavi", 60), mk("Pushdown tricipiti ai cavi", 75)] },
-          { id: uid("r"), name: "Pull", emoji: "⚡", exercises: [mk("Lat machine avanti", 90), mk("Rematore con bilanciere", 105), mk("Alzate posteriori / Reverse fly", 60), mk("Curl bilanciere / EZ bicipiti", 75)] },
-          { id: uid("r"), name: "Legs", emoji: "🔥", exercises: [mk("Squat con bilanciere", 150), mk("Stacco rumeno / RDL", 120), mk("Leg curl sdraiato / Seduto", 75), mk("Calf raise in piedi / Seduto", 60)] }
+          { id: uid("r"), name: "Push", emoji: "🐀", exercises: [mk("Panca piana bilanciere", "Bilanciere", 120), mk("Chest press", "Macchinario", 90), mk("Alzate laterali", "Cavi", 60), mk("Pushdown tricipiti", "Cavi", 75)] },
+          { id: uid("r"), name: "Pull", emoji: "⚡", exercises: [mk("Lat machine", "Macchinario", 90), mk("Rematore", "Manubri", 105), mk("Alzate posteriori / Reverse fly", "Cavi", 60), mk("Curl bicipiti", "Cavi", 75)] },
+          { id: uid("r"), name: "Legs", emoji: "🔥", exercises: [mk("Squat", "Bilanciere", 150), mk("Leg press / Pressa", "Macchinario", 120), mk("Leg curl", "Macchinario", 75), mk("Calf raise / Polpacci", "Macchinario", 60)] }
         ];
       } else if (split === "upper_lower") {
         routines = [
-          { id: uid("r"), name: "Upper", emoji: "🐀", exercises: [mk("Panca piana bilanciere", 120), mk("Pulley basso / Row machine", 90), mk("Lento avanti bilanciere", 120), mk("Curl bilanciere / EZ bicipiti", 75)] },
-          { id: uid("r"), name: "Lower", emoji: "🔥", exercises: [mk("Leg press / Pressa 45°", 120), mk("Stacco rumeno / RDL", 120), mk("Leg curl sdraiato / Seduto", 75), mk("Plank", 60)] }
+          { id: uid("r"), name: "Upper", emoji: "🐀", exercises: [mk("Panca inclinata", "Manubri", 90), mk("Pulley / Row basso", "Cavi", 90), mk("Lento / Shoulder press", "Macchinario", 105), mk("Curl bicipiti", "Cavi", 75)] },
+          { id: uid("r"), name: "Lower", emoji: "🔥", exercises: [mk("Leg press / Pressa", "Macchinario", 120), mk("Stacco rumeno / RDL", "Manubri", 120), mk("Leg extension", "Macchinario", 75), mk("Plank", "Corpo libero", 60)] }
         ];
       } else {
         routines = [
-          { id: uid("r"), name: "Full Body", emoji: "⚡", exercises: [mk("Squat con bilanciere", 120), mk("Panca piana bilanciere", 105), mk("Lat machine avanti", 90), mk("Alzate laterali manubri / Cavi", 60), mk("Plank", 60)] }
+          { id: uid("r"), name: "Full Body", emoji: "⚡", exercises: [mk("Squat", "Bilanciere", 120), mk("Chest press", "Macchinario", 90), mk("Lat machine", "Macchinario", 90), mk("Alzate laterali", "Manubri", 60), mk("Plank", "Corpo libero", 60)] }
         ];
       }
 
@@ -2125,26 +2242,53 @@
       state.selectedRoutineId = routines[0].id;
       saveState();
       renderSchede();
-      document.getElementById("ptCoachOutput").textContent = `Schede ${split.toUpperCase()} pronte in Schede (${getBodySummaryText()}).`;
+      document.getElementById("ptCoachOutput").textContent = `${split.toUpperCase()} · ${routines.length} schede`;
     };
 
+    function renderReadinessAnalysis() {
+      const box = document.getElementById("ptReadinessBox");
+      if (!box) return;
+      const now = Date.now();
+      const dayMs = 24 * 60 * 60 * 1000;
+      const last3dVol = (state.history || []).filter((h) => (now - new Date(h.dateIso || now).getTime()) <= 3 * dayMs)
+        .reduce((a, b) => a + (b.volumeKg || 0), 0);
+      const last7dVol = (state.history || []).filter((h) => (now - new Date(h.dateIso || now).getTime()) <= 7 * dayMs)
+        .reduce((a, b) => a + (b.volumeKg || 0), 0);
+      const weeklyAvg3d = last7dVol > 0 ? last7dVol * (3 / 7) : 0;
+      const ratio = weeklyAvg3d > 0 ? last3dVol / weeklyAvg3d : 1;
+
+      let status = "Prontezza: Alta";
+      let action = "Spinta normale / progressione carico";
+      if (ratio > 1.35) {
+        status = "Prontezza: Carico alto";
+        action = "Mantieni carichi e cura recupero (90–120s)";
+      } else if (ratio < 0.65 && last7dVol > 0) {
+        status = "Prontezza: Fresco";
+        action = "Ottimo momento per qualità e serie target";
+      }
+
+      box.textContent = `${status} · 3g: ${Math.round(last3dVol).toLocaleString("it-IT")} kg · 7g: ${Math.round(last7dVol).toLocaleString("it-IT")} kg\n→ ${action}`;
+    }
+
+    document.getElementById("refreshReadinessBtn").onclick = renderReadinessAnalysis;
+
     function buildLocalPtReply() {
-      const { somatotype } = state.profile;
-      const bodyStr = getBodySummaryText();
-      if (somatotype === "ectomorfo") return `Profilo (${bodyStr}): esercizi base, recuperi pieni (90–180s) e progressione del carico.`;
-      if (somatotype === "endomorfo") return `Profilo (${bodyStr}): tecnica pulita, recuperi ordinati (60–90s) e volume controllato.`;
-      if (somatotype === "mesomorfo") return `Profilo (${bodyStr}): ottima risposta ai carichi progressivi su range 6–12 ripetizioni.`;
-      return `Profilo (${bodyStr}): imposta altezza, peso e somatotipo in Profilo per consigli mirati.`;
+      const bodyStr = getBodySummaryText() || "Profilo base";
+      const s = state.profile.somatotype;
+      if (s === "ectomorfo") return `${bodyStr} · Focus carichi base e recuperi 90–180s.`;
+      if (s === "endomorfo") return `${bodyStr} · Volume controllato, recuperi 60–90s e costanza.`;
+      if (s === "mesomorfo") return `${bodyStr} · Progressione carichi su range 6–12 rip.`;
+      return `${bodyStr} · Imposta i dati in Profilo per consigli su misura.`;
     }
 
     async function askPt(question) {
       const out = document.getElementById("ptCoachOutput");
       const text = (question || "").trim();
       if (!geminiApiKey) {
-        out.textContent = buildLocalPtReply(text);
+        out.textContent = buildLocalPtReply();
         return;
       }
-      out.textContent = "Elaborazione...";
+      out.textContent = "...";
       try {
         const res = await fetch(
           `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(geminiApiKey)}`,
@@ -2154,7 +2298,7 @@
             body: JSON.stringify({
               contents: [{
                 parts: [{
-                  text: `Sei un Personal Trainer sintetico per GymRat. Rispondi in italiano. Profilo: ${getBodySummaryText()}. Domanda: ${text || "Consigli allenamento."}`
+                  text: `Sei un Personal Trainer sintetico in italiano. Profilo: ${getBodySummaryText() || "N/D"}. Domanda: ${text || "Consiglio allenamento."}`
                 }]
               }]
             })
@@ -2162,9 +2306,9 @@
         );
         const json = await res.json();
         const reply = json?.candidates?.[0]?.content?.parts?.[0]?.text;
-        out.textContent = reply ? reply.trim() : buildLocalPtReply(text);
+        out.textContent = reply ? reply.trim() : buildLocalPtReply();
       } catch {
-        out.textContent = buildLocalPtReply(text);
+        out.textContent = buildLocalPtReply();
       }
     }
 
@@ -2175,7 +2319,7 @@
     };
 
     document.getElementById("ptBodyAdviceBtn").onclick = () => {
-      askPt("Come impostare esercizi, serie e recuperi sul mio corpo?");
+      askPt("Consiglio su misura sul mio corpo.");
     };
 
     document.getElementById("calcPlatesBtn").onclick = () => {
@@ -2184,7 +2328,7 @@
       const box = document.getElementById("platesResultBox");
       box.classList.remove("hidden");
       if (!total || total <= bar) {
-        box.textContent = `Inserisci un peso superiore a ${bar} kg.`;
+        box.textContent = `> ${bar} kg`;
         return;
       }
       let perSide = (total - bar) / 2;
@@ -2196,10 +2340,10 @@
           perSide -= p;
         }
       }
-      box.textContent = `Per lato (${((total - bar) / 2).toFixed(2)} kg): ${used.length ? used.join(" + ") + " kg" : "Solo barra"}`;
+      box.textContent = `Lato (${((total - bar) / 2).toFixed(2)} kg): ${used.length ? used.join(" + ") + " kg" : "Solo barra"}`;
     };
 
-    // TIMER DI RECUPERO IN BASSO (APPARE QUANDO PREMI LA SPUNTA)
+    // TIMER IN BASSO
     const bottomRestTimer = document.getElementById("bottomRestTimer");
     const restTimerDigits = document.getElementById("restTimerDigits");
     const restTimerContext = document.getElementById("restTimerContext");
@@ -2222,7 +2366,7 @@
       bottomRestTimer.classList.remove("open");
     }
 
-    function startBottomRestTimer(sec, label = "Recupero") {
+    function startBottomRestTimer(sec, label = "") {
       if (restInterval) { clearInterval(restInterval); restInterval = null; }
       remainingSec = Math.max(5, parseInt(sec, 10) || 90);
       restTimerContext.textContent = label;
@@ -2231,11 +2375,8 @@
 
       restInterval = setInterval(() => {
         remainingSec -= 1;
-        if (remainingSec <= 0) {
-          hideRestTimer();
-        } else {
-          updateRestUi();
-        }
+        if (remainingSec <= 0) hideRestTimer();
+        else updateRestUi();
       }, 1000);
     }
 
@@ -2253,6 +2394,7 @@
     updateHeaderAndProfileBadges();
     renderSchede();
     renderProfiloSection();
+    renderReadinessAnalysis();
 
     if (profileCode) bindCloudProfile(profileCode);
     signInAnonymously(auth).catch(() => {});
