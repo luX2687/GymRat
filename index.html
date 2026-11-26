@@ -181,6 +181,32 @@
       to { opacity: 1; transform: translateX(0); }
     }
 
+    /* OVERLAY A COMPARSA ALLENAMENTO */
+    .workout-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 42;
+      background: var(--bg-canvas);
+      overflow-y: auto;
+      padding: calc(12px + env(safe-area-inset-top)) 12px calc(104px + env(safe-area-inset-bottom));
+      display: none;
+    }
+
+    .workout-overlay.open {
+      display: block;
+      animation: overlaySlideUp 0.28s var(--ease-out) both;
+    }
+
+    @keyframes overlaySlideUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .workout-overlay-inner {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
     .stack {
       display: flex;
       flex-direction: column;
@@ -811,7 +837,7 @@
       left: 0;
       right: 0;
       bottom: calc(68px + env(safe-area-inset-bottom));
-      z-index: 34;
+      z-index: 46;
       padding: 0 12px;
       pointer-events: none;
       display: none;
@@ -851,12 +877,12 @@
 
     .dock {
       pointer-events: auto;
-      max-width: 440px;
+      max-width: 340px;
       margin: 0 auto;
       border-radius: 9999px;
       padding: 5px;
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 4px;
       background: rgba(16, 18, 22, 0.95);
       border: 1px solid var(--border-card);
@@ -952,44 +978,7 @@
       </div>
     </section>
 
-    <!-- 2. ALLENAMENTO -->
-    <section id="view-allenamento" class="view">
-      <div class="stack">
-        <div class="section-card pad">
-          <div class="head-row" style="margin-bottom:8px;">
-            <div class="tabs-row" id="workoutRoutineTabs"></div>
-            <button type="button" class="circle-btn sm" id="addFreeExerciseBtn" title="Aggiungi esercizio">+</button>
-          </div>
-
-          <div class="live-metrics-strip">
-            <div class="metric-pair">
-              <div>
-                <div class="muted-xs">Tempo</div>
-                <div class="metric-val" id="liveDurationVal">0s</div>
-              </div>
-              <div>
-                <div class="muted-xs">Volume</div>
-                <div class="metric-val" id="liveVolumeVal">0 kg</div>
-              </div>
-              <div>
-                <div class="muted-xs">Serie</div>
-                <div class="metric-val" id="liveSetsVal">0</div>
-              </div>
-            </div>
-            <button type="button" class="pill-btn solid" id="finishWorkoutBtn">Termina</button>
-          </div>
-
-          <div class="row-gap" style="margin-top:8px;">
-            <input type="text" id="sessionNoteInput" class="clean-input" style="padding:7px 10px;font-size:0.8rem;" placeholder="Nota sessione..." />
-          </div>
-        </div>
-
-        <div id="workoutExercisesContainer" class="stack"></div>
-        <div id="workoutHistoryContainer" class="stack"></div>
-      </div>
-    </section>
-
-    <!-- 3. PT -->
+    <!-- 2. PT -->
     <section id="view-pt" class="view">
       <div class="stack">
         <div class="section-card pad">
@@ -1064,7 +1053,7 @@
       </div>
     </section>
 
-    <!-- 4. PROFILO -->
+    <!-- 3. PROFILO -->
     <section id="view-profilo" class="view">
       <div class="stack">
         <div class="section-card pad">
@@ -1145,6 +1134,48 @@
     </section>
   </main>
 
+  <!-- SCHERMATA ALLENAMENTO A COMPARSA -->
+  <div id="workoutOverlay" class="workout-overlay" role="dialog" aria-modal="true" aria-label="Allenamento">
+    <div class="workout-overlay-inner">
+      <div class="stack">
+        <div class="section-card pad">
+          <div class="head-row" style="margin-bottom:8px;">
+            <button type="button" class="pill-btn" id="closeWorkoutOverlayBtn">← Schede</button>
+            <div class="sec-title" id="overlayRoutineTitle">Allenamento</div>
+            <button type="button" class="circle-btn sm" id="addFreeExerciseBtn" title="Aggiungi esercizio">+</button>
+          </div>
+
+          <div class="tabs-row" id="workoutRoutineTabs" style="margin-bottom:10px;"></div>
+
+          <div class="live-metrics-strip">
+            <div class="metric-pair">
+              <div>
+                <div class="muted-xs">Tempo</div>
+                <div class="metric-val" id="liveDurationVal">0s</div>
+              </div>
+              <div>
+                <div class="muted-xs">Volume</div>
+                <div class="metric-val" id="liveVolumeVal">0 kg</div>
+              </div>
+              <div>
+                <div class="muted-xs">Serie</div>
+                <div class="metric-val" id="liveSetsVal">0</div>
+              </div>
+            </div>
+            <button type="button" class="pill-btn solid" id="finishWorkoutBtn">Termina</button>
+          </div>
+
+          <div class="row-gap" style="margin-top:8px;">
+            <input type="text" id="sessionNoteInput" class="clean-input" style="padding:7px 10px;font-size:0.8rem;" placeholder="Nota sessione..." />
+          </div>
+        </div>
+
+        <div id="workoutExercisesContainer" class="stack"></div>
+        <div id="workoutHistoryContainer" class="stack"></div>
+      </div>
+    </div>
+  </div>
+
   <!-- TIMER RECUPERO -->
   <div class="bottom-rest-timer" id="bottomRestTimer" role="region" aria-label="Timer recupero">
     <div class="rest-bar-card">
@@ -1164,7 +1195,6 @@
   <nav class="dock-wrap" aria-label="Navigazione">
     <div class="dock">
       <button type="button" class="dock-btn active" data-nav="schede">Schede</button>
-      <button type="button" class="dock-btn" data-nav="allenamento">Allenamento</button>
       <button type="button" class="dock-btn" data-nav="pt">PT</button>
     </div>
   </nav>
@@ -1197,7 +1227,7 @@
     const db = getFirestore(app);
 
     const DAYS = ["Lun", "Mar", "Mer", "Gio", "Ven", "Sab", "Dom"];
-    const NAV_ORDER = ["schede", "allenamento", "pt"];
+    const NAV_ORDER = ["schede", "pt"];
     const SET_MODES = ["N", "W", "D", "F", "S"];
     const MUSCLE_KEYS = ["petto", "schiena", "spalle", "braccia", "gambe", "addome"];
     const MUSCLE_LABELS = {
@@ -1257,7 +1287,6 @@
       return "petto";
     }
 
-    // ILLUSTRAZIONE BIOMECCANICA DETTAGLIATA PER ESERCIZIO
     function renderExerciseIllustrationSvg(exName) {
       const m = detectMuscle(exName);
       const n = (exName || "").toLowerCase();
@@ -1341,7 +1370,6 @@
       </svg>`;
     }
 
-    // MAPPA ANATOMICA DETTAGLIATA FRONTE + RETRO
     function renderDetailedAnatomySvg(activeMusclesSet) {
       const m = (key) => (activeMusclesSet.has(key) ? "active-m" : "");
       return `
@@ -1397,7 +1425,6 @@
       `;
     }
 
-    // GRAFICO VOLUME SESSIONI CON MEDIA
     function renderVolumeChartSvg(historyList) {
       const sessions = (historyList || []).slice(0, 7).reverse();
       if (!sessions.length) {
@@ -1448,7 +1475,6 @@
       `;
     }
 
-    // GRAFICO DISTRIBUZIONE SERIE PER GRUPPO MUSCOLARE
     function computeMuscleSetDistribution() {
       const counts = { petto: 0, schiena: 0, spalle: 0, braccia: 0, gambe: 0, addome: 0 };
       const addFromExList = (exList) => {
@@ -1538,6 +1564,7 @@
     let geminiApiKey = (localStorage.getItem(GEMINI_KEY_STORAGE) || "").trim();
     let unsubCloud = null;
     let isApplyingCloud = false;
+    let isWorkoutOverlayOpen = false;
     const openAdviceIds = new Set();
 
     function getBodySummaryText() {
@@ -1557,7 +1584,7 @@
 
       const brandDefault = document.getElementById("headerBrandDefault");
       const routineBubble = document.getElementById("headerRoutineBubble");
-      if (activeNav === "allenamento" && state.activeWorkout) {
+      if (isWorkoutOverlayOpen && state.activeWorkout) {
         brandDefault.classList.add("hidden");
         routineBubble.classList.remove("hidden");
         routineBubble.textContent = state.activeWorkout.routineName || "Allenamento";
@@ -1565,6 +1592,19 @@
         brandDefault.classList.remove("hidden");
         routineBubble.classList.add("hidden");
       }
+    }
+
+    function openWorkoutOverlay() {
+      isWorkoutOverlayOpen = true;
+      document.getElementById("workoutOverlay").classList.add("open");
+      updateHeaderAndProfileBadges();
+      renderAllenamento();
+    }
+
+    function closeWorkoutOverlay() {
+      isWorkoutOverlayOpen = false;
+      document.getElementById("workoutOverlay").classList.remove("open");
+      updateHeaderAndProfileBadges();
     }
 
     async function pushToCloud() {
@@ -1638,7 +1678,7 @@
         renderSchede();
         renderProfiloSection();
         renderReadinessAnalysis();
-        if (activeNav === "allenamento") renderAllenamento();
+        if (isWorkoutOverlayOpen) renderAllenamento();
       }, () => {});
     }
 
@@ -1664,6 +1704,7 @@
 
     let activeNav = "schede";
     function switchSection(navName) {
+      closeWorkoutOverlay();
       const prevIdx = NAV_ORDER.indexOf(activeNav);
       const nextIdx = NAV_ORDER.indexOf(navName);
       let glideClass = "";
@@ -1682,10 +1723,7 @@
       view.classList.add("active");
       updateHeaderAndProfileBadges();
 
-      if (navName === "allenamento") {
-        ensureWorkoutLoaded();
-        renderAllenamento();
-      } else if (navName === "profilo") {
+      if (navName === "profilo") {
         syncProfileInputsFromState();
         renderProfiloSection();
       } else if (navName === "pt") {
@@ -1694,12 +1732,14 @@
     }
 
     document.getElementById("ratHomeBtn").onclick = () => switchSection("schede");
+    document.getElementById("closeWorkoutOverlayBtn").onclick = () => closeWorkoutOverlay();
 
     document.querySelectorAll(".dock-btn").forEach((btn) => {
       btn.onclick = () => switchSection(btn.dataset.nav);
     });
 
     document.getElementById("openProfileSectionBtn").onclick = () => {
+      closeWorkoutOverlay();
       document.querySelectorAll(".dock-btn").forEach((b) => b.classList.remove("active"));
       activeNav = "profilo";
       document.querySelectorAll(".view").forEach((v) => v.classList.remove("active", "glide-left", "glide-right"));
@@ -2084,7 +2124,7 @@
           if (state.editingRoutineId === routine.id) state.editingRoutineId = null;
           saveState();
           renderSchede();
-          if (activeNav === "allenamento") renderAllenamento();
+          if (isWorkoutOverlayOpen) renderAllenamento();
         };
 
         list.appendChild(card);
@@ -2117,7 +2157,7 @@
         }))
       };
       saveState();
-      switchSection("allenamento");
+      openWorkoutOverlay();
     }
 
     function ensureWorkoutLoaded() {
@@ -2167,12 +2207,11 @@
     }
 
     setInterval(() => {
-      if (activeNav === "allenamento" && state.activeWorkout) {
+      if (isWorkoutOverlayOpen && state.activeWorkout) {
         document.getElementById("liveDurationVal").textContent = formatElapsedSec(getCurrentLiveSeconds());
       }
     }, 1000);
 
-    // SWIPE A SINISTRA PER ELIMINARE UNA SERIE
     function attachSwipeLeftToDelete(rowEl, hintEl, onDelete) {
       let startX = null;
       let startY = null;
@@ -2254,6 +2293,7 @@
       const tabs = document.getElementById("workoutRoutineTabs");
       const list = document.getElementById("workoutExercisesContainer");
       const sessionNoteIn = document.getElementById("sessionNoteInput");
+      const overlayTitle = document.getElementById("overlayRoutineTitle");
 
       tabs.innerHTML = "";
       state.routines.forEach((r) => {
@@ -2261,28 +2301,23 @@
         b.type = "button";
         b.className = `tab-pill ${r.id === state.selectedRoutineId ? "active" : ""}`;
         b.textContent = r.name;
-        b.onclick = () => {
-          state.selectedRoutineId = r.id;
-          state.activeWorkout = null;
-          ensureWorkoutLoaded();
-          saveState();
-          renderSchede();
-          renderAllenamento();
-        };
+        b.onclick = () => startRoutine(r.id);
         tabs.appendChild(b);
       });
 
       const w = state.activeWorkout;
       if (!w) {
+        overlayTitle.textContent = "Allenamento";
         document.getElementById("liveDurationVal").textContent = formatElapsedSec(state.accumulatedSessionSec || 0);
         document.getElementById("liveVolumeVal").textContent = "0 kg";
         document.getElementById("liveSetsVal").textContent = "0";
         sessionNoteIn.value = "";
-        list.innerHTML = `<div class="section-card empty-box">Avvia una scheda per iniziare</div>`;
+        list.innerHTML = `<div class="section-card empty-box">Premi Avvia su una scheda per iniziare</div>`;
         renderHistory();
         return;
       }
 
+      overlayTitle.textContent = w.routineName || "Allenamento";
       sessionNoteIn.value = w.note || "";
       sessionNoteIn.onchange = () => { w.note = sessionNoteIn.value; saveState(); };
 
@@ -2512,9 +2547,9 @@
         }))
       });
       state.activeWorkout = null;
-      ensureWorkoutLoaded();
       saveState();
-      renderAllenamento();
+      closeWorkoutOverlay();
+      switchSection("schede");
     };
 
     function renderHistory() {
@@ -2785,7 +2820,7 @@
       localStorage.setItem(GEMINI_KEY_STORAGE, geminiApiKey);
       saveState();
       renderSchede();
-      if (activeNav === "allenamento") renderAllenamento();
+      if (isWorkoutOverlayOpen) renderAllenamento();
     };
 
     document.getElementById("createGymCodeBtn").onclick = () => {
